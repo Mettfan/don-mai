@@ -1,0 +1,115 @@
+.carrouselHome{
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    background-color: #FFD449;
+    position: relative;
+    left: 0%;
+    width: 196%;
+    /* margin: 30px */
+    display: grid;
+    grid-gap: 10px;
+    padding: 10px;
+    /* height: 50%; */
+}
+.promosHome{
+    background-color: #FFD449;
+    /* width: 200px; */
+    display: grid;
+
+}
+.home{
+    display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    padding: 10px;
+}
+.aHome{
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    /* height: 100%; */
+    align-items: center;
+}
+.cHome{
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* align-items: center; */
+    /* position: fixed; */
+    justify-content: center ;
+    /* padding: 10px; */
+}
+.promoImg{
+    width: 300px;
+}
+.containerlist{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px;
+}
+.dHome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: #FFD449;
+    /* border-color: black; */
+    /* margin: 2px; */
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.listContainerDepartaments{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-around; */
+    
+}
+.elementDepartaments{
+    /* margin: 10px; */
+    width: 50px;
+    margin-left: 15px;
+}
+.titleDepartament{
+    display: flex;
+    padding: 10px 10px 3px 10px;
+}
+.bannerImg{
+    width: 300px;
+}
+.separatorLine{
+    background-color: black;
+    height: 1px;
+    margin-bottom: 10px;
+}
+.departamentContainer{
+    background-color: rgb(234, 135, 78);
+    margin-top: 2px ;
+    display: flex;
+    flex-direction: column;
+}
+@media (max-width: 800px) {
+    .home{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .promoImg{
+        display: flex;
+        justify-content: center;
+        width: 300px;
+    }
+    .carrouselHome{
+        height: 600px;
+        position: relative;
+        left: -0px;
+    }
+    .containerlist{
+        flex-direction: column ;
+    }
+  }
