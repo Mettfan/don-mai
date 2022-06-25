@@ -1,0 +1,19 @@
+.products{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.productContainer{
+    padding: 10px;
+}
+.buttonPrevious{
+    position: fixed;
+    bottom: 50%;
+    left: 0%;
+}
+.buttonNext{
+    position: fixed;
+    bottom: 50%;
+    right: 0%;
+}

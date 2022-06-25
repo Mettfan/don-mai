@@ -1,0 +1,44 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "mocha -w ./tests/**/*.spec.js"
+  },
+  "author": "Henry",
+  "license": "ISC",
+  "engines": {
+    "node": ">=12.18.3",
+    "npm": ">=6.14.6"
+  },
+  "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.75",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.18.1",
+    "ioredis": "^4.19.2",
+    "jsonwebtoken": "^8.5.1",
+    "mailchimp-api-v3": "^1.15.0",
+    "md5": "^2.3.0",
+    "mercadopago": "^1.5.12",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.7.4",
+    "nodemon": "^2.0.6",
+    "pg": "^8.5.1",
+    "sequelize": "^6.3.5",
+    "socket.io": "^4.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "supertest": "^6.0.1",
+    "supertest-session": "^4.1.0"
+  }
+}

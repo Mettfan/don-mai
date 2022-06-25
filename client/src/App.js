@@ -3,6 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import Landing from './Components/Landing/Landing';
 import Home from './Components/Home/Home';
 import Nav from './Components/Nav/Nav';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
+import Sell from './Components/Sell/Sell';
+import Convert from './Components/Convert/Convert'
 
 function App() {
   return (
@@ -11,6 +15,10 @@ function App() {
       <Routes>
         <Route path ="/" element={<Landing></Landing>} />
         <Route path ="/home" element={<Home></Home>} />
+        <Route path ="/login" element={<Login></Login>} />
+        <Route path ="/register" element={<Register></Register>} />
+        <Route path ="/sell" element={<Sell></Sell>} />
+        <Route path ="/convert" element={<Convert></Convert>} />
       </Routes>
     </div>
   );

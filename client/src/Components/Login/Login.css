@@ -1,0 +1,35 @@
+.IniciarSesionContainer{
+    background-color: #700303;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.loginText{
+    font-size: 50px;
+    color: white;
+    font-weight: 500;
+    margin: 40px;
+
+
+}
+.loginForm{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.labelLogin{
+    padding: 10px;
+}
+.buttonLogin{
+    padding: 10px;
+}
+#emailInput{
+    margin-bottom: 10px;
+}
+@media (max-width: 800px) {
+    .loginText{
+        margin: 10%;
+    }
+  }
