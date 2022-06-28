@@ -1,0 +1,12 @@
+.carrito{
+    width: 20px;
+}
+.divPrueba{
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    
+}
+.botonCarrito{
+    background-color: rgb(217, 255, 0);
+}

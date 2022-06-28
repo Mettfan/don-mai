@@ -7,7 +7,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import Sell from './Components/Sell/Sell';
 import Convert from './Components/Convert/Convert'
-
+import Delivery from './Components/Delivery/Delivery';
 function App() {
   return (
     <div className="App">
@@ -19,6 +19,7 @@ function App() {
         <Route path ="/register" element={<Register></Register>} />
         <Route path ="/sell" element={<Sell></Sell>} />
         <Route path ="/convert" element={<Convert></Convert>} />
+        <Route path ="/delivery" element={<Delivery/>} />
       </Routes>
     </div>
   );

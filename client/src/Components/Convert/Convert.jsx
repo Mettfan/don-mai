@@ -87,13 +87,15 @@ export default function Convert () {
     return ( <> 
 
         <input onChange={(e) => inputOnChange(e)} type="file" id = 'hoja' accept= ".xls, .xlsx"></input>
-        <button onClick={ () => saveProducts()}>Guardar Productos y Etiquetar</button>
-        <button onClick={ () => uploadProducts()}>Subir Productos</button>
+        {productos && <div>
+            <button onClick={ () => saveProducts()}>Guardar Productos y Etiquetar</button>
+            <button onClick={ () => uploadProducts()}>Subir Productos</button>
+        </div>}
         <PDFExport fileName = 'barcodes.pdf' paperSize = 'A4' margin={'0cm'} ref= {pdf}>
 
             {
                 <div className="products">
-                    { status && JSON.stringify(status)}
+                    {/* { status && JSON.stringify(status)} */}
 
                     {productos && productos?.slice(li, ls)?.map( (producto) => {
                         return (<div className="productContainer">

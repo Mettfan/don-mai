@@ -1,5 +1,9 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import cocacola from '../../Assets/cocacola.jpg'
+import { getProducts } from "../../redux/actions/productActions";
 import './Home.css'
 let samplePromos =[
     {
@@ -39,8 +43,19 @@ let sampleDepartaments = [
     }
 ]
 export default function Home(){
+    let dispatch = useDispatch()
+    let [state, setState] = useState({
+        productos: useSelector( status => status.status )
+
+    })
+    let productos = state.productos
+    useEffect( ( ) => {
+        dispatch(getProducts())
+    }, [])
+
     let Departamentos = ( ) => {
         return (<>
+            <button className="clgProd" onClick={() => {console.log(productos)}}>CONSOLE PROD</button>
              {sampleDepartaments.map(departament => {
                  return (<div className="departamentContainer">
                     <div className="titleDepartament">

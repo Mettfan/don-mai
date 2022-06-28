@@ -17,7 +17,7 @@ export default function Nav (){
             <img src={Menu} className='menuPng'/>
 
             { productos && <input type={'text'} placeholder='Buscar el producto...'></input>}
-            
+             
 
         </div>
     </>)
