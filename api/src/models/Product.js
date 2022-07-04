@@ -30,6 +30,9 @@ module.exports = (sequelize) => {
     brand: {
       type: DataTypes.STRING,
     },
+    Departamento: {
+      type: DataTypes.STRING,
+    },
     disabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
