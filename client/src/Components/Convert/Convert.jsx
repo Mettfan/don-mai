@@ -7,10 +7,21 @@ import './Convert.css'
 import { addProducts } from "../../redux/actions/productActions";
 import { useDispatch } from "react-redux";
 import { PDFExport } from "@progress/kendo-react-pdf";
+// import { JsonToExcel } from "react-json-to-excel"
 // import {fs} from 'fs';
 // import { Readable } from 'stream';
 // XLSX.set_fs(fs);
 // XLSX.stream.set_readable(Readable);
+export function downloadExcel (data)  {
+    const fileName = 'test.xlsx';
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'test');
+
+    XLSX.writeFile(wb, fileName);
+  };
+
 export default function Convert () {
     let pdf = React.createRef()
     let dispatch = useDispatch()
@@ -84,8 +95,15 @@ export default function Convert () {
         }
         pdf.current.save()
     }
-    return ( <> 
 
+
+    return ( <> 
+        {
+            !productos && <div>
+                <button onClick={ () => downloadExcel([{"wawa": "añeñe", "quita": "bomba"}])}>Crear Copia de Base </button>
+            </div>
+        }
+      
         <input onChange={(e) => inputOnChange(e)} type="file" id = 'hoja' accept= ".xls, .xlsx"></input>
         {productos && <div>
             <button onClick={ () => saveProducts()}>Guardar Productos y Etiquetar</button>
@@ -129,3 +147,4 @@ export default function Convert () {
         }
     </>)
 }
+
