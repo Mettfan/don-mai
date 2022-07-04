@@ -3,7 +3,7 @@ import {
 } from '../actions/productActions'
 
 const initialState = {
-    status: {}
+    status: null
 }
 
 function productReducer( state = initialState, action) {

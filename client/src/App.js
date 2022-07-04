@@ -8,6 +8,7 @@ import Register from './Components/Register/Register';
 import Sell from './Components/Sell/Sell';
 import Convert from './Components/Convert/Convert'
 import Delivery from './Components/Delivery/Delivery';
+import Catalog from './Components/Catalog/Catalog';
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
         <Route path ="/sell" element={<Sell></Sell>} />
         <Route path ="/convert" element={<Convert></Convert>} />
         <Route path ="/delivery" element={<Delivery/>} />
+        <Route path ="/catalog" element={<Catalog/>} />
       </Routes>
     </div>
   );
