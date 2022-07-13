@@ -13,11 +13,11 @@ import { PDFExport } from "@progress/kendo-react-pdf";
 // XLSX.set_fs(fs);
 // XLSX.stream.set_readable(Readable);
 export function downloadExcel (data)  {
-    const fileName = 'test.xlsx';
+    const fileName = 'Respaldo.xlsx';
 
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'test');
+    XLSX.utils.book_append_sheet(wb, ws, 'Respaldo');
 
     XLSX.writeFile(wb, fileName);
   };
