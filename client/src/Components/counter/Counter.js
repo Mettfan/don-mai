@@ -7,25 +7,28 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
+  selectProduct,
+  productSelector,
 } from './counterSlice';
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 
 export function Counter() {
   const count = useSelector(selectCount);
+  const product = useSelector(productSelector(count || 1));
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
   function pp (){
     
-    dispatch(incrementAsync(incrementValue))
+    dispatch(decrement())
     
   }
   function np (){
-    // dispatch(decrement(co))
+    dispatch(increment())
     
-    dispatch(incrementAsync(incrementValue))
+    dispatch(getProduct(count))
   }
   return (
     <div>
@@ -37,7 +40,8 @@ export function Counter() {
         >
           -
         </button>
-        <span className={styles.value}>{count}</span>
+        {/* <span className={styles.value}>{count}</span> */}
+        <span className={styles.value}>{JSON.stringify(product)}</span>
         <button
           className={styles.button}
           aria-label="Increment value"
@@ -61,7 +65,7 @@ export function Counter() {
         </button>
         <button
           className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue  ))}
+          onClick={() => dispatch(incrementAsync(incrementValue))}
         >
           Add Async
         </button>

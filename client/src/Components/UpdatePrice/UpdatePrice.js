@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getProduct } from "../../redux/actions/productActions";
+import { getProduct } from "../../Components/counter/counterSlice";
 import { useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { Counter } from "../counter/Counter";
