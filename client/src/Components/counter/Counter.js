@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   decrement,
@@ -9,13 +9,22 @@ import {
   selectCount,
   selectProduct,
   productSelector,
+  getProductByBarcode,
 } from './counterSlice';
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
+import Cookies from 'universal-cookie';
 
 export function Counter() {
+  let cookie = new Cookies()
+  let [state, setState] = useState({
+    currentProduct: cookie.get('currentProduct'),
+    reduxState: useSelector(state => state)
+  })
+
   const count = useSelector(selectCount);
-  const product = useSelector(productSelector(count || 1));
+  const reduxState = state.reduxState
+  // const product = useSelector(productSelector(count || 1));
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
@@ -23,27 +32,49 @@ export function Counter() {
   function pp (){
     
     dispatch(decrement())
+    setState({...state, currentProduct: cookie.get('currentProduct')})
     
   }
   function np (){
     dispatch(increment())
     
     dispatch(getProduct(count))
+    setState({...state, currentProduct: cookie.get('currentProduct')})
+  }
+  function searchProduct(codigo_de_barras){
+    guardarNumerito(incrementAmount)
+    console.log(state.currentProduct['P. Venta']);
+    console.log(codigo_de_barras);
+    getProductByBarcode(codigo_de_barras)
+    setState({...state, currentProduct: cookie.get('currentProduct')})
+
+  }
+  function guardarNumerito(numerito){
+    setIncrementAmount(numerito)
+    console.log(incrementAmount);
+    dispatch(getProductByBarcode(numerito))
   }
   return (
     <div>
       <div className={styles.row}>
         <button
-          className={styles.button}
+          className={styles.buttondecrement}
           aria-label="Decrement value"
           onClick={() => pp()}
         >
           -
         </button>
-        {/* <span className={styles.value}>{count}</span> */}
-        <span className={styles.value}>{JSON.stringify(product)}</span>
+
+        <div className='valueRow'>
+          <div className={styles.value}>{state?.currentProduct?.id}</div>
+          <div className={styles.value}>{state?.currentProduct?.Código}</div>
+          <div className={styles.value}>{state?.currentProduct?.Producto}</div>
+          <div className={styles.value}>{state?.currentProduct["P. Venta"]}</div>
+        </div>
+
+        {/* <span className={styles.value}>{JSON.stringify(product)}</span> */}
         <button
-          className={styles.button}
+          className={styles.buttonadd}
           aria-label="Increment value"
           onClick={() => np()}
         >
@@ -55,26 +86,31 @@ export function Counter() {
           className={styles.textbox}
           aria-label="Set increment amount"
           value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
+          onChange={(e) => {guardarNumerito(e.target.value)}}
         />
+        <div></div>
+          
+       
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+          onClick = {() => {searchProduct('70707070')}}
+          // onClick={() => dispatch(incrementPrice(`+$`))}
         >
-          Add Amount
+          BUSCAR
         </button>
-        <button
+        {/* <button
           className={styles.asyncButton}
           onClick={() => dispatch(incrementAsync(incrementValue))}
         >
           Add Async
-        </button>
-        <button
+        </button> */}
+        {/* <button
           className={styles.button}
           onClick={() => dispatch(incrementIfOdd(incrementValue))}
         >
           Add If Odd
         </button>
+        {JSON.stringify(reduxState)} */}
       </div>
     </div>
     

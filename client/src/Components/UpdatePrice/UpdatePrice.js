@@ -51,12 +51,12 @@ export function UpdatePrice(){
         {/* {JSON.stringify(state.currentProduct)} */}
         <div>
                 <div>
-                    {state.currentProduct.Producto}
+                    {/* {state?.currentProduct?.Producto} */}
                 </div>
                 <div>
-                    {state.currentProduct["P. Venta"]}
+                    {/* {state?.currentProduct["P. Venta"]} */}
                 </div>
-                <img src={state.currentProduct.image}/>
+                {/* <img src={state.currentProduct.image}/> */}
             </div>
 
         <button onClick={()=>{miFuncionChida()}}>MI BOTON CHIDO</button>
