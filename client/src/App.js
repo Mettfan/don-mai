@@ -10,7 +10,9 @@ import Convert from './Components/Convert/Convert'
 import Delivery from './Components/Delivery/Delivery';
 import Catalog from './Components/Catalog/Catalog';
 import { UpdatePrice } from './Components/UpdatePrice/UpdatePrice';
+
 function App() {
+
   return (
     <div className="App">
       <Nav/>

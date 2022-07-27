@@ -2,6 +2,9 @@
     background-color: #8A0202;
     display: flex;
     justify-content: space-between;
+    /* position: fixed;
+    width: 100%;
+    top: 0 */
     
 }
 .menuPng{
