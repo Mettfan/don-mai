@@ -9,7 +9,10 @@ import Sell from './Components/Sell/Sell';
 import Convert from './Components/Convert/Convert'
 import Delivery from './Components/Delivery/Delivery';
 import Catalog from './Components/Catalog/Catalog';
+import { UpdatePrice } from './Components/UpdatePrice/UpdatePrice';
+
 function App() {
+
   return (
     <div className="App">
       <Nav/>
@@ -22,6 +25,7 @@ function App() {
         <Route path ="/convert" element={<Convert></Convert>} />
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
+        <Route path ="/update/price" element={<UpdatePrice/>} />
       </Routes>
     </div>
   );

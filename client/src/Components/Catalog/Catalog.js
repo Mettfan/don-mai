@@ -21,7 +21,7 @@ export default function Catalog (){
         <div>
             <button onClick={ () => getAllProducts() }> GET </button>
             {JSON.stringify(state.store)}
-            <button onClick={ () => {console.log(state.store) } }> See State</button>
+            
             
         </div>
 
