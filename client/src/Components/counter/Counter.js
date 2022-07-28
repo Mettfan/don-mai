@@ -16,47 +16,45 @@ import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
 import { fetchAllProducts } from '../../features/products/productSlicetest';
+// import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
   let cookie = new Cookies()
   let [state, setState] = useState({
     currentProduct: cookie.get('currentProduct'),
-    reduxState: useSelector(state => state)
+    reduxState: useSelector(state => state),
+    searchValue: '',
+    displayedProduct: {}
   })
-
-  const count = useSelector(selectCount);
+  // const count = useSelector(selectCount);
   const productState = useSelector( state => state)
-  const reduxState = state.reduxState
+  const allProducts = useSelector( state => state.products.products)
   // const product = useSelector(productSelector(count || 1));
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
 
-  const incrementValue = Number(incrementAmount) || 0;
-  function pp (){
-    
-    dispatch(decrement())
-    setState({...state, currentProduct: cookie.get('currentProduct')})
-    dispatch(getProduct(count
-      ))
-    
+  function pp () {
+    console.log('previousPage');
   }
-  function np (){
-    dispatch(increment())
-    
-    dispatch(getProduct(count))
-    setState({...state, currentProduct: cookie.get('currentProduct')})
+  function np () {
+    console.log('nextPage');
   }
-  function searchProduct(codigo_de_barras){
-    guardarNumerito(incrementAmount)
-    // console.log(state?.currentProduct['P. Venta']);
-    console.log(codigo_de_barras);
-    getProductByBarcode(codigo_de_barras)
-    setState({...state, currentProduct: cookie.get('currentProduct')})
+  
+  function handleOnChange (e){
+    console.log(e.target.value);
+    setState({
+      searchValue: e.target.value
+    })
+  }
+  function onSearch() {
 
-  }
-  function guardarNumerito(numerito){
-    setIncrementAmount(numerito)
-    console.log(incrementAmount);
-    dispatch(getProductByBarcode(numerito))
+    productState?.products?.products?.map(product => {
+      console.log(product);
+      if (product.Código == state.searchValue){
+        setState({
+          ...state,
+          displayedProduct: product
+        })
+      }      
+    });
   }
   function handleKeyPress(event){
     console.log(event.keyCode);
@@ -81,15 +79,20 @@ export function Counter() {
           >
             -
           </button>
-
-          <div className='valueRow'>
-            <div className={styles.value}>{state?.currentProduct?.id}</div>
-            <div className={styles.value}>{state?.currentProduct?.Código}</div>
-            <div className={styles.value}>{state?.currentProduct?.Producto}</div>
-            {/* <div className={styles.value}>{state?.currentProduct["P. Venta"] || null}</div> */}
-          </div>
-
-          {/* <span className={styles.value}>{JSON.stringify(product)}</span> */}
+            
+            <div className='valueRow'>
+              <div className={styles.value}>
+                <div>
+                  { state.displayedProduct && JSON.stringify(state.displayedProduct['Producto'])}
+                </div>
+                <div>
+                  { state.displayedProduct && JSON.stringify(state.displayedProduct['P. Venta'])}
+                </div>
+                <div>
+                  { state.displayedProduct && JSON.stringify(state.displayedProduct['Código'])}
+                </div>
+              </div>
+            </div>
           <button
             className={styles.buttonadd}
             aria-label="Increment value"
@@ -103,39 +106,27 @@ export function Counter() {
           <input
             className={styles.textbox}
             aria-label="Set increment amount"
-            value={incrementAmount}
-            onChange={(e) => {guardarNumerito(e.target.value)}}
+            
+            onChange={(e) => {handleOnChange(e)}}
           />
           <div></div>
             
         
           <button
+            onClick={( ) => {onSearch()}}
             className={styles.button}
-            onClick = {() => {searchProduct('70707070')}}
-            // onClick={() => dispatch(incrementPrice(`+$`))}
+            // onClick = {() => {searchProduct('70707070')}}
           >
             BUSCAR
           </button>
-          {/* <button
-            className={styles.asyncButton}
-            onClick={() => dispatch(incrementAsync(incrementValue))}
-          >
-            Add Async
-          </button> */}
-          {/* <button
-            className={styles.button}
-            onClick={() => dispatch(incrementIfOdd(incrementValue))}
-          >
-            Add If Odd
-          </button>
-          {JSON.stringify(reduxState)} */}
         </div>
       </div>
 
       <div>
-        {JSON.stringify(productState)}
+        {JSON.stringify(productState.products.products)}
       </div>
       <button onClick={ () => dispatch(fetchAllProducts()) }>{'BRING ALL'}</button>
+      
     </>
   );
 }
