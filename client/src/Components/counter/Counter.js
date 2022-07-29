@@ -91,6 +91,9 @@ export function Counter() {
                 <div>
                   { state.displayedProduct && JSON.stringify(state.displayedProduct['Código'])}
                 </div>
+                <div>
+                  { state.displayedProduct && JSON.stringify(state.displayedProduct['id'])}
+                </div>
               </div>
             </div>
           <button

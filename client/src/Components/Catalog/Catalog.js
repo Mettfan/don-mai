@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import './Catalog.css'
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { getProducts } from "../../redux/actions/productActions";
 import { fetchAllProducts } from "../../redux/slices/products/product";
-
+import { fetchAllProducts  as fetchProducts } from '../../features/products/productSlicetest';
+import productPlaceholder from '../../Assets/productPlaceholder.png'
 export default function Catalog (){
+    const productState = useSelector( state => state)
+    const productList = productState.products.products
     let cookie = new Cookies()
     let store = useSelector( status => status )
     let dispatch = useDispatch()
@@ -13,16 +17,27 @@ export default function Catalog (){
         response: cookie.get('response')
     })
     let response = state.response
-    function getAllProducts () {
+    function downloadExcel () {
         dispatch( fetchAllProducts() )
+    }
+    function getAllProducts () {
+        dispatch( fetchProducts() )
     }
     return (<>
     
         <div>
-            <button onClick={ () => getAllProducts() }> GET </button>
+            <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
             {JSON.stringify(state.store)}
             
             
+            <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
+            {productList.map( product => {
+                return ( <div>
+                    <img className="productImage" src={productPlaceholder }/>
+                    <div>{product.Producto}</div>
+                    <div>{product['P. Venta']}</div>
+                </div>)
+            })}
         </div>
 
 
