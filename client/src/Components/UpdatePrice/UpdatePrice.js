@@ -38,9 +38,9 @@ export function UpdatePrice(){
         // window.location.reload()
     }
     let dispatch = useDispatch()
-    function miFuncionChida(){
-        console.log('CACA POPO');
-    }
+    // function miFuncionChida(){
+    //     console.log('CACA POPO');
+    // }
     return ( <>
     <Counter></Counter>
     Update Price
@@ -59,7 +59,7 @@ export function UpdatePrice(){
                 {/* <img src={state.currentProduct.image}/> */}
             </div>
 
-        <button onClick={()=>{miFuncionChida()}}>MI BOTON CHIDO</button>
+        {/* <button onClick={()=>{miFuncionChida()}}>MI BOTON CHIDO</button> */}
     </div>
         </>)
 }

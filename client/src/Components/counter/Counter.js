@@ -15,7 +15,7 @@ import {
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
-import { fetchAllProducts } from '../../features/products/productSlicetest';
+import { fetchAllProducts, fetchOneProduct } from '../../features/products/productSlicetest';
 // import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
   let cookie = new Cookies()
@@ -25,17 +25,22 @@ export function Counter() {
     searchValue: '',
     displayedProduct: {}
   })
+
   // const count = useSelector(selectCount);
   const productState = useSelector( state => state)
   const allProducts = useSelector( state => state.products.products)
+  const selectedProduct = useSelector( state => state.products.selectedProduct)
+  // const selectedProduct = useSelector( state => state.products.selectedProduct)
   // const product = useSelector(productSelector(count || 1));
   const dispatch = useDispatch();
 
   function pp () {
     console.log('previousPage');
+    dispatch(fetchOneProduct(Number(selectedProduct) - 1))
   }
   function np () {
     console.log('nextPage');
+    dispatch(fetchOneProduct(Number(selectedProduct) + 1))
   }
   
   function handleOnChange (e){
@@ -46,7 +51,7 @@ export function Counter() {
   }
   function onSearch() {
 
-    productState?.products?.products?.map(product => {
+    productState?.products?.products && productState?.products?.products?.map(product => {
       console.log(product);
       if (product.Código == state.searchValue){
         setState({
@@ -54,7 +59,10 @@ export function Counter() {
           displayedProduct: product
         })
       }      
-    });
+    })
+    dispatch(fetchOneProduct(state.searchValue))
+    
+
   }
   function handleKeyPress(event){
     console.log(event.keyCode);
@@ -83,18 +91,19 @@ export function Counter() {
             <div className='valueRow'>
               <div className={styles.value}>
                 <div>
-                  { state.displayedProduct && JSON.stringify(state.displayedProduct['Producto'])}
+                  { productState?.products?.selectedProduct['Producto']}
                 </div>
                 <div>
-                  { state.displayedProduct && JSON.stringify(state.displayedProduct['P. Venta'])}
+                  { productState?.products?.selectedProduct['P. Venta']}
                 </div>
                 <div>
-                  { state.displayedProduct && JSON.stringify(state.displayedProduct['Código'])}
+                  { productState?.products?.selectedProduct['Código']}
                 </div>
                 <div>
-                  { state.displayedProduct && JSON.stringify(state.displayedProduct['id'])}
+                  { productState?.products?.selectedProduct['id']}
                 </div>
               </div>
+              {JSON.stringify(productState.products.selectProduct)}
             </div>
           <button
             className={styles.buttonadd}
