@@ -26,16 +26,26 @@ export default function Catalog (){
     return (<>
     
         <div>
-            <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
-            {JSON.stringify(state.store)}
-            
-            
-            <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
+            <div>
+                <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
+                {/* {JSON.stringify(state.store)} */}
+                
+                
+                <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
+
+            </div>
             {productList.map( product => {
-                return ( <div>
-                    <img className="productImage" src={productPlaceholder }/>
-                    <div>{product.Producto}</div>
-                    <div>{product['P. Venta']}</div>
+                return ( <div className="catalogContainer">
+                    <span className="productBg">
+                        <img className="productImage" src={productPlaceholder }/>
+                        <div className="productInfoContainer">
+                            <div>{product.Producto}</div>
+                            <div>{product['P. Venta']}</div>
+
+                        </div>
+
+                    </span>
+
                 </div>)
             })}
         </div>

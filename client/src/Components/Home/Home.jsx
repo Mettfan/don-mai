@@ -49,9 +49,9 @@ export default function Home(){
 
     })
     let productos = state.productos
-    useEffect( ( ) => {
-        dispatch(getProducts())
-    }, [])
+    // useEffect( ( ) => {
+    //     dispatch(getProducts())
+    // }, [])
 
     let Departamentos = ( ) => {
         return (<>

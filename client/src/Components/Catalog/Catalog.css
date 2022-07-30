@@ -1,3 +1,33 @@
 .productImage{
-    width: 30px;
+    width: 100px;
+}
+.catalogContainer{
+    display: inline-flex ;
+    /* width: 100%; */
+    background-color: transparent;
+    /* flex-direction: row; */
+    /* min-width: px; */
+    height: 200px;
+}
+.productBg{
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* justify-content: center; */
+    background-color: rgb(230, 138, 34);
+    margin: 5px;
+    font-size: small;
+    font-weight: 500;
+
+}
+.productInfoContainer{
+    background-color: rgb(240, 181, 100);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
 }
