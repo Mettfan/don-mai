@@ -3,33 +3,29 @@ const { Product, User } = require("../../db.js");
 
 
 const getProduct = async (req, res, next) => {
-  let { id } = req.query
-  let { productos } = req.body
-  if (!id){
 
-    try{
-      // console.log(JSON.stringify(productos) );
-      Product.findAll().then( d => {
-        console.log('status: ' + JSON.stringify(d));
-        res.status(200).send({productos: productos, db: d})
-      })
-    }
-    catch(error){
-      res.send({error: error.error})
-    }
+  let { filter, value } = req.query
+
+
+
+  console.log(req.query);
+  let respuesta = null
+
+  if(filter){
+    Product.findOne( {where: { [filter]: value } } ).then( (producto) => {
+      respuesta = producto
+      res.send(respuesta)
+    })
+    .catch(error => {
+      res.send(error)
+    })
   }
   else{
-    try{
-
-      Product.findOne({where: { id: id }}).then( (result) => {
-        res.status(200).send(result)
-  
-      })
-    }
-    catch ( error ) {
-      res.send({ error: error})
-    }
+    Product.findAll().then(productos => {
+      res.send(productos)
+    })
   }
+
  
 };
 
