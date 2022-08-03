@@ -1,7 +1,7 @@
 .nav{
     background-color: #8A0202;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* position: fixed;
     width: 100%;
     top: 0 */
@@ -10,4 +10,16 @@
 .menuPng{
     width: 40px;
     margin: 10px;
+}
+.changePage{
+    width: 100%;
+    background-color: #FFD449 ;
+    filter: drop-shadow( 0px 3px 3px #8a0202);
+}
+.changePage:hover{
+    background-color: #8a0202;
+    color: aliceblue;
+    font-weight: 700;
+    border-color: gold;
+    border-radius: 2%
 }

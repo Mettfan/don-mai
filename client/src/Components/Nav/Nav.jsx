@@ -18,9 +18,9 @@ export default function Nav (){
             <img src={Menu} className='menuPng'/>
 
             { productos && <input type={'text'} placeholder='Buscar el producto...'></input>}
-             <button onClick={() => { nav('/home')}}>HOME</button>
-             <button onClick={() => { nav('/catalog')}}> CATALOG </button>
-             <button onClick={() => { nav('/update/price')}}>SEARCH</button>
+             <button className="changePage" onClick={() => { nav('/home')}}>HOME</button>
+             <button className="changePage" onClick={() => { nav('/catalog')}}> CATALOG </button>
+             <button className="changePage" onClick={() => { nav('/update/price')}}>SEARCH</button>
 
         </div>
     </>)

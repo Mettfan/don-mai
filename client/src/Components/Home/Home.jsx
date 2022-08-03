@@ -55,7 +55,7 @@ export default function Home(){
 
     let Departamentos = ( ) => {
         return (<>
-            <button className="clgProd" onClick={() => {console.log(productos)}}>CONSOLE PROD</button>
+            {/* <button className="clgProd" onClick={() => {console.log(productos)}}>CONSOLE PROD</button> */}
              {sampleDepartaments.map(departament => {
                  return (<div className="departamentContainer">
                     <div className="titleDepartament">

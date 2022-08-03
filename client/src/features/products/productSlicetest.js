@@ -45,8 +45,9 @@ const fetchProducts = createAsyncThunk('products/fetchProducts', () => {
     return axios.get('http://localhost:3001/products')
     .then( response => response.data.db)
 })
-const fetchProduct = createAsyncThunk('products/fetchProduct', (id) => {
-    return axios.get('http://localhost:3001/products/?id=' + id)
+const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value}) => {
+    console.log(value);
+    return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}`)
     .then( response => response.data)
 })
 

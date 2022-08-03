@@ -60,7 +60,7 @@ export function Counter() {
         })
       }      
     })
-    dispatch(fetchOneProduct(state.searchValue))
+    dispatch(fetchOneProduct( {filter: 'barcode' , value: state.searchValue }))
     
 
   }
