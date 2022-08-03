@@ -5,6 +5,7 @@
     /* position: fixed;
     width: 100%;
     top: 0 */
+    /* align-items: center; */
     
 }
 .menuPng{
@@ -12,9 +13,25 @@
     margin: 10px;
 }
 .changePage{
+    /* display: flex; */
+    
     width: 100%;
     background-color: #FFD449 ;
     filter: drop-shadow( 0px 3px 3px #8a0202);
+    text-decoration: none;
+    /* justify-content: center; */
+    /* text-align: center; */
+    color: black;
+    /* top: 50%; */
+    /* height: 100%; */
+    
+}
+.changePage.active{
+    width: 100%;
+    background-color: #8a0202 ;
+    filter: drop-shadow( 0px 3px 3px #8a0202);
+    color: white;
+    font-weight: 700;
 }
 .changePage:hover{
     background-color: #8a0202;
@@ -22,4 +39,9 @@
     font-weight: 700;
     border-color: gold;
     border-radius: 2%
+}
+.navText{
+
+    position: relative;
+    top: 30%;
 }
