@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getProduct } from "../../Components/counter/counterSlice";
 import { useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { Counter } from "../counter/Counter";
+import { Ticket } from "./Ticket";
 export function UpdatePrice(){
+
     let cookie = new Cookies()
     // let currentProduct = cookie.get('currentProduct')
     
@@ -38,15 +40,14 @@ export function UpdatePrice(){
         // window.location.reload()
     }
     let dispatch = useDispatch()
-    // function miFuncionChida(){
-    //     console.log('CACA POPO');
-    // }
+
     return ( <>
     <Counter></Counter>
-    Update Price
+    {/* Update Price
     <button onClick={()=>{ previousPage() } }>previous</button>
     {pageIndex}
-    <button onClick={()=>{ nextPage() } }>next</button>
+    <button onClick={()=>{ nextPage() } }>next</button> */}
+    <Ticket></Ticket>
     <div>
         {/* {JSON.stringify(state.currentProduct)} */}
         <div>
