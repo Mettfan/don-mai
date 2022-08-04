@@ -134,10 +134,10 @@ export function Counter() {
         </div>
       </div>
 
-      {/* <div>
-        {JSON.stringify(productState.products.loading)}
+      <div>
+        {/* {JSON.stringify(productState.products.products)} */}
       </div>
-      <button onClick={ () => dispatch(fetchAllProducts()) }>{'BRING ALL'}</button> */}
+      <button onClick={ () => dispatch(fetchAllProducts()) }>{'BRING ALL'}</button>
       
     </>
   );
