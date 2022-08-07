@@ -43,13 +43,14 @@ export function Counter() {
     dispatch(fetchOneProduct(Number(selectedProduct) + 1))
   }
   
-  function handleOnChange (e){
+  async function handleOnChange (e){
     console.log(e.target.value);
     setState({
       searchValue: e.target.value
     })
   }
-  function onSearch() {
+  function onSearch(e) {
+    e?.preventDefault && e.preventDefault()
 
     productState?.products?.products && productState?.products?.products?.map(product => {
       console.log(product);
@@ -61,8 +62,7 @@ export function Counter() {
       }      
     })
     dispatch(fetchOneProduct( {filter: 'barcode' , value: state.searchValue }))
-    
-
+    document.getElementById('inputBarcode').value = ''
   }
   function handleKeyPress(event){
     console.log(event.keyCode);
@@ -115,29 +115,34 @@ export function Counter() {
           </button>
         </div>
         <div className={styles.row}>
-          <input
-            className={styles.textbox}
-            aria-label="Set increment amount"
-            
-            onChange={(e) => {handleOnChange(e)}}
-          />
-          <div></div>
-            
-        
-          <button
-            onClick={( ) => {onSearch()}}
-            className={styles.button}
-            // onClick = {() => {searchProduct('70707070')}}
-          >
-            BUSCAR
-          </button>
+
+          <form onSubmit={(e) => onSearch(e)}>
+
+            <input
+              className={styles.textbox}
+              aria-label="Set increment amount"
+              id={'inputBarcode'}
+              onChange={(e) => {handleOnChange(e)}}
+              autoFocus={true}
+              />  
+            <input
+              type={'submit'}
+              value={'BUSCAR'}
+              className={styles.button}
+              
+              // onClick = {() => {searchProduct('70707070')}}
+              />
+              
+          </form>
+
+
         </div>
       </div>
 
       <div>
         {/* {JSON.stringify(productState.products.products)} */}
       </div>
-      <button onClick={ () => dispatch(fetchAllProducts()) }>{'BRING ALL'}</button>
+      {/* <button onClick={ () => dispatch(fetchAllProducts()) }>{'BRING ALL'}</button> */}
       
     </>
   );
