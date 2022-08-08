@@ -27,6 +27,10 @@ module.exports = (sequelize) => {
       defaultValue:
         "https://www.cristobalcolon.com/fullaccess/item21334foto95108.jpg",
     },
+    quantity: {
+      type: DataTypes.INTEGER,
+      defaultValue:0,
+    },
     brand: {
       type: DataTypes.STRING,
     },
@@ -40,5 +44,6 @@ module.exports = (sequelize) => {
     sales: {
       type: DataTypes.INTEGER,
     },
+
   });
 };

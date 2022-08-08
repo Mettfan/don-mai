@@ -21,10 +21,18 @@ export function Ticket(){
     }, [selectedProduct])
     function addProductToTicket ( product ) {
         if(product){
-            setState({
-                ...state,
-                ticketProducts: [...state.ticketProducts, product]
-            })
+
+            if(ticketProducts.find( listedProduct => product.id == listedProduct.id )){
+                console.log('Ya existe');
+            }
+            else{
+                setState({
+                    ...state,
+                    ticketProducts: [...state.ticketProducts, product]
+                })
+
+            }
+
 
         }
     }
@@ -51,6 +59,7 @@ export function Ticket(){
                         <div className="productInfoContainer">
                             <div>{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
+                            <div>{product['quantity']}</div>
 
                         </div>
 
