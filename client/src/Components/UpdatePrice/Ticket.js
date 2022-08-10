@@ -3,6 +3,7 @@ import './Ticket.css'
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import productPlaceholder from '../../Assets/productPlaceholder.png'
+import { Example } from "./PrintTest";
 
 export function Ticket(){
 
@@ -43,6 +44,34 @@ export function Ticket(){
         })
         return total
     }
+    function currentTicket(){
+        let products =  ticketProducts.map( product => {
+            return ( <div>
+                <span>
+                    {/* <img className="productImage" src={productPlaceholder }/> */}
+                    <div>
+                        <div>{product.Producto}</div>
+                        <div>{product['P. Venta']}</div>
+                        <div>{product['quantity']}</div>
+
+                    </div>
+
+                </span>
+
+            </div>)
+
+        })
+        return (<>
+            <div>
+                {products}
+            </div>
+            <div className="totalTicket">
+            {'A pagar: ' + '$' + totalTicket()}            
+        </div>
+
+        </>)
+
+    }
     return (<>
 
         <div>TICKET</div>
@@ -52,6 +81,7 @@ export function Ticket(){
         <div>
             {/* {JSON.stringify(ticketProducts)} */}
         </div>
+        <Example ticket = {currentTicket()} ></Example>
         {ticketProducts && ticketProducts.map( product => {
                 return ( <div className="catalogContainer">
                     <span className="productBg">
