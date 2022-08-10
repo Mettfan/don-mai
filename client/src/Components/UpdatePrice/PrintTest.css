@@ -1,7 +1,21 @@
 .mickeyTicket{
     width: 50px;
+    position: fixed;
+    left: 30mm;
+    top: 10mm;
 }
 .mainTicketContainer{
     width: 58mm;
     font-size: x-small;
+}
+.ticketTitle{
+    font-size: medium;
+}
+.divisorContainerStart{
+    background-color: black;
+    height: 0.5mm;
+}
+.divisorContainerEnd{
+    background-color: black;
+    height: 1mm;
 }
