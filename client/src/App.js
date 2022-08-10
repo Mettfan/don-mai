@@ -10,6 +10,7 @@ import Convert from './Components/Convert/Convert'
 import Delivery from './Components/Delivery/Delivery';
 import Catalog from './Components/Catalog/Catalog';
 import { UpdatePrice } from './Components/UpdatePrice/UpdatePrice';
+import { Example } from './Components/UpdatePrice/PrintTest';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
         <Route path ="/update/price" element={<UpdatePrice/>} />
+        <Route path ="/printest" element={<Example/>} />
       </Routes>
     </div>
   );
