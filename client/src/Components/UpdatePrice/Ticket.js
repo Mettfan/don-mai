@@ -47,21 +47,31 @@ export function Ticket(){
     function currentTicket(){
         let products =  ticketProducts.map( product => {
             return ( <div>
-                <span>
+                <table>
                     {/* <img className="productImage" src={productPlaceholder }/> */}
-                    <div>
-                        <div>{product.Producto}</div>
-                        <div>{product['P. Venta']}</div>
-                        <div>{product['quantity']}</div>
 
-                    </div>
+                    <tr>
+                        <td>{product['quantity']}</td>
+                        <td>{product.Producto}</td>
+                        <td>{product['P. Venta']}</td>
 
-                </span>
+                    </tr>
+
+                </table>
 
             </div>)
 
         })
         return (<>
+        <table>
+                <tr>
+                    <td>{'Cantidad'}</td>
+                    <td>{'Concepto'}</td>
+                    <td>{'Precio'}</td>
+                    
+                </tr>
+            
+        </table>
             <div>
                 {products}
             </div>
