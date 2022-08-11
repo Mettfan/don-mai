@@ -4,12 +4,14 @@ import Mickey from '../../Assets/Mickey.png'
 import './PrintTest.css'
 
 export const Example = (propsRoot) => {
-  let [state, setState] = useState({
-    ticketId: 0
-  })
   const date = new Date()
+  let [state, setState] = useState({
+    ticketId: 0,
+    currentDateTime: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+  })
+
   const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-  const currentDateTime = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();;
+  const currentDateTime = state.currentDateTime
   const ComponentToPrint = React.forwardRef((props, ref) => {
       return (
         <div ref={ref} className= 'mainTicketContainer' >
@@ -47,7 +49,7 @@ export const Example = (propsRoot) => {
   return (
     <div>
       <ComponentToPrint ref={componentRef} />
-      <button onClick={handlePrint}>Print this out!</button>
+      <button className="printButton" onClick={handlePrint}>Print this out!</button>
     </div>
   );
 };

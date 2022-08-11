@@ -45,35 +45,26 @@ export function Ticket(){
         return total
     }
     function currentTicket(){
-        let products =  ticketProducts.map( product => {
-            return ( <div>
-                <table>
-                    {/* <img className="productImage" src={productPlaceholder }/> */}
-
-                    <tr>
-                        <td>{product['quantity']}</td>
-                        <td>{product.Producto}</td>
-                        <td>{product['P. Venta']}</td>
-
-                    </tr>
-
-                </table>
-
-            </div>)
-
-        })
+        
         return (<>
         <table>
                 <tr>
-                    <td>{'Cantidad'}</td>
+                    <td>{'Cant.'}</td>
                     <td>{'Concepto'}</td>
                     <td>{'Precio'}</td>
                     
                 </tr>
+                {ticketProducts.map(producto => {
+                    return <tr>
+                    <td>{producto['quantity']}</td>
+                    <td>{producto.Producto.substring(0, 10) }</td>
+                    <td>{producto['P. Venta']}</td>
+
+                </tr>
+                })}
             
         </table>
             <div>
-                {products}
             </div>
             <div className="totalTicket">
             {'A pagar: ' + '$' + totalTicket()}            
@@ -83,30 +74,33 @@ export function Ticket(){
 
     }
     return (<>
+        <div className="downSearchContainer">
 
-        <div>TICKET</div>
-        <div className="totalTicket">
-            {'$' + totalTicket()}            
+            {/* <div>TICKET</div> */}
+            <div className="totalTicket">
+                {'$' + totalTicket()}            
+            </div>
+            <div>
+                {/* {JSON.stringify(ticketProducts)} */}
+            </div>
+            <Example ticket = {currentTicket()} ></Example>
+            <div className="productTicketAddedContainer">
+                {ticketProducts && ticketProducts.map( product => {
+                        return ( <div className="productTicketAdded">
+
+                                <img className="productTicketAddedImage" src={productPlaceholder }/>
+                                <div className="">
+                                    <div>{product.Producto.substring(0, 10) }</div>  
+                                    <div>{product['P. Venta']}</div>
+                                    <div>{product['quantity']}</div>
+
+                                </div>
+
+                        </div>)
+                    })}
+
+            </div>
         </div>
-        <div>
-            {/* {JSON.stringify(ticketProducts)} */}
-        </div>
-        <Example ticket = {currentTicket()} ></Example>
-        {ticketProducts && ticketProducts.map( product => {
-                return ( <div className="catalogContainer">
-                    <span className="productBg">
-                        <img className="productImage" src={productPlaceholder }/>
-                        <div className="productInfoContainer">
-                            <div>{product.Producto}</div>
-                            <div>{product['P. Venta']}</div>
-                            <div>{product['quantity']}</div>
-
-                        </div>
-
-                    </span>
-
-                </div>)
-            })}
 
 
     

@@ -7,6 +7,8 @@
 .mainTicketContainer{
     width: 58mm;
     font-size: x-small;
+    position: fixed;
+    /* bottom: 100px; */
 }
 .ticketTitle{
     font-size: medium;
@@ -18,4 +20,9 @@
 .divisorContainerEnd{
     background-color: black;
     height: 1mm;
+}
+.printButton{
+    position: fixed;
+    left: 10px;
+    bottom:50% ;
 }

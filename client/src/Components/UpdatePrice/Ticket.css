@@ -2,3 +2,21 @@
     font-size: large;
     font-weight: 600;
 }
+.downSearchContainer{
+    position: relative;
+    top: -50px;
+}
+.productTicketAddedContainer{
+    display: flex;
+    /* position: fixed; */
+    justify-content: center;
+    /* left: 50%; */
+    bottom: 30px;
+
+}
+.productTicketAddedImage{
+    width: 30px;
+}
+.productTicketAdded{
+    padding: 10px;
+}
