@@ -8,10 +8,11 @@ import { Example } from "./PrintTest";
 export function Ticket(){
 
     let [state, setState] = useState({
-        ticketProducts: []
+        ticketProducts: [],
+        ticketSelectedProduct: {}
     })
     let ticketProducts = state.ticketProducts
-
+    let selectedProductCounter = useSelector( state => state.products.productSelectedCounter)
     let selectedProduct = useSelector( state => state.products.selectedProduct)
     useEffect(()=> {
         console.log(ticketProducts);
@@ -19,7 +20,15 @@ export function Ticket(){
             addProductToTicket(selectedProduct)
 
         }
+
     }, [selectedProduct])
+    useEffect(()=> {
+        setState({
+            ...state,
+            ticketSelectedProduct: ticketProducts[selectedProductCounter]
+        })
+
+    }, [selectedProductCounter])
     function addProductToTicket ( product ) {
         if(product){
 
@@ -98,9 +107,10 @@ export function Ticket(){
 
                         </div>)
                     })}
-
+                
             </div>
         </div>
+        <div>{JSON.stringify(state.ticketSelectedProduct)}</div>
 
 
     

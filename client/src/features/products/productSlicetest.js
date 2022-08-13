@@ -6,7 +6,18 @@ export const productSlicetest = createSlice({
         loading: false,
         products: [],
         selectedProduct: {},
+        productSelectedCounter: 0,
         error: ''
+    },
+    reducers: {
+        nextProduct: (state) => {
+            state.productSelectedCounter += 1
+            console.log("Next!");
+        },
+        previousProduct: (state) => {
+            state.productSelectedCounter -= 1
+            console.log("Previous!");
+        }
     },
     extraReducers: builder => {
         builder.addCase(fetchProducts.pending, state => {
@@ -28,7 +39,7 @@ export const productSlicetest = createSlice({
         })
         builder.addCase(fetchProduct.fulfilled, (state, action) => {
             state.loading = false
-            state.selectedProduct = action.payload
+            state.selectedProduct = {...action.payload, selected: false, quantity: 0}
             state.error = ''
         })
         builder.addCase(fetchProduct.rejected, (state, action) => {
@@ -50,7 +61,7 @@ const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value})
     return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}`)
     .then( response => response.data)
 })
-
+export const { nextProduct, previousProduct } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
 export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct

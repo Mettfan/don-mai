@@ -15,7 +15,7 @@ import {
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
-import { fetchAllProducts, fetchOneProduct } from '../../features/products/productSlicetest';
+import { fetchAllProducts, fetchOneProduct, nextProduct, previousProduct } from '../../features/products/productSlicetest';
 // import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
   let cookie = new Cookies()
@@ -33,14 +33,14 @@ export function Counter() {
   // const selectedProduct = useSelector( state => state.products.selectedProduct)
   // const product = useSelector(productSelector(count || 1));
   const dispatch = useDispatch();
-
+  let selectedProductCounter = useSelector( state => state.products.productSelectedCounter)
   function pp () {
     console.log('previousPage');
-    dispatch(fetchOneProduct(Number(selectedProduct) - 1))
+    dispatch(previousProduct())
   }
   function np () {
     console.log('nextPage');
-    dispatch(fetchOneProduct(Number(selectedProduct) + 1))
+    dispatch(nextProduct())
   }
   
   async function handleOnChange (e){
@@ -103,7 +103,7 @@ export function Counter() {
                   { productState?.products?.selectedProduct['id']}
                 </div>
               </div>
-              {JSON.stringify(productState.products.selectProduct)}
+              {/* {JSON.stringify(productState.products.selectedProduct)} */}
             </div>
           <button
             className={styles.buttonadd}
@@ -134,7 +134,7 @@ export function Counter() {
               />
               
           </form>
-
+          {JSON.stringify(selectedProductCounter)}
 
         </div>
       </div>
