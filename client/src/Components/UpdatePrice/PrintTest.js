@@ -41,9 +41,13 @@ export const Example = (propsRoot) => {
         </div>
       );
     });
+    function handleOnAfterPrint (){
+      window.location.reload()
+    }
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    onAfterPrint: () => {handleOnAfterPrint()}
   });
 
   return (
