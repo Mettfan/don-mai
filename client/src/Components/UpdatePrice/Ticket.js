@@ -1,19 +1,23 @@
 import React, { useEffect } from "react";
 import './Ticket.css'
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { Example } from "./PrintTest";
+import { addProductToGlobalTicket } from "../../features/products/productSlicetest";
 
 export function Ticket(){
 
     let [state, setState] = useState({
         ticketProducts: [],
-        ticketSelectedProduct: {}
+        ticketSelectedProduct: {},
+        total: 0
     })
-    let ticketProducts = state.ticketProducts
+    let dispatch = useDispatch()
+    let ticketProducts = useSelector( state => state.products.ticketProducts)
     let selectedProductCounter = useSelector( state => state.products.productSelectedCounter)
     let selectedProduct = useSelector( state => state.products.selectedProduct)
+    let globalTicket = useSelector( state => state.products.ticketProducts)
     useEffect(()=> {
         console.log(ticketProducts);
         if(selectedProduct['P. Venta']){
@@ -32,26 +36,23 @@ export function Ticket(){
     function addProductToTicket ( product ) {
         if(product){
 
-            if(ticketProducts.find( listedProduct => product.id == listedProduct.id )){
-                console.log('Ya existe');
-            }
-            else{
-                setState({
-                    ...state,
-                    ticketProducts: [...state.ticketProducts, product]
-                })
-
-            }
-
-
+            dispatch(addProductToGlobalTicket(product))
+            setState({
+                ...state,
+                total: state.total + Number(product['P. Venta'].slice(1) )
+            })
+  
         }
     }
     function totalTicket(){
         let total = 0;
-        ticketProducts.forEach( (product) => {
-            total += Number(product['P. Venta'].slice(1))
+        globalTicket['P. Venta'] && globalTicket.forEach( (product) => {
+            total += Number(product['P. Venta'].slice(1)*product?.quantity)
         })
-        return total
+        setState({
+            ...state,
+            total: total
+        })
     }
     function currentTicket(){
         
@@ -65,9 +66,9 @@ export function Ticket(){
                 </tr>
                 {ticketProducts.map(producto => {
                     return <tr>
-                    <td>{producto['quantity']}</td>
-                    <td>{producto.Producto.substring(0, 10) }</td>
-                    <td>{producto['P. Venta']}</td>
+                    <td>{producto?.quantity}</td>
+                    <td>{producto?.Producto.substring(0, 10) }</td>
+                    <td>{producto['P. Venta'] && producto['P. Venta']}</td>
 
                 </tr>
                 })}
@@ -76,7 +77,7 @@ export function Ticket(){
             <div>
             </div>
             <div className="totalTicket">
-            {'A pagar: ' + '$' + totalTicket()}            
+            {'A pagar: ' + '$' + state.total}            
         </div>
 
         </>)
@@ -87,7 +88,7 @@ export function Ticket(){
 
             {/* <div>TICKET</div> */}
             <div className="totalTicket">
-                {'$' + totalTicket()}            
+                {'$' + state.total}            
             </div>
             <div>
                 {/* {JSON.stringify(ticketProducts)} */}
@@ -111,6 +112,7 @@ export function Ticket(){
             </div>
         </div>
         <div>{JSON.stringify(state.ticketSelectedProduct)}</div>
+        <div>{JSON.stringify(globalTicket)}</div>
 
 
     

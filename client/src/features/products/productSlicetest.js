@@ -7,6 +7,8 @@ export const productSlicetest = createSlice({
         products: [],
         selectedProduct: {},
         productSelectedCounter: 0,
+        ticketProducts: [],
+        totalTicket: 0,
         error: ''
     },
     reducers: {
@@ -17,6 +19,30 @@ export const productSlicetest = createSlice({
         previousProduct: (state) => {
             state.productSelectedCounter -= 1
             console.log("Previous!");
+        },
+        addProductToGlobalTicket: ( state, action) => {
+            
+
+
+            if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
+                console.log('Ya existe');
+                state.ticketProducts =  state.ticketProducts.map( producto => {
+                        if(action.payload.id == producto.id){
+                            return {...producto, ['quantity']: producto.quantity + 1 }
+                        }
+                        else{
+                            return producto
+                        }
+                    })
+                
+            }
+            else{
+                state.ticketProducts = [...state.ticketProducts, action.payload]
+                console.log('Product added: ' + JSON.stringify(action.payload));
+
+            }
+
+
         }
     },
     extraReducers: builder => {
@@ -39,7 +65,7 @@ export const productSlicetest = createSlice({
         })
         builder.addCase(fetchProduct.fulfilled, (state, action) => {
             state.loading = false
-            state.selectedProduct = {...action.payload, selected: false, quantity: 0}
+            state.selectedProduct = {...action.payload, selected: false, quantity: 1}
             state.error = ''
         })
         builder.addCase(fetchProduct.rejected, (state, action) => {
@@ -61,7 +87,7 @@ const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value})
     return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}`)
     .then( response => response.data)
 })
-export const { nextProduct, previousProduct } = productSlicetest.actions
+export const { nextProduct, previousProduct, addProductToGlobalTicket } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
 export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct
