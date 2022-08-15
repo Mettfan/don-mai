@@ -20,3 +20,8 @@
 .productTicketAdded{
     padding: 10px;
 }
+.paymentInput{
+    position: fixed;
+    top: 50%;
+    right: 0px;
+}

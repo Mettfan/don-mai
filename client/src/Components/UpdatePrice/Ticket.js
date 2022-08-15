@@ -11,7 +11,9 @@ export function Ticket(){
     let [state, setState] = useState({
         ticketProducts: [],
         ticketSelectedProduct: {},
-        total: 0
+        total: 0,
+        change: 0,
+        payment: 0
     })
     let dispatch = useDispatch()
     let ticketProducts = useSelector( state => state.products.ticketProducts)
@@ -74,14 +76,35 @@ export function Ticket(){
                 })}
             
         </table>
-            <div>
-            </div>
             <div className="totalTicket">
             {'A pagar: ' + '$' + state.total}            
+            <div>
+                {'Pagado: ' + '$' + state.payment}
+            </div>
+            <div>
+                {'Cambio: ' + '$' + state.change}
+            </div>
         </div>
 
         </>)
 
+    }
+    function calculateChange(payingQuantity){
+        setState({
+            ...state,
+            change: state.total - payingQuantity
+        })
+        
+    }
+    function handleInputPaymentOnChange(e){
+        setState({
+            ...state,
+            payment: e.target.value
+        })
+    }
+    function handlePaymentOnSubmit(e){
+        e?.preventDefault && e.preventDefault()
+        calculateChange(state.payment)
     }
     return (<>
         <div className="downSearchContainer">
@@ -93,7 +116,7 @@ export function Ticket(){
             <div>
                 {/* {JSON.stringify(ticketProducts)} */}
             </div>
-            <Example ticket = {currentTicket()} ></Example>
+            <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} ></Example>
             <div className="productTicketAddedContainer">
                 {ticketProducts && ticketProducts.map( product => {
                         return ( <div className="productTicketAdded">
@@ -111,9 +134,16 @@ export function Ticket(){
                 
             </div>
         </div>
-        <div>{JSON.stringify(state.ticketSelectedProduct)}</div>
-        <div>{JSON.stringify(globalTicket)}</div>
+        <div className="paymentInput">
+            <form onSubmit={(e) => handlePaymentOnSubmit(e)}>
+                <input placeholder="Paying with: " onChange={(e) => handleInputPaymentOnChange(e)} /> 
 
+            </form>
+            {state.change}
+        </div>
+        {/* <div>{JSON.stringify(state.ticketSelectedProduct)}</div> */}
+        {/* <div>{JSON.stringify(globalTicket)}</div> */}
+        
 
     
     </>)
