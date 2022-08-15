@@ -43,6 +43,30 @@ export const productSlicetest = createSlice({
             }
 
 
+        },
+        removeProductFromGlobalTicket: ( state, action) => {
+            
+
+
+            if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
+                console.log('Ya existe');
+                state.ticketProducts =  state.ticketProducts.map( producto => {
+                        if(action.payload.id == producto.id){
+                            return {...producto, ['quantity']: producto.quantity - 1 }
+                        }
+                        else{
+                            return producto
+                        }
+                    })
+                
+            }
+            else{
+
+                console.log('Product currently inexistent: ' + JSON.stringify(action.payload));
+
+            }
+
+
         }
     },
     extraReducers: builder => {
@@ -87,7 +111,7 @@ const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value})
     return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}`)
     .then( response => response.data)
 })
-export const { nextProduct, previousProduct, addProductToGlobalTicket } = productSlicetest.actions
+export const { nextProduct, previousProduct, addProductToGlobalTicket, removeProductFromGlobalTicket } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
 export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct

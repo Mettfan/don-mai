@@ -25,3 +25,11 @@
     top: 50%;
     right: 0px;
 }
+.productTicketAddedContainer{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 3px;
+    border-width: 1px;
+    border-color: blue;
+    background-color: #FFD449;
+}

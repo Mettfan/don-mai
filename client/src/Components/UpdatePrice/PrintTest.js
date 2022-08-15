@@ -51,7 +51,7 @@ export const Example = (propsRoot) => {
   });
 
   return (
-    <div>
+    <div>  
       <ComponentToPrint ref={componentRef} />
       <button className="printButton" onClick={handlePrint}>Print this out!</button>
     </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { Example } from "./PrintTest";
-import { addProductToGlobalTicket } from "../../features/products/productSlicetest";
+import { addProductToGlobalTicket, removeProductFromGlobalTicket } from "../../features/products/productSlicetest";
 
 export function Ticket(){
 
@@ -43,6 +43,22 @@ export function Ticket(){
                 ...state,
                 total: state.total + Number(product['P. Venta'].slice(1) )
             })
+  
+        }
+    }
+    function removeProductFromTicket ( product ) {
+        if(product){
+
+            dispatch(removeProductFromGlobalTicket(product))
+            
+
+            setState({
+                ...state,
+                total: state.total - Number(product['P. Venta'].slice(1) )
+            })
+
+            
+            
   
         }
     }
@@ -116,11 +132,14 @@ export function Ticket(){
             <div>
                 {/* {JSON.stringify(ticketProducts)} */}
             </div>
-            <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} ></Example>
+            <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} showTicket = {true} ></Example>
             <div className="productTicketAddedContainer">
                 {ticketProducts && ticketProducts.map( product => {
-                        return ( <div className="productTicketAdded">
+                        return (<div className="productTicketAddedContainer">
 
+                        
+                        <button onClick={() => { removeProductFromTicket(product) }}>-</button>
+                        <div className="productTicketAdded">
                                 <img className="productTicketAddedImage" src={productPlaceholder }/>
                                 <div className="">
                                     <div>{product.Producto.substring(0, 10) }</div>  
@@ -129,6 +148,8 @@ export function Ticket(){
 
                                 </div>
 
+                        </div>
+                        <button onClick={() => { addProductToTicket(product) }}>+</button>
                         </div>)
                     })}
                 
