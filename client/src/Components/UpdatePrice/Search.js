@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getProduct } from "../../Components/counter/counterSlice";
+import { getProduct } from "../counter/counterSlice";
 import { useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { Counter } from "../counter/Counter";
 import { Ticket } from "./Ticket";
-export function UpdatePrice(){
+export function Search(){
 
     let cookie = new Cookies()
     // let currentProduct = cookie.get('currentProduct')

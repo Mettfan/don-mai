@@ -24,6 +24,7 @@
   padding-right: 16px;
   margin-top: 2px;
   font-family: 'Courier New', Courier, monospace;
+  font-size: x-large;
 }
 
 .button {
@@ -115,4 +116,9 @@
   width: 0%;
   opacity: 1;
   transition: 0s;
+}
+.inputSearch{
+  position: fixed;
+  top: 80px;
+  left: 40%;
 }

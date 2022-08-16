@@ -43,6 +43,7 @@ export function Ticket(){
                 ...state,
                 total: state.total + Number(product['P. Venta'].slice(1) )
             })
+            // calculateChange()
   
         }
     }
@@ -56,6 +57,7 @@ export function Ticket(){
                 ...state,
                 total: state.total - Number(product['P. Venta'].slice(1) )
             })
+            // calculateChange()
 
             
             
@@ -129,7 +131,7 @@ export function Ticket(){
         <div className="downSearchContainer">
 
             {/* <div>TICKET</div> */}
-            <div className="totalTicket">
+            <div className="totalTicketCalculated">
                 {'$' + state.total}            
             </div>
             <div>
@@ -139,12 +141,12 @@ export function Ticket(){
 
             <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} showTicket = {true} ></Example>
             </div>
-            <div className="productTicketAddedContainer" >
+            <div className="productTicketContainer" >
                 {ticketProducts && ticketProducts.map( product => {
                         return (<div className="productTicketAddedContainer">
 
                         
-                        <button onClick={() => { removeProductFromTicket(product) }}>-</button>
+                        <button className="buttonRemoveProduct" onClick={() => { removeProductFromTicket(product) }}>-</button>
                         <div className="productTicketAdded">
                                 <img className="productTicketAddedImage" src={productPlaceholder }/>
                                 <div className="">
@@ -155,7 +157,7 @@ export function Ticket(){
                                 </div>
 
                         </div>
-                        <button onClick={() => { addProductToTicket(product) }}>+</button>
+                        <button className="buttonAddProduct" onClick={() => { addProductToTicket(product) }}>+</button>
                         </div>)
                     })}
                 

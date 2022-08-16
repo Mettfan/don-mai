@@ -9,9 +9,20 @@ export const productSlicetest = createSlice({
         productSelectedCounter: 0,
         ticketProducts: [],
         totalTicket: 0,
+        counterId: 0,
+        response: '',
         error: ''
     },
     reducers: {
+        counterIncrement: (state) => {
+            state.counterId += 1
+        },
+        counterDecrement: (state) => {
+            if(state.counterId > 0){
+                state.counterId -= 1
+
+            }
+        },
         nextProduct: (state) => {
             if(state.productSelectedCounter < state.ticketProducts.length - 1){
                 state.productSelectedCounter += 1
@@ -104,6 +115,20 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
         })
 
+        builder.addCase(editProduct.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(editProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(editProduct.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+
 
     }
 })
@@ -117,7 +142,17 @@ const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value})
     return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}`)
     .then( response => response.data)
 })
-export const { nextProduct, previousProduct, addProductToGlobalTicket, removeProductFromGlobalTicket } = productSlicetest.actions
+const editProduct = createAsyncThunk('products/editProduct', ({id, findBy, infoUpdated}) => {
+    // console.log(value);
+    return axios.put(`http://localhost:3001/products/update`, {
+        id,
+        findBy,
+        infoUpdated
+    })
+    .then( response => response.data)
+})
+export const { nextProduct, previousProduct, addProductToGlobalTicket, removeProductFromGlobalTicket, counterDecrement, counterIncrement } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
 export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct
+export const editOneProduct = editProduct

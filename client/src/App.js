@@ -9,8 +9,9 @@ import Sell from './Components/Sell/Sell';
 import Convert from './Components/Convert/Convert'
 import Delivery from './Components/Delivery/Delivery';
 import Catalog from './Components/Catalog/Catalog';
-import { UpdatePrice } from './Components/UpdatePrice/UpdatePrice';
+import { Search } from './Components/UpdatePrice/Search';
 import { Example } from './Components/UpdatePrice/PrintTest';
+import UpdatePrice from './Components/UpdatePrice/UpdatePrice/UpdatePrice';
 
 function App() {
 
@@ -26,8 +27,9 @@ function App() {
         <Route path ="/convert" element={<Convert></Convert>} />
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
-        <Route path ="/update/price" element={<UpdatePrice/>} />
+        <Route path ="/search" element={<Search/>} />
         <Route path ="/printest" element={<Example/>} />
+        <Route path ="/update/price" element={<UpdatePrice/>} />
       </Routes>
     </div>
   );

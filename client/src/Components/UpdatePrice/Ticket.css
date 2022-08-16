@@ -1,6 +1,14 @@
+.totalTicketCalculated{
+    font-size: xx-large ;
+    font-weight: 600;
+    position: fixed;
+    right: 50px;
+    top: 100px;
+}
 .totalTicket{
     font-size: large;
     font-weight: 600;
+
 }
 .downSearchContainer{
     position: relative;
@@ -19,6 +27,7 @@
 }
 .productTicketAdded{
     padding: 10px;
+    background-color: orange;
 }
 .paymentInput{
     position: fixed;
@@ -29,11 +38,35 @@
     display: flex;
     flex-wrap: wrap;
     margin: 3px;
-    border-width: 1px;
-    border-color: blue;
+    /* border-width: 1px;
+    border-color: blue; */
     background-color: #FFD449;
+    position: relative;
 }
 .ticketContainer{
     position: fixed;
     top: 65px
+}
+
+.buttonRemoveProduct{
+    background-color: orangered;
+}
+.buttonAddProduct{
+    background-color: greenyellow;
+
+}
+.productTicketContainer{
+    display: flex;
+    position: fixed;
+    right: 0px;
+    bottom: 3%;
+}
+@media (max-width: 800px ){
+    .ticketContainer{
+        display: none;
+    }
+    .totalTicketCalculated{
+        top: 50%;
+        left: 20%;
+    }
 }

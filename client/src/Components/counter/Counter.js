@@ -117,26 +117,28 @@ export function Counter() {
         <div className={styles.row}>
 
           <form onSubmit={(e) => onSearch(e)} autoComplete={'on'}>
+            <div className={styles.inputSearch}>
+              {JSON.stringify(selectedProductCounter)}
+              <input
 
-            <input
-              className={'inputSearch'}
-              aria-label="Set increment amount"
-              id={'inputBarcode'}
-              onChange={(e) => {handleOnChange(e)}}
-              autoFocus={true}
-              onKeyDown={(e) => {handleKeyPress(e)}}
-              autoComplete={false}
-              />  
-            <input
-              type={'submit'}
-              value={'BUSCAR'}
-              className={'searchButton'}
-              
-              // onClick = {() => {searchProduct('70707070')}}
-              />
+                aria-label="Set increment amount"
+                id={'inputBarcode'}
+                onChange={(e) => {handleOnChange(e)}}
+                autoFocus={true}
+                onKeyDown={(e) => {handleKeyPress(e)}}
+                autoComplete={false}
+                />  
+              <input
+                type={'submit'}
+                value={'BUSCAR'}
+                className={'searchButton'}
+                
+                // onClick = {() => {searchProduct('70707070')}}
+                />
+
+            </div>
               
           </form>
-          {JSON.stringify(selectedProductCounter)}
 
         </div>
       </div>
