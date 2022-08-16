@@ -1,13 +1,15 @@
 .mickeyTicket{
     width: 50px;
-    position: fixed;
-    left: 30mm;
-    top: 10mm;
+    position: relative;
+    left: 35mm;
+    bottom: 20mm;
 }
 .mainTicketContainer{
+    display: flex;
+    flex-direction: column;
     width: 58mm;
     font-size: x-small;
-    position: fixed;
+    position: relative;
 }
 .ticketTitle{
     font-size: medium;
@@ -22,6 +24,11 @@
 }
 .printButton{
     position: fixed;
-    left: 10px;
+    right: 10px;
     bottom:50% ;
+}
+.informacionFiscal{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }

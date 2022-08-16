@@ -113,15 +113,18 @@ export function Ticket(){
         
     }
     function handleInputPaymentOnChange(e){
+        
         setState({
             ...state,
             payment: e.target.value
         })
+        // calculateChange(e.target.value)
     }
     function handlePaymentOnSubmit(e){
         e?.preventDefault && e.preventDefault()
         calculateChange(state.payment)
     }
+   
     return (<>
         <div className="downSearchContainer">
 
@@ -132,8 +135,11 @@ export function Ticket(){
             <div>
                 {/* {JSON.stringify(ticketProducts)} */}
             </div>
+            <div className="ticketContainer">
+
             <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} showTicket = {true} ></Example>
-            <div className="productTicketAddedContainer">
+            </div>
+            <div className="productTicketAddedContainer" >
                 {ticketProducts && ticketProducts.map( product => {
                         return (<div className="productTicketAddedContainer">
 

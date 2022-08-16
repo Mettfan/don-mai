@@ -80,13 +80,13 @@ export function Counter() {
     
       <div>
         <div className={styles.row}>
-          <button
+          {/* <button
             className={styles.buttondecrement}
             aria-label="Decrement value"
             onClick={() => pp()}
           >
             -
-          </button>
+          </button> */}
             
             <div className='valueRow'>
               <div className={styles.value}>
@@ -105,30 +105,32 @@ export function Counter() {
               </div>
               {/* {JSON.stringify(productState.products.selectedProduct)} */}
             </div>
-          <button
+          {/* <button
             className={styles.buttonadd}
             aria-label="Increment value"
             onClick={() => np()}
             onKeyDown = { (e) => handleKeyPress(e)}
           >
             +
-          </button>
+          </button> */}
         </div>
         <div className={styles.row}>
 
-          <form onSubmit={(e) => onSearch(e)}>
+          <form onSubmit={(e) => onSearch(e)} autoComplete={'on'}>
 
             <input
-              className={styles.textbox}
+              className={'inputSearch'}
               aria-label="Set increment amount"
               id={'inputBarcode'}
               onChange={(e) => {handleOnChange(e)}}
               autoFocus={true}
+              onKeyDown={(e) => {handleKeyPress(e)}}
+              autoComplete={false}
               />  
             <input
               type={'submit'}
               value={'BUSCAR'}
-              className={styles.button}
+              className={'searchButton'}
               
               // onClick = {() => {searchProduct('70707070')}}
               />

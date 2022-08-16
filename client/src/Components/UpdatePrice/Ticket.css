@@ -33,3 +33,7 @@
     border-color: blue;
     background-color: #FFD449;
 }
+.ticketContainer{
+    position: fixed;
+    top: 65px
+}

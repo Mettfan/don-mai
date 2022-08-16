@@ -15,7 +15,7 @@ export const Example = (propsRoot) => {
   const ComponentToPrint = React.forwardRef((props, ref) => {
       return (
         <div ref={ref} className= 'mainTicketContainer' >
-          <div>
+          <div className="informacionFiscal">
             
             <b className="ticketTitle" >'Tiendas Don May'</b>
             <div>Miguel Torres Colindres</div>
@@ -53,7 +53,7 @@ export const Example = (propsRoot) => {
   return (
     <div>  
       <ComponentToPrint ref={componentRef} />
-      <button className="printButton" onClick={handlePrint}>Print this out!</button>
+      <button className="printButton" onClick={handlePrint}>PrintTicket</button>
     </div>
   );
 };

@@ -13,11 +13,17 @@ export const productSlicetest = createSlice({
     },
     reducers: {
         nextProduct: (state) => {
-            state.productSelectedCounter += 1
+            if(state.productSelectedCounter < state.ticketProducts.length - 1){
+                state.productSelectedCounter += 1
+
+            } 
             console.log("Next!");
         },
         previousProduct: (state) => {
-            state.productSelectedCounter -= 1
+            if(state.productSelectedCounter > 0){
+                state.productSelectedCounter -= 1
+
+            } 
             console.log("Previous!");
         },
         addProductToGlobalTicket: ( state, action) => {
