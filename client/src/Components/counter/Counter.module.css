@@ -95,7 +95,7 @@
 }
 
 .asyncButton {
-  composes: button;
+  /* composes: button; */
   position: relative;
 }
 
