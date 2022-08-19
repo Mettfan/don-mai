@@ -1,8 +1,8 @@
 .mickeyTicket{
     width: 50px;
-    position: relative;
-    left: 35mm;
-    bottom: 20mm;
+    position: absolute;
+    right: 15mm;
+    bottom: 50mm;
 }
 .mainTicketContainer{
     display: flex;
