@@ -10,7 +10,10 @@ export default function UpdatePrice(){
         priceInput: null,
         Producto: '',
         id: null,
-        ['P. Venta']: null
+        ['P. Venta']: null,
+        lastDayUpdated: '',
+        lastMonthUpdated: '',
+        lastYearUpdated: '',
     })
     let idInput = state.idInput
     let nameInput = state.Producto
@@ -22,6 +25,14 @@ export default function UpdatePrice(){
     useEffect(()=>{
         getProduct(counterId)
     }, [counterId])
+    useEffect(()=>{
+        setState({
+            ...state,
+            lastDayUpdated: Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[2]),
+            lastMonthUpdated: Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[1]),
+            lastYearUpdated: Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[0])
+        })
+    }, [selectedProduct])
     function getProduct(id){
         dispatch( fetchOneProduct({filter: 'id', value: id})  )
 
@@ -49,6 +60,36 @@ export default function UpdatePrice(){
 
         })
     }
+    function checkIfProductIsUpdated(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay){
+        console.log(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay );
+        let sinceMonth = currentMonth - lastUpdatedMonth
+        
+        let sinceDay = currentDay - lastUpdatedDay
+        let updatedMessage = <div>
+
+            {'Producto Actualizado hace '} <span style={ {
+                backgroundColor: sinceMonth !== 0 ? 'red' : 'green',
+                color: 'white',
+                padding: '3px'
+            
+            
+            } }>{sinceMonth}</span> {' meses y '} <span  style={ {
+                backgroundColor: sinceDay >= 12 ? 'orange' : 'green',
+                color: 'white',
+                padding: '3px'
+                } }>{sinceDay}</span> {' días'}
+
+        </div>
+        if(sinceMonth > 0){
+            return 'Producto Desactualizado'
+        }
+        else{
+            return updatedMessage
+
+        }
+        
+    }   
+    
     return (<>
         <form onSubmit={(e) => {handleOnSubmit(e)}}>
             <input name="idInput" type={'text'} placeholder={'ID'} onChange= {(e) => {handleInputOnChange(e)}} ></input>
@@ -90,16 +131,16 @@ export default function UpdatePrice(){
             <div>
                 <div>Ultima vez Actualizado: </div>
                     <div>
-                        {selectedProduct && 'Día: ' + Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[2])}
+                        {selectedProduct && 'Día: ' + state.lastDayUpdated }
                     </div>
                     <div>
-                        { selectedProduct && 'Mes: ' + Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[1])}
+                        { selectedProduct && 'Mes: ' + state.lastMonthUpdated}
                     </div>
                     <div>
-                        { selectedProduct &&  'Año: ' + Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[0])}
+                        { selectedProduct &&  'Año: ' + state.lastYearUpdated}
                     </div>
                 <div>
-                    {todaysDate.getMonth()+1 > Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[1]) ? 'Producto Desactualizado' : 'Producto Actualizado'   }
+                    {checkIfProductIsUpdated(state.lastMonthUpdated, state.lastDayUpdated, todaysDate.getMonth()+1, todaysDate.getDate())}
                 </div>
             </div>
             <button onClick={() => {incrementCounter() }}>
