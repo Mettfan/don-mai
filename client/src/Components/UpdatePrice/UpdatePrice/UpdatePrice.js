@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { counterDecrement, counterIncrement, editOneProduct, fetchOneProduct } from "../../../features/products/productSlicetest";
-
+import './UpdatePrice.css'
+import Catalog from "../../Catalog/Catalog";
+import Draggable from 'react-draggable'
 export default function UpdatePrice(){
     let todaysDate = new Date()
     let [state, setState] = useState({
@@ -24,6 +26,8 @@ export default function UpdatePrice(){
     let counterId = useSelector(state => state.products.counterId)
     useEffect(()=>{
         getProduct(counterId)
+        document.getElementById('price').focus()
+        document.getElementById('price').value = null
     }, [counterId])
     useEffect(()=>{
         setState({
@@ -48,6 +52,7 @@ export default function UpdatePrice(){
         })
     }
     function incrementCounter(){
+        
         dispatch(counterIncrement())
     }
     function decrementCounter(){
@@ -55,8 +60,8 @@ export default function UpdatePrice(){
     }
     function handleOnEdit(e, findBy){
         e.preventDefault && e.preventDefault()
-        dispatch(editOneProduct({id: counterId, findBy: e.target.name, infoUpdated: state[e.target.name] })).then(()=>{
-            getProduct(counterId)
+        dispatch(editOneProduct({id: selectedProduct.id, findBy: e.target.name, infoUpdated: state[e.target.name] })).then(()=>{
+            getProduct(selectedProduct.id)
 
         })
     }
@@ -74,7 +79,7 @@ export default function UpdatePrice(){
             
             
             } }>{sinceMonth}</span> {' meses y '} <span  style={ {
-                backgroundColor: sinceDay >= 12 ? 'orange' : 'green',
+                backgroundColor: sinceDay >= 12 ? sinceDay >=20 ? 'red' : 'orange' : 'green',
                 color: 'white',
                 padding: '3px'
                 } }>{sinceDay}</span> {' días'}
@@ -89,71 +94,86 @@ export default function UpdatePrice(){
         }
         
     }   
+    function handleKeyPress(e){
+        let keyCode = e.keyCode
+        if(keyCode === 37){
+            decrementCounter()
+        }
+        if(keyCode === 39){
+            incrementCounter()
+        }
+        console.log(e.keyCode);
+    }
     
     return (<>
-        <form onSubmit={(e) => {handleOnSubmit(e)}}>
-            <input name="idInput" type={'text'} placeholder={'ID'} onChange= {(e) => {handleInputOnChange(e)}} ></input>
-        </form>
-        <div>
-            {idInput}
-        </div>
-        <div>
-            {nameInput}
-        </div>
-        <div>
-            {priceInput}
-        </div>
-        <div>
-            <button onClick={() => {decrementCounter() }}>
-                -
-            </button>
-            <div>
-                {selectedProduct.Producto}
-                <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
-                    <input placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
+        <Draggable>
+            <div className="editProductContainer">
+                <form onSubmit={(e) => {handleOnSubmit(e)}}>
+                    <input name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
                 </form>
-                
-            </div>
-            <div>
-                {selectedProduct['P. Venta']}
-                <form name="P. Venta" onSubmit={(e)=> {handleOnEdit(e, 'P. Venta')}}>
-                    <input placeholder="Nuevo Precio" name="P. Venta" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
-                </form>
-
-            </div>
-            <div>
-                {selectedProduct['Departamento']}
-                <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
-                    <input placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
-                </form>
-
-            </div>
-            <div>
-                <div>Ultima vez Actualizado: </div>
-                    <div>
-                        {selectedProduct && 'Día: ' + state.lastDayUpdated }
-                    </div>
-                    <div>
-                        { selectedProduct && 'Mes: ' + state.lastMonthUpdated}
-                    </div>
-                    <div>
-                        { selectedProduct &&  'Año: ' + state.lastYearUpdated}
-                    </div>
+                {/* <div>
+                    {idInput}
+                </div>
                 <div>
-                    {checkIfProductIsUpdated(state.lastMonthUpdated, state.lastDayUpdated, todaysDate.getMonth()+1, todaysDate.getDate())}
+                    {nameInput}
+                </div>
+                <div>
+                    {priceInput}
+                </div> */}
+                <div>
+                    <button className="previousProductToCheck" onClick={() => {decrementCounter() }}>
+                        {'←'}
+                    </button>
+                    <div>
+                        {selectedProduct.Producto}
+                        <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
+                            <input placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
+                        </form>
+                        
+                    </div>
+                    <div>
+                        {selectedProduct['P. Venta']}
+                        <form name="P. Venta" onSubmit={(e)=> {handleOnEdit(e, 'P. Venta')}}>
+                            <input id="price" placeholder="Nuevo Precio" name="P. Venta" type={'number'} onChange={(e)=> handleInputOnChange(e)} autofocus='autofocus' onKeyDown={(e)=>{handleKeyPress(e) }}  />
+                        </form>
+
+                    </div>
+                    <div>
+                        {selectedProduct['Departamento']}
+                        <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
+                            <input placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
+                        </form>
+
+                    </div>
+                    <div>
+                        {/* <div>Ultima vez Actualizado: </div> */}
+                            {/* <div>
+                                {selectedProduct && 'Día: ' + state.lastDayUpdated }
+                            </div>
+                            <div>
+                                { selectedProduct && 'Mes: ' + state.lastMonthUpdated}
+                            </div>
+                            <div>
+                                { selectedProduct &&  'Año: ' + state.lastYearUpdated}
+                            </div> */}
+                        <div>
+                            {checkIfProductIsUpdated(state.lastMonthUpdated, state.lastDayUpdated, todaysDate.getMonth()+1, todaysDate.getDate())}
+                        </div>
+                    </div>
+                    <button className="nextProductToCheck" onClick={() => {incrementCounter() }}>
+                        {'→'}
+                    </button>
+                    <div>
+                        
+                        {counterId}
+                    </div>
+                    <div>
+                        {/* {JSON.stringify(globalState)} */}
+
+                    </div>
                 </div>
             </div>
-            <button onClick={() => {incrementCounter() }}>
-                +
-            </button>
-            <div>
-                
-                {counterId}
-            </div>
-            <div>
-                {JSON.stringify(globalState)}
-
-            </div>
-        </div>
+        </Draggable>
+        <Catalog editmode={true}></Catalog>
     </>)
 }

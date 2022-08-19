@@ -6,7 +6,8 @@ import { getProducts } from "../../redux/actions/productActions";
 import { fetchAllProducts } from "../../redux/slices/products/product";
 import { fetchAllProducts  as fetchProducts } from '../../features/products/productSlicetest';
 import productPlaceholder from '../../Assets/productPlaceholder.png'
-export default function Catalog (){
+export default function Catalog (props){
+    let editMode = props.editmode
     const productState = useSelector( state => state)
     const productList = productState.products.products
     let cookie = new Cookies()
@@ -41,7 +42,7 @@ export default function Catalog (){
                         <div className="productInfoContainer">
                             <div>{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
-
+                            {editMode && <div>{product.id}</div>}
                         </div>
 
                     </span>
