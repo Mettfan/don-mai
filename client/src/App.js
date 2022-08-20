@@ -12,6 +12,7 @@ import Catalog from './Components/Catalog/Catalog';
 import { Search } from './Components/UpdatePrice/Search';
 import { Example } from './Components/UpdatePrice/PrintTest';
 import UpdatePrice from './Components/UpdatePrice/UpdatePrice/UpdatePrice';
+import Calculator from './Components/Calculator/Calculator';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path ="/search" element={<Search/>} />
         <Route path ="/printest" element={<Example/>} />
         <Route path ="/update/price" element={<UpdatePrice/>} />
+        <Route path ="/calculator" element={<Calculator/>} />
       </Routes>
     </div>
   );

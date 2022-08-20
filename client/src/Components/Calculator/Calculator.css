@@ -1,0 +1,13 @@
+.calculatorContainer{
+    background-color: rgb(184, 138, 22, 0.5);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap ;
+    width: 200px;
+    position: fixed;
+    height: 75px;
+    padding: 10px;
+}
+.calculatorTitle{
+    font-size: x-small;
+}

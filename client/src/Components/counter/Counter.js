@@ -118,7 +118,7 @@ export function Counter() {
 
           <form onSubmit={(e) => onSearch(e)} autoComplete={'on'}>
             <div className={styles.inputSearch}>
-              {JSON.stringify(selectedProductCounter)}
+              {/* {JSON.stringify(selectedProductCounter)} */}
               <input
 
                 aria-label="Set increment amount"

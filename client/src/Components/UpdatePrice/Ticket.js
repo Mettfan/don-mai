@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { Example } from "./PrintTest";
 import { addProductToGlobalTicket, removeProductFromGlobalTicket } from "../../features/products/productSlicetest";
-
+import Draggable from 'react-draggable'
+import Calculator from "../Calculator/Calculator";
 export function Ticket(){
 
     let [state, setState] = useState({
@@ -129,7 +130,9 @@ export function Ticket(){
    
     return (<>
         <div className="downSearchContainer">
-
+            <Draggable>
+                <Calculator></Calculator>
+            </Draggable>
             {/* <div>TICKET</div> */}
             <div className="totalTicketCalculated">
                 {'$' + state.total}            

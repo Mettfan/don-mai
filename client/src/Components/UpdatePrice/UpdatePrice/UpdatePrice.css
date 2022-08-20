@@ -19,7 +19,8 @@
 .editProductContainer{
     
     position: fixed;
-    background-color: brown;
+    background-color: rgb(165, 42, 42, 0.9);
     color: white;
     padding: 20px;
+    font-weight: 600;
 }

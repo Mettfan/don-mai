@@ -14,6 +14,10 @@ export const productSlicetest = createSlice({
         error: ''
     },
     reducers: {
+        
+        setCounter: (state, action) => {
+            state.counterId = action.payload
+        },
         counterIncrement: (state) => {
             state.counterId += 1
         },
@@ -151,7 +155,16 @@ const editProduct = createAsyncThunk('products/editProduct', ({id, findBy, infoU
     })
     .then( response => response.data)
 })
-export const { nextProduct, previousProduct, addProductToGlobalTicket, removeProductFromGlobalTicket, counterDecrement, counterIncrement } = productSlicetest.actions
+export const { 
+    nextProduct, 
+    previousProduct, 
+    addProductToGlobalTicket, 
+    removeProductFromGlobalTicket, 
+    counterDecrement, 
+    counterIncrement,
+    setCounter
+
+} = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
 export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct

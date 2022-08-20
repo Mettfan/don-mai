@@ -6,7 +6,9 @@ import { getProducts } from "../../redux/actions/productActions";
 import { fetchAllProducts } from "../../redux/slices/products/product";
 import { fetchAllProducts  as fetchProducts } from '../../features/products/productSlicetest';
 import productPlaceholder from '../../Assets/productPlaceholder.png'
+import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 export default function Catalog (props){
+    let todaysDate = new Date()
     let editMode = props.editmode
     const productState = useSelector( state => state)
     const productList = productState.products.products
@@ -43,6 +45,14 @@ export default function Catalog (props){
                             <div>{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
                             {editMode && <div>{product.id}</div>}
+                            {editMode && <div>{checkIfProductIsUpdated(
+                                Number(product['updatedAt']?.split('T')[0]?.split('-')[1]),
+                                Number(product['updatedAt']?.split('T')[0]?.split('-')[2]),
+                                todaysDate.getMonth()+1,
+                                todaysDate.getDate(),
+                                'onlyNumbers'
+                                
+                                )}</div>}
                         </div>
 
                     </span>

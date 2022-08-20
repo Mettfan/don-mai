@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { counterDecrement, counterIncrement, editOneProduct, fetchOneProduct } from "../../../features/products/productSlicetest";
+import { counterDecrement, counterIncrement, editOneProduct, fetchOneProduct, setCounter } from "../../../features/products/productSlicetest";
 import './UpdatePrice.css'
 import Catalog from "../../Catalog/Catalog";
 import Draggable from 'react-draggable'
+import { checkIfProductIsUpdated } from "./updateTools";
 export default function UpdatePrice(){
     let todaysDate = new Date()
     let [state, setState] = useState({
@@ -28,6 +29,9 @@ export default function UpdatePrice(){
         getProduct(counterId)
         document.getElementById('price').focus()
         document.getElementById('price').value = null
+        document.getElementById('name').value = null
+        document.getElementById('departament').value = null
+        document.getElementById('id').value = null
     }, [counterId])
     useEffect(()=>{
         setState({
@@ -44,6 +48,7 @@ export default function UpdatePrice(){
     function handleOnSubmit(e){
         e.preventDefault && e.preventDefault()
         getProduct(idInput)
+        dispatch(setCounter(Number(idInput)))
     }
     function handleInputOnChange(e){
         setState({
@@ -65,35 +70,7 @@ export default function UpdatePrice(){
 
         })
     }
-    function checkIfProductIsUpdated(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay){
-        console.log(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay );
-        let sinceMonth = currentMonth - lastUpdatedMonth
-        
-        let sinceDay = currentDay - lastUpdatedDay
-        let updatedMessage = <div>
-
-            {'Producto Actualizado hace '} <span style={ {
-                backgroundColor: sinceMonth !== 0 ? 'red' : 'green',
-                color: 'white',
-                padding: '3px'
-            
-            
-            } }>{sinceMonth}</span> {' meses y '} <span  style={ {
-                backgroundColor: sinceDay >= 12 ? sinceDay >=20 ? 'red' : 'orange' : 'green',
-                color: 'white',
-                padding: '3px'
-                } }>{sinceDay}</span> {' días'}
-
-        </div>
-        if(sinceMonth > 0){
-            return 'Producto Desactualizado'
-        }
-        else{
-            return updatedMessage
-
-        }
-        
-    }   
+    
     function handleKeyPress(e){
         let keyCode = e.keyCode
         if(keyCode === 37){
@@ -106,10 +83,10 @@ export default function UpdatePrice(){
     }
     
     return (<>
-        <Draggable>
+    
             <div className="editProductContainer">
                 <form onSubmit={(e) => {handleOnSubmit(e)}}>
-                    <input name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
+                    <input id="id" name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
                 </form>
                 {/* <div>
                     {idInput}
@@ -127,7 +104,7 @@ export default function UpdatePrice(){
                     <div>
                         {selectedProduct.Producto}
                         <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
-                            <input placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
+                            <input id="name" placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
                         </form>
                         
                     </div>
@@ -141,7 +118,7 @@ export default function UpdatePrice(){
                     <div>
                         {selectedProduct['Departamento']}
                         <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
-                            <input placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
+                            <input id="departament" placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
 
                     </div>
@@ -173,7 +150,7 @@ export default function UpdatePrice(){
                     </div>
                 </div>
             </div>
-        </Draggable>
+        
         <Catalog editmode={true}></Catalog>
     </>)
 }
