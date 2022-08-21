@@ -83,7 +83,7 @@ export default function UpdatePrice(){
     }
     
     return (<>
-    
+        <Draggable>
             <div className="editProductContainer">
                 <form onSubmit={(e) => {handleOnSubmit(e)}}>
                     <input id="id" name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
@@ -150,7 +150,7 @@ export default function UpdatePrice(){
                     </div>
                 </div>
             </div>
-        
+        </Draggable>
         <Catalog editmode={true}></Catalog>
     </>)
 }

@@ -13,6 +13,7 @@ import { Search } from './Components/UpdatePrice/Search';
 import { Example } from './Components/UpdatePrice/PrintTest';
 import UpdatePrice from './Components/UpdatePrice/UpdatePrice/UpdatePrice';
 import Calculator from './Components/Calculator/Calculator';
+import ProductDetail from './Components/ProductDetail/ProductDetail';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path ="/printest" element={<Example/>} />
         <Route path ="/update/price" element={<UpdatePrice/>} />
         <Route path ="/calculator" element={<Calculator/>} />
+        <Route path ="/products/:id" element={<ProductDetail/>} />
       </Routes>
     </div>
   );

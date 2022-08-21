@@ -7,7 +7,9 @@ import { fetchAllProducts } from "../../redux/slices/products/product";
 import { fetchAllProducts  as fetchProducts } from '../../features/products/productSlicetest';
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
+import { useNavigate } from "react-router-dom";
 export default function Catalog (props){
+    let nav = useNavigate()
     let todaysDate = new Date()
     let editMode = props.editmode
     const productState = useSelector( state => state)
@@ -42,7 +44,7 @@ export default function Catalog (props){
                     <span className="productBg">
                         <img className="productImage" src={productPlaceholder }/>
                         <div className="productInfoContainer">
-                            <div>{product.Producto}</div>
+                            <div onClick={()=>{ nav('/products/'+product.id) }} >{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
                             {editMode && <div>{product.id}</div>}
                             {editMode && <div>{checkIfProductIsUpdated(
