@@ -88,7 +88,7 @@ export function Ticket(){
                 {ticketProducts.map(producto => {
                     return <tr>
                     <td>{producto?.quantity}</td>
-                    <td>{producto?.Producto.substring(0, 10) }</td>
+                    <td>{producto?.Producto?.substring(0, 10) }</td>
                     <td>{producto['P. Venta'] && producto['P. Venta']}</td>
 
                 </tr>

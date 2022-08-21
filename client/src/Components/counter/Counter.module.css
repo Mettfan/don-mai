@@ -122,3 +122,24 @@
   top: 80px;
   left: 40%;
 }
+.matchList{
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  top: 110px;
+  left: 20%;
+  
+}
+.matchContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100px;
+  background-color: burlywood;
+  padding: 5px;
+  margin: 2px;
+  font-size: small;
+
+}

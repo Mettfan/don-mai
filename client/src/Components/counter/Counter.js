@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-  selectProduct,
-  productSelector,
-  getProductByBarcode,
-} from './counterSlice';
+
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
-import { fetchAllProducts, fetchOneProduct, nextProduct, previousProduct } from '../../features/products/productSlicetest';
+import { addProductToGlobalTicket, fetchAllProducts, fetchOneProduct, nextProduct, previousProduct } from '../../features/products/productSlicetest';
 // import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
   let cookie = new Cookies()
@@ -23,7 +13,8 @@ export function Counter() {
     currentProduct: cookie.get('currentProduct'),
     reduxState: useSelector(state => state),
     searchValue: '',
-    displayedProduct: {}
+    displayedProduct: {},
+    matchList: []
   })
 
   // const count = useSelector(selectCount);
@@ -48,7 +39,25 @@ export function Counter() {
     setState({
       searchValue: e.target.value
     })
+    searchStates(e.target.value)
   }
+  function searchStates(searchText){
+    
+    let matches = allProducts.filter(product => {
+      const regex = new RegExp(`^${searchText}`, 'gi')
+      return product['Producto'].match(regex) || product['Código'].match(regex)
+    })
+    if(searchText.length === 0){
+      matches = []
+    }
+    console.log(matches);
+    setState({
+      ...state,
+      matchList: matches
+    })
+
+  }
+  
   function onSearch(e) {
     e?.preventDefault && e.preventDefault()
 
@@ -80,13 +89,6 @@ export function Counter() {
     
       <div>
         <div className={styles.row}>
-          {/* <button
-            className={styles.buttondecrement}
-            aria-label="Decrement value"
-            onClick={() => pp()}
-          >
-            -
-          </button> */}
             
             <div className='valueRow'>
               <div className={styles.value}>
@@ -116,7 +118,7 @@ export function Counter() {
         </div>
         <div className={styles.row}>
 
-          <form onSubmit={(e) => onSearch(e)} autoComplete={'on'}>
+          <form onSubmit={(e) => onSearch(e)} autoComplete={'off'}>
             <div className={styles.inputSearch}>
               {/* {JSON.stringify(selectedProductCounter)} */}
               <input
@@ -136,6 +138,24 @@ export function Counter() {
                 // onClick = {() => {searchProduct('70707070')}}
                 />
 
+            </div>
+            <div className={styles.matchList}>
+              {state.matchList && state.matchList.map(match => {
+                return (<>
+                <div className={styles.matchContainer} onClick={()=>{dispatch(fetchOneProduct( {filter: 'id' , value: match.id }))}}>
+                  <div>
+                    {match['Producto']}
+                  </div>
+                  <div>
+                    {match['P. Venta']}
+                  </div>
+                  <div>
+                    {match['id']}
+                  </div>
+
+                </div>
+                </>)
+              })}
             </div>
               
           </form>

@@ -34,6 +34,7 @@ function App() {
         <Route path ="/update/price" element={<UpdatePrice/>} />
         <Route path ="/calculator" element={<Calculator/>} />
         <Route path ="/products/:id" element={<ProductDetail/>} />
+
       </Routes>
     </div>
   );
