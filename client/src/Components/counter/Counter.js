@@ -84,6 +84,17 @@ export function Counter() {
     }
     // if ( event.key === )
   }
+  function productClicked(id){
+    dispatch(fetchOneProduct( {filter: 'id' , value: id })).then(()=>{
+      document.getElementById('inputBarcode').value = ''
+      document.getElementById('inputBarcode').focus()
+      setState({
+        ...state,
+        matchList: []
+      })
+
+    })
+  }
   return (
     <>
     
@@ -142,7 +153,7 @@ export function Counter() {
             <div className={styles.matchList}>
               {state.matchList && state.matchList.map(match => {
                 return (<>
-                <div className={styles.matchContainer} onClick={()=>{dispatch(fetchOneProduct( {filter: 'id' , value: match.id }))}}>
+                <div className={styles.matchContainer} onClick={()=>{productClicked(match.id)}}>
                   <div>
                     {match['Producto']}
                   </div>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from 'react-to-print';
 import Mickey from '../../Assets/Mickey.png'
 import './PrintTest.css'
@@ -9,6 +9,13 @@ export const Example = (propsRoot) => {
     ticketId: 0,
     currentDateTime: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
   })
+  useEffect(()=>{
+    setInterval(() => {
+      setState({...state,
+        currentDateTime: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+        })
+    }, 1000);
+  },[state.currentDateTime])
 
   const currentDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
   const currentDateTime = state.currentDateTime

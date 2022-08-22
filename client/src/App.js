@@ -14,8 +14,15 @@ import { Example } from './Components/UpdatePrice/PrintTest';
 import UpdatePrice from './Components/UpdatePrice/UpdatePrice/UpdatePrice';
 import Calculator from './Components/Calculator/Calculator';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchAllProducts } from './features/products/productSlicetest';
 
 function App() {
+  let dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch( fetchAllProducts() )
+  }, [])
 
   return (
     <div className="App">
