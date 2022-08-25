@@ -10,6 +10,12 @@ module.exports = (sequelize) => {
     username: {
       type: DataTypes.TEXT,
     },
+    email: {
+      type: DataTypes.STRING
+    },
+    password: {
+      type: DataTypes.STRING
+    },
     age: {
       type: DataTypes.FLOAT,
     },
