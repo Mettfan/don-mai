@@ -17,11 +17,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING
     },
     age: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.INTEGER,
     },
 
     privileges: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
 
     image: {
