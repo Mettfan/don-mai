@@ -6,7 +6,8 @@ const { Product, User, Sucursal } = require("../../db.js");
 const addUserToSucursal = async (req, res, next) => {
 
   let { userId, sucursalId } = req.body
-
+console.log(userId);
+console.log(sucursalId);
 //   console.log(req.query);
   let respuesta = null
 

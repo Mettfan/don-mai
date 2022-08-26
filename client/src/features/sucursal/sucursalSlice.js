@@ -75,6 +75,21 @@ export const sucursalSlice = createSlice({
             state.error = action.error.message
             state.response = null
         })
+        ///////////////
+        builder.addCase(associateSucursalToUser.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(associateSucursalToUser.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(associateSucursalToUser.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+    
 
 
 
@@ -84,6 +99,10 @@ export const sucursalSlice = createSlice({
 const createSucursal = createAsyncThunk('sucursales/createSucursal', ({sucursal}) => {
     return axios.post('http://localhost:3001/sucursales', {sucursal: sucursal})
     .then( response => response.data.db)
+})
+const associateSucursalToUser = createAsyncThunk('sucursales/associateSucursalToUser', ({userId, sucursalId}) => {
+    return axios.post('http://localhost:3001/sucursales/add/user', {userId, sucursalId})
+    .then( response => response.data)
 })
 // const fetchSucursal = createAsyncThunk('users/fetchSucursal', ({filter, value, password}) => {
 //     console.log(value);
@@ -105,5 +124,6 @@ export const {
 } = sucursalSlice.actions
 // export const productSliceReducer = productSlicetest.reducer
 export const createOneSucursal = createSucursal
+export const associateOneSucursalToUser = associateSucursalToUser
 // export const fetchOneSucursal = fetchSucursal //
 // export const editOneProduct = editProduct

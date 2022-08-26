@@ -1,0 +1,11 @@
+.associateSucursalToUserFormContainer{
+    display: flex;
+    width: 100%;
+    background-color: rgb(215, 101, 35);
+    justify-content: center;
+}
+.associateSucursalToUserFormGroupContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
