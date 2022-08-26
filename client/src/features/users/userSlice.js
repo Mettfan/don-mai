@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "universal-cookie";
+let cookie = new Cookies()
 export const userSlice = createSlice({
     name: 'users',
     initialState: {
         loading: false,
-        user: [],
+        user: {},
         counter: 0,
         response: '',
         error: ''
@@ -35,13 +37,14 @@ export const userSlice = createSlice({
             state.loading = true
         })
         builder.addCase(fetchUser.fulfilled, (state, action) => {
+            cookie.set('user', action.payload)
             state.loading = false
             state.user = {...action.payload}
             state.error = ''
         })
         builder.addCase(fetchUser.rejected, (state, action) => {
             state.loading = false
-            state.user = []
+            state.user = {}
             state.error = action.error.message
         })
 ////////////////////////////
