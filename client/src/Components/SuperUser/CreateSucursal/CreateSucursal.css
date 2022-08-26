@@ -1,0 +1,11 @@
+.createSucursalFormContainer{
+    display: flex;
+    width: 100%;
+    background-color: rgb(240, 132, 16);
+    justify-content: center;
+}
+.createSucursalFormGroupContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}

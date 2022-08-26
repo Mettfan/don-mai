@@ -11,7 +11,7 @@ const postSucursal = async (req, res, next) => {
     Sucursal.create(sucursal).then( d => {
         console.log(d);
       console.log('status: ' + JSON.stringify(d));
-      Sucursal.findAll().then( (d2) => {
+      Sucursal.findOne({where: {name: sucursal.name}}).then( (d2) => {
         console.log(d2,  ' <-database');
         res.status(200).send({sucursal: sucursal, db: d2})
       })
