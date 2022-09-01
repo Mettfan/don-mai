@@ -1,4 +1,3 @@
-const { response } = require("express");
 const { Product, User, Sucursal } = require("../../db.js");
 
 

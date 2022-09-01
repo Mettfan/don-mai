@@ -7,9 +7,11 @@ import CreateUser from './CreateUser/CreateUser';
 function SuperUser() {
     let cookie = new Cookies()
     let user = cookie.get('user')
-    let state = useSelector( state => state.sucursales)
+    let sucursalState = useSelector( state => state.sucursales)
+    let userState = useSelector( state => state.user)
     return ( <>
-        {JSON.stringify(state)}
+        {JSON.stringify(userState)}
+        {JSON.stringify(sucursalState)}
         {   user?.privileges === 'superuser' ?
             (<div>
             Super Usuario Here

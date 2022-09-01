@@ -37,7 +37,7 @@ export function checkIfProductIsUpdated(lastUpdatedMonth, lastUpdatedDay, curren
         return onlyMessageNumbers
     }
     if(sinceMonth > 0){
-        return 'Producto Desactualizado'
+        return 'Desactualizado'
     }
     else{
         return updatedMessage
