@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { getProducts } from "../../redux/actions/productActions";
 import { fetchAllProducts } from "../../redux/slices/products/product";
-import { fetchAllProducts  as fetchProducts } from '../../features/products/productSlicetest';
+import { fetchAllProducts  as fetchProducts, setCounter } from '../../features/products/productSlicetest';
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,7 @@ export default function Catalog (props){
     function getAllProducts () {
         dispatch( fetchProducts() )
     }
+    
     return (<>
     
         <div>
@@ -40,6 +41,7 @@ export default function Catalog (props){
 
             </div>
             {productList.map( product => {
+                // return  product[props.filter] === props.value &&
                 return ( <div className="catalogContainer">
                     <span className="productBg">
                         <img className="productImage" src={productPlaceholder }/>
@@ -55,6 +57,14 @@ export default function Catalog (props){
                                 'onlyNumbers'
                                 
                                 )}</div>}
+                            {editMode && <div style={{
+                                cursor: 'pointer'
+                                
+                            }} onClick={ () => dispatch(setCounter(product.id)) }>
+                                
+                                    Edit
+                                
+                                </div>}
                         </div>
 
                     </span>
