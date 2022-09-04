@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { counterDecrement, counterIncrement, editOneProduct, fetchOneProduct, setCounter } from "../../../features/products/productSlicetest";
+import { counterDecrement, counterIncrement, editOneProduct, fetchAllProducts, fetchOneProduct, setCounter } from "../../../features/products/productSlicetest";
 import './UpdatePrice.css'
 import Catalog from "../../Catalog/Catalog";
 import Draggable from 'react-draggable'
@@ -32,6 +32,7 @@ export default function UpdatePrice(){
         document.getElementById('name').value = null
         document.getElementById('departament').value = null
         document.getElementById('id').value = null
+
     }, [counterId])
     useEffect(()=>{
         setState({
@@ -67,10 +68,19 @@ export default function UpdatePrice(){
         e.preventDefault && e.preventDefault()
         dispatch(editOneProduct({id: selectedProduct.id, findBy: e.target.name, infoUpdated: state[e.target.name] })).then(()=>{
             getProduct(selectedProduct.id)
+            getAllProducts()
 
         })
     }
-    
+    function reUpdatePrice(){
+        dispatch(editOneProduct({id: selectedProduct.id, findBy: 'P. Venta', infoUpdated: selectedProduct["P. Venta"] })).then(()=> {
+            getProduct(selectedProduct.id)
+            getAllProducts()
+        })
+    }
+    function getAllProducts(){
+        dispatch( fetchAllProducts() )
+    }
     function handleKeyPress(e){
         let keyCode = e.keyCode
         if(keyCode === 37){
@@ -137,6 +147,7 @@ export default function UpdatePrice(){
                             {checkIfProductIsUpdated(state.lastMonthUpdated, state.lastDayUpdated, todaysDate.getMonth()+1, todaysDate.getDate())}
                         </div>
                     </div>
+                    <button onClick={() => {reUpdatePrice()}}>Reupdate</button>
                     <button className="nextProductToCheck" onClick={() => {incrementCounter() }}>
                         {'→'}
                     </button>
@@ -151,6 +162,6 @@ export default function UpdatePrice(){
                 </div>
             </div>
         </Draggable>
-        <Catalog editmode={true}></Catalog>
+        <Catalog editmode={true} filter={''} value={''} ></Catalog>
     </>)
 }

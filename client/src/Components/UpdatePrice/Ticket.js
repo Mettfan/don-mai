@@ -56,7 +56,7 @@ export function Ticket(){
 
             setState({
                 ...state,
-                total: state.total - Number(product['P. Venta'].slice(1) )
+                total: (state.total > 0 && state.total - Number(product['P. Venta'].slice(1)) || 0   )
             })
             // calculateChange()
 

@@ -45,7 +45,7 @@ export function Counter() {
     
     let matches = allProducts.filter(product => {
       const regex = new RegExp(`^${searchText}`, 'gi')
-      return product['Producto'].match(regex) || product['Código'].match(regex)
+      return product['Producto'].match(regex) || product['Código'].match(regex) || product['Departamento'].match(regex) 
     })
     if(searchText.length === 0){
       matches = []

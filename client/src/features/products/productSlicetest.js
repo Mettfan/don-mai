@@ -48,7 +48,7 @@ export const productSlicetest = createSlice({
             if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
                 console.log('Ya existe');
                 state.ticketProducts =  state.ticketProducts.map( producto => {
-                        if(action.payload.id == producto.id){
+                        if(action.payload.id == producto.id ){
                             return {...producto, ['quantity']: producto.quantity + 1 }
                         }
                         else{
@@ -72,7 +72,7 @@ export const productSlicetest = createSlice({
             if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
                 console.log('Ya existe');
                 state.ticketProducts =  state.ticketProducts.map( producto => {
-                        if(action.payload.id == producto.id){
+                        if(action.payload.id == producto.id && producto.quantity > 0){
                             return {...producto, ['quantity']: producto.quantity - 1 }
                         }
                         else{
