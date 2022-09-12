@@ -8,7 +8,6 @@ import { fetchAllProducts  as fetchProducts, setCounter } from '../../features/p
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 import { useNavigate } from "react-router-dom";
-import AddProductToCart from "../../app/AddProductToCart/AddProductToCart";
 export default function Catalog (props){
     let nav = useNavigate()
     let todaysDate = new Date()
@@ -49,8 +48,6 @@ export default function Catalog (props){
                         <div className="productInfoContainer">
                             <div onClick={()=>{ nav('/products/'+product.id) }} >{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
-                            {/* <AddProductToCart id={product.id} ></AddProductToCart> */}
-                            {/* <RemoveProductToCart></RemoveProductToCart> */}
                             {editMode && <div>{product.id}</div>}
                             {editMode && <div>{checkIfProductIsUpdated(
                                 Number(product['updatedAt']?.split('T')[0]?.split('-')[1]),
@@ -69,7 +66,6 @@ export default function Catalog (props){
                                 
                                 </div>}
                         </div>
-
 
                     </span>
 
