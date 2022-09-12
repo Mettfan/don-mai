@@ -9,6 +9,7 @@ export const productSlicetest = createSlice({
         productSelectedCounter: 0,
         ticketProducts: [],
         totalTicket: 0,
+        shoppingCart:[],
         counterId: 0,
         response: '',
         error: ''
@@ -88,8 +89,13 @@ export const productSlicetest = createSlice({
             }
 
 
-        }
+        },
+
+        
+
+        
     },
+
     extraReducers: builder => {
         builder.addCase(fetchProducts.pending, state => {
             state.loading = true
@@ -162,7 +168,8 @@ export const {
     removeProductFromGlobalTicket, 
     counterDecrement, 
     counterIncrement,
-    setCounter
+    setCounter,
+    addProductToShoppingCart
 
 } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
