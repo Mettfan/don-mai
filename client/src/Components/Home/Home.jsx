@@ -93,6 +93,15 @@ export default function Home(){
         </div>
             <div className="dHome">
                 TOOLS
+                <div>
+                    Tool 1
+                </div>
+                <div>
+                    Tool 2
+                </div>
+                <div>
+                    Tool 3
+                </div>
             </div>
     </>
 }
