@@ -139,6 +139,20 @@ export const productSlicetest = createSlice({
             state.response = null
         })
 
+        builder.addCase(createProduct.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(createProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(createProduct.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+
 
     }
 })
@@ -161,6 +175,13 @@ const editProduct = createAsyncThunk('products/editProduct', ({id, findBy, infoU
     })
     .then( response => response.data)
 })
+const createProduct = createAsyncThunk('products/createProduct', (products) => {
+    // console.log(value);
+    return axios.post(`http://localhost:3001/products/upload`, {
+        productos: [...products]
+    })
+    .then( response => response.data)
+})
 export const { 
     nextProduct, 
     previousProduct, 
@@ -176,3 +197,4 @@ export const productSliceReducer = productSlicetest.reducer
 export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct
 export const editOneProduct = editProduct
+export const postProduct = createProduct

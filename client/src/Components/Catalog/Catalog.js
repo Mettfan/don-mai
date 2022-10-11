@@ -9,6 +9,7 @@ import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 import { useNavigate } from "react-router-dom";
 import AddProductToCart from "../../app/AddProductToCart/AddProductToCart";
+import CreateProduct from "../CreateProduct/CreateProduct";
 export default function Catalog (props){
     let nav = useNavigate()
     let todaysDate = new Date()
@@ -33,6 +34,9 @@ export default function Catalog (props){
     return (<>
     
         <div>
+        {/* <div>
+            <CreateProduct></CreateProduct>
+        </div> */}
             <div>
                 <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
                 {/* {JSON.stringify(state.store)} */}
@@ -77,6 +81,7 @@ export default function Catalog (props){
             })}
         </div>
 
+        
 
     </>)
 }
