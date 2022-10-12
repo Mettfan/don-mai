@@ -76,6 +76,8 @@ export default function UpdatePrice(){
         dispatch(editOneProduct({id: selectedProduct.id, findBy: 'P. Venta', infoUpdated: selectedProduct["P. Venta"] })).then(()=> {
             getProduct(selectedProduct.id)
             getAllProducts()
+        }).then(() => {
+            window.location.reload()
         })
     }
     function getAllProducts(){
