@@ -8,6 +8,7 @@ import { addProducts } from "../../redux/actions/productActions";
 import { useDispatch } from "react-redux";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import { postProduct } from "../../features/products/productSlicetest";
+import CreateProduct from "../CreateProduct/CreateProduct";
 // import { JsonToExcel } from "react-json-to-excel"
 // import {fs} from 'fs';
 // import { Readable } from 'stream';
@@ -146,6 +147,7 @@ export default function Convert () {
                 <button onClick={() => nextPage()} className='buttonNext'>Next</button>
             </div>
         }
+        <CreateProduct></CreateProduct>
     </>)
 }
 

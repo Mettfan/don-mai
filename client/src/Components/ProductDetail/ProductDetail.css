@@ -1,0 +1,10 @@
+.deleteProductButton{
+    background-color: red ;
+    color: white;
+    cursor: pointer;
+}
+.deleteProductButton:hover{
+    background-color: rgb(126, 13, 13) ;
+    color: white;
+    cursor: pointer;
+}

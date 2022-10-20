@@ -15,7 +15,7 @@ export const productSlice = createSlice({
 export const { setProductList } = productSlice.actions
 export default productSlice.reducer
 export const fetchAllProducts = ( ) => (dispatch) => {
-     axios.get('https://donmay-front.vercel.app/products').then(
+     axios.get('http://localhost:3001/products').then(
         (response) => {
             console.log(response);
             console.log('passed');

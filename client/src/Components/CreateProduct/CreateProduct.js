@@ -18,7 +18,7 @@ function CreateProduct() {
     }
     let createProduct = (product) => {
         console.log(product);
-        dispatch(postProduct({...product}))
+        dispatch(postProduct([{...product}]))
     }
     return ( <>
 
@@ -26,8 +26,8 @@ function CreateProduct() {
         <input placeholder='Código' name = {'Código'} type={'text'} onChange={( (e) => {handleInputChange(e)})} />
         <input placeholder='P.Venta' name = {'P. Venta'} type={'number'} onChange={( (e) => {handleInputChange(e)})} />
         <input placeholder='Departamento' name = {'Departamento'} type={'text'} onChange={( (e) => {handleInputChange(e)})} />
-        <button onClick={() => { createProduct(state.product) } } ></button>
-        {/* {JSON.stringify(globalState)} */}
+        <button onClick={() => { createProduct(state.product) } } >CREAR</button>
+        {JSON.stringify(globalState.products.loading)}
     
     </> );
     

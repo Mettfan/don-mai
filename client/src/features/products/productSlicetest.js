@@ -152,7 +152,20 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
-
+        
+        builder.addCase(deleteProduct.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(deleteProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(deleteProduct.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
 
     }
 })
@@ -182,6 +195,13 @@ const createProduct = createAsyncThunk('products/createProduct', (products) => {
     })
     .then( response => response.data)
 })
+const deleteProduct = createAsyncThunk('products/deleteProduct', (id) => {
+    // console.log(value);
+    return axios.post(`http://localhost:3001/products/delete`, {
+        id,
+    })
+    .then( response => response.data)
+})
 export const { 
     nextProduct, 
     previousProduct, 
@@ -190,7 +210,7 @@ export const {
     counterDecrement, 
     counterIncrement,
     setCounter,
-    addProductToShoppingCart
+    addProductToShoppingCart,
 
 } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
@@ -198,3 +218,4 @@ export const fetchAllProducts = fetchProducts
 export const fetchOneProduct = fetchProduct
 export const editOneProduct = editProduct
 export const postProduct = createProduct
+export const eraseProduct = deleteProduct
