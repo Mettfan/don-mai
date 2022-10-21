@@ -37,12 +37,15 @@ export function Ticket(){
 
     }, [selectedProductCounter])
     function addProductToTicket ( product ) {
+        let newTotal = null
         if(product){
-
+            
             dispatch(addProductToGlobalTicket(product))
+            //Verifica si el producto viene con el signo de pesos
+            newTotal = state.total + ( product['P. Venta']?.includes('$') ? Number(product['P. Venta'].slice(1)   ) : Number(product['P. Venta']) )
             setState({
                 ...state,
-                total: state.total + Number(product['P. Venta'].slice(1) )
+                total: newTotal
             })
             // calculateChange()
   
