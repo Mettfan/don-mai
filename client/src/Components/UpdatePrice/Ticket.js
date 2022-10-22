@@ -52,14 +52,15 @@ export function Ticket(){
         }
     }
     function removeProductFromTicket ( product ) {
+        let newTotal = null
         if(product){
 
             dispatch(removeProductFromGlobalTicket(product))
             
-
+            newTotal = (state.total > 0 && state.total - (product['P. Venta']?.includes('$') ? Number(product['P. Venta'].slice(1)   ) : Number(product['P. Venta'])) || 0   )
             setState({
                 ...state,
-                total: (state.total > 0 && state.total - Number(product['P. Venta'].slice(1)) || 0   )
+                total: newTotal
             })
             // calculateChange()
 
