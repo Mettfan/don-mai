@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postProduct } from '../../features/products/productSlicetest';
+import {useNavigate} from 'react-router-dom'
 function CreateProduct() {
+    let nav = useNavigate()
     let [state, setState] = useState({
         product: {}
     })
@@ -19,6 +21,9 @@ function CreateProduct() {
     let createProduct = (product) => {
         console.log(product);
         dispatch(postProduct([{...product}]))
+        nav('/catalog')
+        window.location.reload()
+        
     }
     return ( <>
 

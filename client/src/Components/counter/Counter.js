@@ -6,6 +6,7 @@ import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
 import { addProductToGlobalTicket, fetchAllProducts, fetchOneProduct, nextProduct, previousProduct } from '../../features/products/productSlicetest';
+import CreateProduct from '../CreateProduct/CreateProduct';
 // import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
   let cookie = new Cookies()
@@ -151,7 +152,7 @@ export function Counter() {
 
             </div>
             <div className={styles.matchList}>
-              {state.matchList && state.matchList.map(match => {
+              {state.matchList.length >= 1 ? state.matchList.map(match => {
                 return (<>
                 <div className={styles.matchContainer} onClick={()=>{productClicked(match.id)}}>
                   <div>
@@ -166,7 +167,7 @@ export function Counter() {
 
                 </div>
                 </>)
-              })}
+              }) :<CreateProduct></CreateProduct>}
             </div>
               
           </form>
