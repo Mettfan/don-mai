@@ -20,9 +20,11 @@ function CreateProduct() {
     }
     let createProduct = (product) => {
         console.log(product);
-        dispatch(postProduct([{...product}]))
-        nav('/catalog')
-        window.location.reload()
+        dispatch(postProduct([{...product}])).then(() => {
+            nav('/catalog')
+            window.location.reload()
+
+        })
         
     }
     return ( <>
