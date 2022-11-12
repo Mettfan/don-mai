@@ -5,6 +5,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useState } from "react";
 import Cookie from 'universal-cookie'
 import { NavLink, useNavigate } from 'react-router-dom'
+import UserNav from "../User/UserNav/UserNav";
 let cookie = new Cookie()
 export default function Nav (){
     let [state, setState] = useState({
@@ -13,6 +14,7 @@ export default function Nav (){
     })
     let productos = state.productos
     let nav = useNavigate()
+    let user = useSelector(state => state.user) || cookie.get('user')
     return (<>
         <div className="nav">
             <img src={Menu} className='menuPng'/>
@@ -24,6 +26,8 @@ export default function Nav (){
             <NavLink className= { 'changePage' } to={'/home'}><div className="navText">HOME</div></NavLink>
             <NavLink className={ 'changePage' } to={'/catalog'}><div className="navText">CATALOG</div></NavLink>
             <NavLink className={ 'changePage' } to={'/search'}><div className="navText">SEARCH</div></NavLink>
+            <UserNav user = {user} ></UserNav>
+            {/* {JSON.stringify(user)} */}
         </div>
     </>)
 

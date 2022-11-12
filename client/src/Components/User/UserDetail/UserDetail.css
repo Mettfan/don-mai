@@ -1,0 +1,26 @@
+.userDetailContainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    /* background-color: red; */
+    /* position: absolute; */
+
+}
+.userDetailInfo{
+    padding: 1vw;
+
+    
+}
+.userDetailImage{
+    height: 50vh;
+}
+.logoutButton{
+    background-color: red;
+    color: white;
+}
+.logoutButton:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}

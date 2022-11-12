@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllProducts } from './features/products/productSlicetest';
 import SuperUser from './Components/SuperUser/SuperUser';
+import UserDetail from './Components/User/UserDetail/UserDetail';
 
 function App() {
   let dispatch = useDispatch()
@@ -43,6 +44,7 @@ function App() {
         <Route path ="/calculator" element={<Calculator/>} />
         <Route path ="/products/:id" element={<ProductDetail/>} />
         <Route path ="/superuser" element={<SuperUser/>} />
+        <Route path ="/profile" element={<UserDetail/>} />
 
       </Routes>
     </div>

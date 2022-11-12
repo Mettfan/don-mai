@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { createOneUser } from '../../features/users/userSlice';
 import './Register.css'
 function Register() {
     let dispatch = useDispatch()
+    let nav = useNavigate()
     let [user, setUser] = useState({
         name: '',
         age: null,
@@ -14,7 +16,9 @@ function Register() {
     })
     let handleRegisterSubmit = (e) => {
         e.preventDefault && e.preventDefault()
-        dispatch(createOneUser({user}))
+        dispatch(createOneUser({user})).then(() => {
+            nav('/login')
+        } )
 
     }
     let handleOnChange = (e) => {
