@@ -30,7 +30,7 @@ export default function Catalog (props){
     function getAllProducts () {
         dispatch( fetchProducts() )
     }
-    
+    let user = cookie.get('user')
     return (<>
     
         <div>
@@ -38,11 +38,25 @@ export default function Catalog (props){
             <CreateProduct></CreateProduct>
         </div> */}
             <div>
-                <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
+
+                {    !user && <div>
+                    not registered
+                    <div>
+                        Registrate y mira nuestros 639 productos existentes
+                    </div>
+                </div> }
+                {    user?.privileges === 'usuario' && <div>
+                    usuario mode
+                </div> }
+                {/* {JSON.stringify(state.store)} */}
+                {    user?.privileges === 'admin' && <div>
+                    admin mode
+                    <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
+                    <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
+                </div> }
                 {/* {JSON.stringify(state.store)} */}
                 
                 
-                <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
 
             </div>
             {productList.map( product => {

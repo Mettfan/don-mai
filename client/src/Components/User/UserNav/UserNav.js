@@ -9,7 +9,7 @@ function UserNav(props) {
     }
     return ( <>
         <div className='userNavThumb' onClick={() => onUserClick()} >
-            <img className='userNavImage' src={user?.image || null} />
+            {user?.image && <img className='userNavImage' src={user?.image || null} />}
             
             <div>
                 {user?.name || 'Login'}

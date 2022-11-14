@@ -12,7 +12,7 @@ function SuperUser() {
     return ( <>
         {JSON.stringify(userState)}
         {JSON.stringify(sucursalState)}
-        {   user?.privileges === 'superuser' ?
+        {   user?.privileges === 'admin' ?
             (<div>
             Super Usuario Here
             <CreateUser></CreateUser>
