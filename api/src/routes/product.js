@@ -5,7 +5,9 @@ const router = express.Router();
 const postProduct = require("../Controllers/ProductControllers/postProduct");
 const putProduct = require("../Controllers/ProductControllers/putProduct");
 const deleteProduct = require("../Controllers/ProductControllers/deleteProduct");
-
+const addProductStock = require("../Controllers/ProductControllers/addProductStock");
+ 
+router.put("/add/product/stock", addProductStock);
 router.put("/products/update", putProduct);
 router.post("/products/upload", postProduct);
 router.post("/products/delete", deleteProduct);

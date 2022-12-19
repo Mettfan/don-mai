@@ -81,7 +81,7 @@ export default function Catalog (props){
                             {editMode && <div style={{
                                 cursor: 'pointer'
                                 
-                            }} onClick={ () => dispatch(setCounter(product.id)) }>
+                            }} onClick={ () => dispatch(setCounter(product['Código'])) }>
                                 
                                     Edit
                                 

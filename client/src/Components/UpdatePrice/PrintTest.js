@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from 'react-to-print';
 import Mickey from '../../Assets/Mickey.png'
+import LOGODONMAY from '../../Assets/LOGODONMAY.png'
 import './PrintTest.css'
 
 export const Example = (propsRoot) => {
@@ -34,7 +35,7 @@ export const Example = (propsRoot) => {
             <div>{currentDate}</div>
             <div>{currentDateTime}</div>
             <div>Ticket  Id{' '+state.ticketId}</div>
-            <img className="mickeyTicket" src={Mickey}/>
+            <img className="mickeyTicket" src={LOGODONMAY}/>
           </div>
           <div className="divisorContainerStart"></div>
           <div>

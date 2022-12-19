@@ -116,7 +116,7 @@ export const productSlicetest = createSlice({
         })
         builder.addCase(fetchProduct.fulfilled, (state, action) => {
             state.loading = false
-            state.selectedProduct = {...action.payload, selected: false, quantity: 1}
+            state.selectedProduct = {...action.payload, selected: false}
             state.error = ''
         })
         builder.addCase(fetchProduct.rejected, (state, action) => {
@@ -166,6 +166,20 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
+        
+        builder.addCase(addProductStock.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(addProductStock.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(addProductStock.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
 
     }
 })
@@ -202,6 +216,14 @@ const deleteProduct = createAsyncThunk('products/deleteProduct', (id) => {
     })
     .then( response => response.data)
 })
+const addProductStock = createAsyncThunk('products/addProductStock', ({productBarcode, quantity}) => {
+    console.log(productBarcode);
+    return axios.put(`http://localhost:3001/add/product/stock`, {
+        productBarcode,
+        quantity: Number(quantity)
+    })
+    .then( response => response.data)
+})
 export const { 
     nextProduct, 
     previousProduct, 
@@ -219,3 +241,4 @@ export const fetchOneProduct = fetchProduct
 export const editOneProduct = editProduct
 export const postProduct = createProduct
 export const eraseProduct = deleteProduct
+export const addProductToStock = addProductStock
