@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
-import { addProductToGlobalTicket, fetchAllProducts, fetchOneProduct, nextProduct, previousProduct } from '../../features/products/productSlicetest';
+import { addProductToGlobalTicket, fetchAllProducts, fetchOneProduct, nextProduct, previousProduct, sellProducts } from '../../features/products/productSlicetest';
 import CreateProduct from '../CreateProduct/CreateProduct';
 // import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
@@ -21,6 +21,7 @@ export function Counter() {
   // const count = useSelector(selectCount);
   const productState = useSelector( state => state)
   const allProducts = useSelector( state => state.products.products)
+  const ticketProducts = useSelector( state => state.products.ticketProducts)
   const selectedProduct = useSelector( state => state.products.selectedProduct)
   // const selectedProduct = useSelector( state => state.products.selectedProduct)
   // const product = useSelector(productSelector(count || 1));
@@ -94,6 +95,11 @@ export function Counter() {
         matchList: []
       })
 
+    })
+  }
+  function buyProducts({products}){
+    dispatch(sellProducts({products})).then(() => {
+      window.location.reload()
     })
   }
   return (
@@ -171,6 +177,13 @@ export function Counter() {
             </div>
               
           </form>
+              {ticketProducts && (<div>
+
+                  <button onClick={() => {buyProducts({products: ticketProducts})}} >BUY</button>
+
+              </div>)}
+              {/* {JSON.stringify(ticketProducts)} */}
+              {JSON.stringify(productState.products.response)}
 
         </div>
       </div>

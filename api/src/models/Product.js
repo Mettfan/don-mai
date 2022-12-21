@@ -22,6 +22,9 @@ module.exports = (sequelize) => {
     ['P. Venta']: {
       type: DataTypes.STRING,
     },
+    ['P. Compra']: {
+      type: DataTypes.STRING,
+    },
 
     discount: {
       type: DataTypes.INTEGER,

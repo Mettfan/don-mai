@@ -12,7 +12,8 @@ export const productSlicetest = createSlice({
         shoppingCart:[],
         counterId: 0,
         response: '',
-        error: ''
+        error: '',
+        totalInvest: null
     },
     reducers: {
         
@@ -180,6 +181,34 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
+        
+        builder.addCase(fetchTotalInvest.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(fetchTotalInvest.fulfilled, (state, action) => {
+            state.loading = false
+            state.totalInvest = action.payload
+            state.error = ''
+        })
+        builder.addCase(fetchTotalInvest.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+        
+        builder.addCase(decreaseStock.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(decreaseStock.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(decreaseStock.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
 
     }
 })
@@ -224,6 +253,20 @@ const addProductStock = createAsyncThunk('products/addProductStock', ({productBa
     })
     .then( response => response.data)
 })
+const fetchTotalInvest = createAsyncThunk('products/fetchTotalInvest', (investType) => {
+    return axios.get(`http://localhost:3001/product/invest/?investType=${investType}`)
+    .then( response => response.data)
+})
+const decreaseStock = createAsyncThunk('products/sellProducts', ({products}) => {
+    return axios.post(`http://localhost:3001/product/sell`, {
+        productos: [...products.map(product => {
+            return { ...product,
+                quantity: product.quantity + 1
+            }
+        })]
+    })
+    .then( response => response.data)
+})
 export const { 
     nextProduct, 
     previousProduct, 
@@ -242,3 +285,5 @@ export const editOneProduct = editProduct
 export const postProduct = createProduct
 export const eraseProduct = deleteProduct
 export const addProductToStock = addProductStock
+export const getTotalInvested = fetchTotalInvest
+export const sellProducts = decreaseStock

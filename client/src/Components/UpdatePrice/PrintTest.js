@@ -3,6 +3,8 @@ import { useReactToPrint } from 'react-to-print';
 import Mickey from '../../Assets/Mickey.png'
 import LOGODONMAY from '../../Assets/LOGODONMAY.png'
 import './PrintTest.css'
+import { sellProducts } from "../../features/products/productSlicetest";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Example = (propsRoot) => {
   const date = new Date()
@@ -10,6 +12,8 @@ export const Example = (propsRoot) => {
     ticketId: 0,
     currentDateTime: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
   })
+  const ticketProducts = useSelector( state => state.products.ticketProducts)
+  let dispatch = useDispatch()
   useEffect(()=>{
     setInterval(() => {
       setState({...state,
@@ -52,16 +56,20 @@ export const Example = (propsRoot) => {
     function handleOnAfterPrint (){
       window.location.reload()
     }
+    function handleOnBeforePrint (){
+      dispatch(sellProducts({products: ticketProducts}))
+    }
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    onAfterPrint: () => {handleOnAfterPrint()}
+    onAfterPrint: () => {handleOnAfterPrint()},
+    onBeforePrint: () => {handleOnBeforePrint()}
   });
 
   return (
     <div>  
       <ComponentToPrint ref={componentRef} />
-      <button className="printButton" onClick={handlePrint}>PrintTicket</button>
+      <button className="printButton" onClick={handlePrint}>COBRAR</button>
     </div>
   );
 };

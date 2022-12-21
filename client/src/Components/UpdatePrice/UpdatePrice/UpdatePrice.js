@@ -5,6 +5,7 @@ import './UpdatePrice.css'
 import Catalog from "../../Catalog/Catalog";
 import Draggable from 'react-draggable'
 import { checkIfProductIsUpdated } from "./updateTools";
+import TotalInvest from "../../TotalInvest/TotalInvest";
 export default function UpdatePrice(){
     let todaysDate = new Date()
     let [state, setState] = useState({
@@ -14,10 +15,12 @@ export default function UpdatePrice(){
         Producto: '',
         id: null,
         ['P. Venta']: null,
+        ['P. Compra']: null,
         lastDayUpdated: '',
         lastMonthUpdated: '',
         lastYearUpdated: '',
         pieces: null,
+        
     })
     let idInput = state.idInput
     let nameInput = state.Producto
@@ -128,28 +131,28 @@ export default function UpdatePrice(){
                         {'←'}
                     </button> */}
                     <div>
-                        {selectedProduct.Producto}
+                        {'Producto: ' + selectedProduct.Producto}
                         <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
                             <input id="name" placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
                         </form>
                         
                     </div>
                     <div>
-                        {selectedProduct['P. Venta']}
+                        {'Precio: ' + selectedProduct['P. Venta']}
                         <form name="P. Venta" onSubmit={(e)=> {handleOnEdit(e, 'P. Venta')}}>
                             <input id="price" placeholder="Nuevo Precio" name="P. Venta" type={'number'} onChange={(e)=> handleInputOnChange(e)} autofocus='autofocus' onKeyDown={(e)=>{handleKeyPress(e) }}  />
                         </form>
 
                     </div>
                     <div>
-                        {selectedProduct['Departamento']}
+                        {'Departamento: ' + selectedProduct['Departamento']}
                         <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
                             <input id="departament" placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
 
                     </div>
                     <div>
-                        {selectedProduct['quantity']}
+                        {'Cantidad: ' + selectedProduct['quantity']}
                         <form name="quantity" onSubmit={(e)=> {handleOnEdit(e, 'quantity')}}>
                             <input id="quantity" placeholder="Editar Inventario" name="quantity" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
@@ -157,6 +160,13 @@ export default function UpdatePrice(){
                             <input id="pieces" placeholder="Agregar Piezas a Inventario" name="pieces" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
                         {JSON.stringify(globalState.response)}
+
+                    </div>
+                    <div>
+                        {'Precio de Compra: ' + selectedProduct['P. Compra']}
+                        <form name="P. Compra" onSubmit={(e)=> {handleOnEdit(e, 'P. Compra')}}>
+                            <input id="P. Compra" placeholder="Nuevo precio de compra" name="P. Compra" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
+                        </form>
 
                     </div>
                     <div>
@@ -189,6 +199,7 @@ export default function UpdatePrice(){
                 </div>
             </div>
         </Draggable>
+        <TotalInvest></TotalInvest>
         <Catalog editmode={true} filter={''} value={''} ></Catalog>
     </>)
 }
