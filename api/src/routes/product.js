@@ -8,7 +8,9 @@ const deleteProduct = require("../Controllers/ProductControllers/deleteProduct")
 const addProductStock = require("../Controllers/ProductControllers/addProductStock");
 const getTotalInvested = require("../Controllers/ProductControllers/getTotalInvested");
 const sellProducts = require("../Controllers/ProductControllers/sellProducts");
+const deleteProductStock = require("../Controllers/ProductControllers/deleteProductStock");
  
+router.post("/delete/product/stock", deleteProductStock);
 router.post("/product/sell", sellProducts);
 router.get("/product/invest", getTotalInvested);
 router.put("/add/product/stock", addProductStock);
