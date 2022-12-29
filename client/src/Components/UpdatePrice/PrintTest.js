@@ -69,6 +69,7 @@ export const Example = (propsRoot) => {
   return (
     <div>  
       <ComponentToPrint ref={componentRef} />
+      {/* <button className="printButton" onClick={handlePrint}>COBRAR</button> */}
       <button className="printButton" onClick={handlePrint}>COBRAR</button>
     </div>
   );

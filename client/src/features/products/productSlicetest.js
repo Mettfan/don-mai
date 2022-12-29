@@ -13,10 +13,22 @@ export const productSlicetest = createSlice({
         counterId: 0,
         response: '',
         error: '',
-        totalInvest: null
+        totalInvest: null,
+        modalShown: false,
+        payment: null
     },
     reducers: {
         
+        setPayment: (state, action) => {
+            state.payment = action.payload
+            console.log(state.payment);
+        },
+        showModal: (state, action) => {
+            state.modalShown = true
+        },
+        hideModal: (state, action) => {
+            state.modalShown = false
+        },
         setCounter: (state, action) => {
             state.counterId = action.payload
         },
@@ -267,7 +279,10 @@ const decreaseStock = createAsyncThunk('products/sellProducts', ({products}) => 
     })
     .then( response => response.data)
 })
-export const { 
+export const {
+    setPayment,
+    showModal,
+    hideModal, 
     nextProduct, 
     previousProduct, 
     addProductToGlobalTicket, 
@@ -287,3 +302,6 @@ export const eraseProduct = deleteProduct
 export const addProductToStock = addProductStock
 export const getTotalInvested = fetchTotalInvest
 export const sellProducts = decreaseStock
+export const spawnModal = showModal
+export const killModal = hideModal
+

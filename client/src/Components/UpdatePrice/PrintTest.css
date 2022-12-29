@@ -34,3 +34,34 @@
     justify-content: flex-start;
     font-size: xx-small;
 }
+.modalBox{
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    background-color: red;
+    z-index: 6;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.modalText{
+    color: #FFD449;
+    filter: drop-shadow(black 3px 3px 3px);
+    font-weight: 500;
+    font-size: xx-large;
+}
+.inputPayment{
+    width: 50%;
+    height: 30%;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    font-size: xx-large;
+    background-color: #ffffff;
+    border: double black 10px;
+    
+}

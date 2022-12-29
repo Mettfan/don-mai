@@ -21,6 +21,13 @@ export function Ticket(){
     let selectedProductCounter = useSelector( state => state.products.productSelectedCounter)
     let selectedProduct = useSelector( state => state.products.selectedProduct)
     let globalTicket = useSelector( state => state.products.ticketProducts)
+    let userPayment = useSelector(state => state.products.payment)
+    useEffect(() => {
+        calculateChange(userPayment)
+        setState({...state,
+            payment: userPayment
+        })
+    }, [userPayment])
     useEffect(()=> {
         console.log(ticketProducts);
         if(selectedProduct['P. Venta']){
@@ -146,7 +153,7 @@ export function Ticket(){
             </div>
             <div className="ticketContainer">
 
-            <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} showTicket = {true} ></Example>
+            <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} total = {state.total} showTicket = {true} ></Example>
             </div>
             <div className="productTicketContainer" >
                 {ticketProducts && ticketProducts.map( product => {
