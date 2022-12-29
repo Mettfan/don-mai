@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { counterDecrement, counterIncrement, editOneProduct, fetchAllProducts, fetchOneProduct, setCounter } from "../../../features/products/productSlicetest";
+import { addProductToStock, counterDecrement, counterIncrement, editOneProduct, fetchAllProducts, fetchOneProduct, setCounter } from "../../../features/products/productSlicetest";
 import './UpdatePrice.css'
 import Catalog from "../../Catalog/Catalog";
 import Draggable from 'react-draggable'
 import { checkIfProductIsUpdated } from "./updateTools";
+import TotalInvest from "../../TotalInvest/TotalInvest";
 export default function UpdatePrice(){
     let todaysDate = new Date()
     let [state, setState] = useState({
@@ -14,9 +15,12 @@ export default function UpdatePrice(){
         Producto: '',
         id: null,
         ['P. Venta']: null,
+        ['P. Compra']: null,
         lastDayUpdated: '',
         lastMonthUpdated: '',
         lastYearUpdated: '',
+        pieces: null,
+        
     })
     let idInput = state.idInput
     let nameInput = state.Producto
@@ -27,14 +31,18 @@ export default function UpdatePrice(){
     let counterId = useSelector(state => state.products.counterId)
     useEffect(()=>{
         getProduct(counterId)
-        document.getElementById('price').focus()
+        document.getElementById('id').focus()
         document.getElementById('price').value = null
         document.getElementById('name').value = null
         document.getElementById('departament').value = null
         document.getElementById('id').value = null
-
+        
     }, [counterId])
     useEffect(()=>{
+        if(selectedProduct?.id){
+            document.getElementById('price').focus()
+            
+        }
         setState({
             ...state,
             lastDayUpdated: Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[2]),
@@ -42,8 +50,8 @@ export default function UpdatePrice(){
             lastYearUpdated: Number(selectedProduct['updatedAt']?.split('T')[0]?.split('-')[0])
         })
     }, [selectedProduct])
-    function getProduct(id){
-        dispatch( fetchOneProduct({filter: 'id', value: id})  )
+    function getProduct(barcode){
+        dispatch( fetchOneProduct({filter: 'Código', value: barcode})  )
 
     }
     function handleOnSubmit(e){
@@ -52,6 +60,7 @@ export default function UpdatePrice(){
         dispatch(setCounter(Number(idInput)))
     }
     function handleInputOnChange(e){
+        console.log(state[e.target.name]);
         setState({
             ...state,
             [e.target.name]: e.target.value
@@ -67,14 +76,14 @@ export default function UpdatePrice(){
     function handleOnEdit(e, findBy){
         e.preventDefault && e.preventDefault()
         dispatch(editOneProduct({id: selectedProduct.id, findBy: e.target.name, infoUpdated: state[e.target.name] })).then(()=>{
-            getProduct(selectedProduct.id)
+            getProduct(selectedProduct['Código'])
             getAllProducts()
 
         })
     }
     function reUpdatePrice(){
         dispatch(editOneProduct({id: selectedProduct.id, findBy: 'P. Venta', infoUpdated: selectedProduct["P. Venta"] })).then(()=> {
-            getProduct(selectedProduct.id)
+            getProduct(selectedProduct['Código'])
             getAllProducts()
         }).then(() => {
             window.location.reload()
@@ -93,6 +102,14 @@ export default function UpdatePrice(){
         }
         console.log(e.keyCode);
     }
+    function addStock(e){
+        e?.preventDefault && e.preventDefault()
+        dispatch(addProductToStock({productBarcode: selectedProduct['Código'], quantity: state.pieces})).then(()=>{
+            getProduct(selectedProduct['Código'])
+            getAllProducts()
+
+        })
+    }
     
     return (<>
         <Draggable>
@@ -110,27 +127,45 @@ export default function UpdatePrice(){
                     {priceInput}
                 </div> */}
                 <div>
-                    <button className="previousProductToCheck" onClick={() => {decrementCounter() }}>
+                    {/* <button className="previousProductToCheck" onClick={() => {decrementCounter() }}>
                         {'←'}
-                    </button>
+                    </button> */}
                     <div>
-                        {selectedProduct.Producto}
+                        {'Producto: ' + selectedProduct.Producto}
                         <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
                             <input id="name" placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
                         </form>
                         
                     </div>
                     <div>
-                        {selectedProduct['P. Venta']}
+                        {'Precio: ' + selectedProduct['P. Venta']}
                         <form name="P. Venta" onSubmit={(e)=> {handleOnEdit(e, 'P. Venta')}}>
                             <input id="price" placeholder="Nuevo Precio" name="P. Venta" type={'number'} onChange={(e)=> handleInputOnChange(e)} autofocus='autofocus' onKeyDown={(e)=>{handleKeyPress(e) }}  />
                         </form>
 
                     </div>
                     <div>
-                        {selectedProduct['Departamento']}
+                        {'Departamento: ' + selectedProduct['Departamento']}
                         <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
                             <input id="departament" placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
+                        </form>
+
+                    </div>
+                    <div>
+                        {'Cantidad: ' + selectedProduct['quantity']}
+                        <form name="quantity" onSubmit={(e)=> {handleOnEdit(e, 'quantity')}}>
+                            <input id="quantity" placeholder="Editar Inventario" name="quantity" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
+                        </form>
+                        <form name="pieces" onSubmit={(e)=> {addStock(e)}}>
+                            <input id="pieces" placeholder="Agregar Piezas a Inventario" name="pieces" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
+                        </form>
+                        {JSON.stringify(globalState.response)}
+
+                    </div>
+                    <div>
+                        {'Precio de Compra: ' + selectedProduct['P. Compra']}
+                        <form name="P. Compra" onSubmit={(e)=> {handleOnEdit(e, 'P. Compra')}}>
+                            <input id="P. Compra" placeholder="Nuevo precio de compra" name="P. Compra" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
 
                     </div>
@@ -150,13 +185,13 @@ export default function UpdatePrice(){
                         </div>
                     </div>
                     <button onClick={() => {reUpdatePrice()}}>Reupdate</button>
-                    <button className="nextProductToCheck" onClick={() => {incrementCounter() }}>
+                    {/* <button className="nextProductToCheck" onClick={() => {incrementCounter() }}>
                         {'→'}
-                    </button>
-                    <div>
+                    </button> */}
+                    {/* <div>
                         
-                        {counterId}
-                    </div>
+                        {selectedProduct.quantity}
+                    </div> */}
                     <div>
                         {/* {JSON.stringify(globalState)} */}
 
@@ -164,6 +199,7 @@ export default function UpdatePrice(){
                 </div>
             </div>
         </Draggable>
+        <TotalInvest></TotalInvest>
         <Catalog editmode={true} filter={''} value={''} ></Catalog>
     </>)
 }

@@ -1,5 +1,5 @@
 export function checkIfProductIsUpdated(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay, messageType){
-    console.log(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay );
+    // console.log(lastUpdatedMonth, lastUpdatedDay, currentMonth, currentDay );
     let sinceMonth = currentMonth - lastUpdatedMonth
     
     let sinceDay = currentDay - lastUpdatedDay + 1

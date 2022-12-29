@@ -36,6 +36,9 @@ export default function ProductDetail(){
                 {selectedProduct['Departamento']}
             </div>
             <div>
+                {selectedProduct['quantity']}
+            </div>
+            <div>
                 {selectedProduct['updatedAt']}
             </div>
 
