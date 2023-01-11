@@ -15,7 +15,9 @@ export const productSlicetest = createSlice({
         error: '',
         totalInvest: null,
         modalShown: false,
-        payment: null
+        payment: null,
+        tickets: [],
+        ticket: {}
     },
     reducers: {
         
@@ -72,7 +74,7 @@ export const productSlicetest = createSlice({
                 
             }
             else{
-                state.ticketProducts = [...state.ticketProducts, action.payload]
+                state.ticketProducts = [...state.ticketProducts, {...action.payload, quantity: 1}]
                 console.log('Product added: ' + JSON.stringify(action.payload));
 
             }
@@ -221,6 +223,48 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
+        
+        builder.addCase(makeTicket.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(makeTicket.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(makeTicket.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+        
+        builder.addCase(getTickets.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(getTickets.fulfilled, (state, action) => {
+            state.loading = false
+            state.tickets = action.payload
+            state.error = ''
+        })
+        builder.addCase(getTickets.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+        
+        builder.addCase(getTicket.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(getTicket.fulfilled, (state, action) => {
+            state.loading = false
+            state.ticket = action.payload.response
+            state.error = ''
+        })
+        builder.addCase(getTicket.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
 
     }
 })
@@ -273,10 +317,30 @@ const decreaseStock = createAsyncThunk('products/sellProducts', ({products}) => 
     return axios.post(`http://localhost:3001/product/sell`, {
         productos: [...products.map(product => {
             return { ...product,
-                quantity: product.quantity + 1
+                quantity: product.quantity
             }
         })]
     })
+    .then( response => response.data)
+})
+const makeTicket = createAsyncThunk('products/ticketProducts', ({products, total, user, client, description }) => {
+    console.log(products, total, user, client, description);
+    return axios.post(`http://localhost:3001/Tickets`, {
+        products,
+        total,
+        user,
+        client,
+        description
+
+    })
+    .then( response => response.data)
+})
+const getTickets = createAsyncThunk('products/getTickets', () => {
+    return axios.get(`http://localhost:3001/Tickets`)
+    .then( response => response.data)
+})
+const getTicket = createAsyncThunk('products/getTicket', (id) => {
+    return axios.get(`http://localhost:3001/Tickets/?id=${id}`)
     .then( response => response.data)
 })
 export const {
@@ -304,4 +368,6 @@ export const getTotalInvested = fetchTotalInvest
 export const sellProducts = decreaseStock
 export const spawnModal = showModal
 export const killModal = hideModal
-
+export const postTicket = makeTicket
+export const fetchTickets = getTickets
+export const getTicketById = getTicket

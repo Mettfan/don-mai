@@ -11,7 +11,7 @@ const postProduct = async (req, res, next) => {
     productos.map( async producto => {
       found = await Product.findOne({where: {
         [Op.or]: [
-          {['Código']: producto['Código']},
+          {['Código']: producto['Código'] || null},
           {['id']: producto?.id || null},
         ]
       }
@@ -19,10 +19,17 @@ const postProduct = async (req, res, next) => {
     })
     if (!found){
       await Product.bulkCreate([...[{
-        ['Código']: producto['Código'],
-        ['Producto']: producto['Producto'],
-        ['P. Venta']: producto['P. Venta'],
-        ['Departamento']: producto['Departamento'],
+        ['Código']: producto['Código'] || null,
+        ['Producto']: producto['Producto'] || null,
+        ['P. Venta']: producto['P. Venta'] || null,
+        ['P. Compra']: producto['P. Compra'] || null,
+        ['updatedAt']: producto['updatedAt'] || null,
+        ['createdAt']: producto['createdAt'] || null,
+        ['quantity']: producto['quantity'] || null,
+        ['Departamento']: producto['Departamento'] || null,
+        ['image']: producto['image'] || null,
+        ['sales']: producto['sales'] || null,
+        ['brand']: producto['brand'] || null,
       }]]).then( d => {
         console.log('status: ' + JSON.stringify(d));
         // Product.findAll().then( (d2) => {
@@ -33,7 +40,7 @@ const postProduct = async (req, res, next) => {
       })
     }
     else{
-      found = null
+      res.send({response: found})
     }
         
     } )

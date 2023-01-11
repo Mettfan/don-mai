@@ -1,0 +1,47 @@
+.ticketsName{
+    font-size: x-small;
+}
+.ticketsProducts{
+    font-size: x-small;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFD449;
+}
+.ticketsTotal{
+
+}
+.ticketsImage{
+    width: 40mm;
+}
+.ticketProductContainer{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: #FFD449;
+    color: black;
+}
+.ticketTable{
+    /* display: flex;
+    justify-content: center; */
+}
+.ticketContainer{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    background-color: #FFD449;
+}
+.ticketDetailContainer{
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center; */
+
+}
+.ticketsProductRow{
+    font-size: xx-small;
+}
+.ticketTableTitles{
+    font-size: small;
+}

@@ -5,7 +5,7 @@ const { Product, User, Ticket } = require("../../db.js");
 const getTicket = async (req, res, next) => {
 
   // let respuesta = null
-  let {id} = req.body
+  let {id} = req.query
   try{
 
     if (!id){

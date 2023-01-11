@@ -12,6 +12,7 @@
     "fs": "^0.0.1-security",
     "react": "^18.1.0",
     "react-barcode": "^1.4.1",
+    "react-calendar": "^4.0.0",
     "react-dom": "^18.1.0",
     "react-draggable": "^4.4.5",
     "react-json-to-excel": "^1.0.4",

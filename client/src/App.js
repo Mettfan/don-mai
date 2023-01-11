@@ -19,6 +19,8 @@ import { useDispatch } from 'react-redux';
 import { fetchAllProducts } from './features/products/productSlicetest';
 import SuperUser from './Components/SuperUser/SuperUser';
 import UserDetail from './Components/User/UserDetail/UserDetail';
+import TicketHandler from './Components/TicketHandler/TicketHandler';
+import TicketDetail from './Components/TicketDetail/TicketDetail';
 
 function App() {
   let dispatch = useDispatch()
@@ -45,6 +47,8 @@ function App() {
         <Route path ="/products/:id" element={<ProductDetail/>} />
         <Route path ="/superuser" element={<SuperUser/>} />
         <Route path ="/profile" element={<UserDetail/>} />
+        <Route path ="/tickets" element={<TicketHandler/>} />
+        <Route path ="/tickets/:id" element={<TicketDetail/>} />
 
       </Routes>
     </div>

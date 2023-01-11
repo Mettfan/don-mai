@@ -1,0 +1,9 @@
+/* .printComponentButton{
+    display: flex;
+} */
+.componentToPrintContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
