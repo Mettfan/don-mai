@@ -25,10 +25,10 @@ const postProduct = async (req, res, next) => {
         ['P. Compra']: producto['P. Compra'] || null,
         ['updatedAt']: producto['updatedAt'] || null,
         ['createdAt']: producto['createdAt'] || null,
-        ['quantity']: producto['quantity'] || null,
+        ['quantity']: producto['quantity'] || 0,
         ['Departamento']: producto['Departamento'] || null,
         ['image']: producto['image'] || null,
-        ['sales']: producto['sales'] || null,
+        ['sales']: producto['sales'] || 0,
         ['brand']: producto['brand'] || null,
       }]]).then( d => {
         console.log('status: ' + JSON.stringify(d));
