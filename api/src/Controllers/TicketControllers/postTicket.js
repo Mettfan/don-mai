@@ -12,7 +12,11 @@ const postTicket = async (req, res, next) => {
     await User.findOne({where: {email: user}}).then(async (user) => {
       console.log(user);
       if(user && products){
-        await Ticket.create({user: user.name, Productos: products, Total: Number(total), description: description, client: client || 'Público'}).then(async (response) => {
+        await Ticket.create({user: user.name, 
+          Productos: products, 
+          Total: Number(total), 
+          description: description, 
+          client: client || 'Público'}).then(async (response) => {
           let ticket = await Ticket.findOne({where: {id: response?.id}})
           let userFound = await User.findOne({where: {email: user?.email} })
           if(ticket){

@@ -15,6 +15,7 @@ import CreateProduct from "../CreateProduct/CreateProduct";
 // XLSX.set_fs(fs);
 // XLSX.stream.set_readable(Readable);
 export function downloadExcel (data)  {
+    //download Excel es una funcion que nos permite descargar un archivo en formato excel a partir de datos entregados
     const fileName = 'Respaldo.xlsx';
 
     const ws = XLSX.utils.json_to_sheet(data);
@@ -23,7 +24,24 @@ export function downloadExcel (data)  {
 
     XLSX.writeFile(wb, fileName);
   };
-
+export const readExcel = (file) => {
+    const promise  = new Promise( ( resolve, reject ) => {
+        const fileReader = new FileReader()
+        fileReader.readAsArrayBuffer(file)
+        fileReader.onload = (e) =>{
+            const bufferArray = e.target.result
+            const wb = XLSX.read( bufferArray , { type: 'buffer'});
+            const wsname = wb.SheetNames[0]
+            const ws = wb.Sheets[wsname]
+            const data = XLSX.utils.sheet_to_json(ws)
+            resolve(data)
+        } 
+        fileReader.onerror = ( error ) => {
+            reject(error)
+        }
+    })
+    return promise
+}
 export default function Convert () {
     let pdf = React.createRef()
     let dispatch = useDispatch()
@@ -101,9 +119,9 @@ export default function Convert () {
 
     return ( <> 
         {
-            !productos && <div>
-                <button onClick={ () => downloadExcel([{"wawa": "añeñe", "quita": "bomba"}])}>Crear Copia de Base </button>
-            </div>
+            // !productos && <div>
+            //     <button onClick={ () => downloadExcel([{"wawa": "añeñe", "quita": "bomba"}])}>Crear Copia de Base </button>
+            // </div>
         }
       
         <input onChange={(e) => inputOnChange(e)} type="file" id = 'hoja' accept= ".xls, .xlsx"></input>

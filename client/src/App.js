@@ -5,7 +5,6 @@ import Home from './Components/Home/Home';
 import Nav from './Components/Nav/Nav';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
-import Sell from './Components/Sell/Sell';
 import Convert from './Components/Convert/Convert'
 import Delivery from './Components/Delivery/Delivery';
 import Catalog from './Components/Catalog/Catalog';
@@ -21,6 +20,7 @@ import SuperUser from './Components/SuperUser/SuperUser';
 import UserDetail from './Components/User/UserDetail/UserDetail';
 import TicketHandler from './Components/TicketHandler/TicketHandler';
 import TicketDetail from './Components/TicketDetail/TicketDetail';
+import TicketStats from './Components/TicketStats/TicketStats';
 
 function App() {
   let dispatch = useDispatch()
@@ -36,7 +36,6 @@ function App() {
         <Route path ="/home" element={<Home></Home>} />
         <Route path ="/login" element={<Login></Login>} />
         <Route path ="/register" element={<Register></Register>} />
-        <Route path ="/sell" element={<Sell></Sell>} />
         <Route path ="/convert" element={<Convert></Convert>} />
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
@@ -49,6 +48,7 @@ function App() {
         <Route path ="/profile" element={<UserDetail/>} />
         <Route path ="/tickets" element={<TicketHandler/>} />
         <Route path ="/tickets/:id" element={<TicketDetail/>} />
+        <Route path ="/tickets/stats" element={<TicketStats/>} />
 
       </Routes>
     </div>

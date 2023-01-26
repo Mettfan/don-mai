@@ -1,0 +1,24 @@
+.statsMostSoldbackGround{
+    background-color: rgb(161, 176, 216);
+    color: white;
+    font-weight: 600;
+    font-family:'Courier New', Courier, monospace;
+    letter-spacing: 3px;
+    width: 25%;
+    padding: 5px;
+    font-size: x-small;
+}
+.productTopName{
+    filter: drop-shadow(1px 1px 1px black);
+}
+.pairContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid black;
+    padding: 3px;
+}
+.productTopQuantity{
+    color: yellow;
+    filter: drop-shadow(2px 2px 1px green);
+}

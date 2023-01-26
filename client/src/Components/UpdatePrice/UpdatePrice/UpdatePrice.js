@@ -114,7 +114,7 @@ export default function UpdatePrice(){
     return (<>
         <Draggable>
             <div className="editProductContainer">
-                <form onSubmit={(e) => {handleOnSubmit(e)}}>
+                <form onSubmit={(e) => {handleOnSubmit(e)}} autoComplete='off'>
                     <input id="id" name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
                 </form>
                 {/* <div>

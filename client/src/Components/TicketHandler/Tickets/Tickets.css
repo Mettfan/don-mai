@@ -18,9 +18,15 @@
 
     
 }
-.ticketTotal{
-    background-color: rgb(71, 202, 71);
+.ticketTotalOut{
+    background-color: rgb(116, 221, 70);
     padding: 5px;
+    /* display: flex; */
+}
+.ticketTotalEntry{
+    background-color: rgb(252, 51, 51);
+    padding: 5px;
+    /* display: flex; */
 }
 .ticketsContainer{
     border: dotted black 3px ;
@@ -53,7 +59,11 @@
 } */
 .calendarTicket{
     display: flex;
+    flex-direction: column;
+
+    /* background-color: red; */
     width: 100%;
+    align-items: center;
     justify-content: center;
 }
 .allTicketsContainer{
@@ -72,6 +82,12 @@
     display: flex;
     /* justify-content: space-evenly; */
     flex-wrap: nowrap;
+}
+.ticketDownloadButton{
+  height: 50px;
+  position: fixed;
+  top: 100px;
+  right: 0px;
 }
 @media (max-width: 1260px ) {
     .ticketsContainer{

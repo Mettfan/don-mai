@@ -94,14 +94,14 @@ export function Counter() {
         ...state,
         matchList: []
       })
-
+      
     })
   }
-  function buyProducts({products}){
-    dispatch(sellProducts({products})).then(() => {
-      window.location.reload()
-    })
-  }
+  // function buyProducts({products}){
+  //   dispatch(sellProducts({products})).then(() => {
+  //     window.location.reload()
+  //   })
+  // }
   return (
     <>
     
@@ -177,13 +177,13 @@ export function Counter() {
             </div>
               
           </form>
-              {ticketProducts && (<div>
+              { (<div className={styles.serverState}>
 
-                  <button onClick={() => {buyProducts({products: ticketProducts})}} >BUY</button>
+                {JSON.stringify(productState?.products?.response)}
+                  {/* <button onClick={() => {buyProducts({products: ticketProducts})}} >BUY</button> */}
 
               </div>)}
               {/* {JSON.stringify(ticketProducts)} */}
-              {JSON.stringify(productState.products.response)}
 
         </div>
       </div>
