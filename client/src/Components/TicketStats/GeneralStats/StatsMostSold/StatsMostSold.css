@@ -1,12 +1,12 @@
 .statsMostSoldbackGround{
-    background-color: rgb(161, 176, 216);
-    color: white;
-    font-weight: 600;
-    font-family:'Courier New', Courier, monospace;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    font-family:'Courier New';
     letter-spacing: 3px;
     width: 25%;
     padding: 5px;
-    font-size: x-small;
+    font-size: small;
 }
 .productTopName{
     filter: drop-shadow(1px 1px 1px black);
@@ -19,6 +19,6 @@
     padding: 3px;
 }
 .productTopQuantity{
-    color: yellow;
+    color: rgb(0, 0, 0);
     filter: drop-shadow(2px 2px 1px green);
 }

@@ -11,7 +11,12 @@
 .productTick{
     background-color: black;
     padding-inline: 5px;
+    
+}
+.producTickContainer{
+    border: 3px gold solid;
 
+    
 }
 
 .productCounterBackground{

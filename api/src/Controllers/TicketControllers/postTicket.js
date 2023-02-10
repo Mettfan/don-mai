@@ -6,8 +6,8 @@ const { Product, User, Ticket } = require("../../db.js");
 
 const postTicket = async (req, res, next) => {
 
-  let { products, total, user, client, description } = req.body
-  console.log({ products, total, user, client, description });
+  let { products, total, user, client, description, createdAt } = req.body
+  console.log({ products, total, user, client, description, createdAt });
   try{
     await User.findOne({where: {email: user}}).then(async (user) => {
       console.log(user);
@@ -16,7 +16,9 @@ const postTicket = async (req, res, next) => {
           Productos: products, 
           Total: Number(total), 
           description: description, 
-          client: client || 'Público'}).then(async (response) => {
+          client: client || 'Público'},
+          createdAt
+          ).then(async (response) => {
           let ticket = await Ticket.findOne({where: {id: response?.id}})
           let userFound = await User.findOne({where: {email: user?.email} })
           if(ticket){

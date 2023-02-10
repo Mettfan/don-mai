@@ -2,3 +2,9 @@
     display: flex;
     justify-content: space-evenly;
 }
+.goToTicketsStats{
+    position: fixed;
+    right: 0;
+    top: 20%;
+
+}

@@ -23,7 +23,7 @@ function ProductCounter(props) {
                         'width': '100%',
                         
                         }}>{product?.Producto}</span>    
-                    <div>
+                    <div className='producTickContainer'>
                         {
                             [...Array(product?.quantity + 1).keys()].map((element) => {
                                 return(<>
