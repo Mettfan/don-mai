@@ -2,12 +2,12 @@ const { Product, Ticket } = require("../../db.js");
 
 
 
-const getMostSoldProducts = async (req, res, next) => {
+const getMostBoughtProducts = async (req, res, next) => {
 
   let mostSoldList = []
   try{
         await Ticket.findAll().then( (tickets) => {
-            tickets?.filter(element => element.description === 'out').forEach(ticket => {
+            tickets?.filter(element => element.description === 'entry').forEach(ticket => {
                 ticket.Productos.forEach((product) => {
                     let foundObjectIndex = {}
                     foundObjectIndex = mostSoldList.findIndex(object => object.Código === product.Código)
@@ -34,4 +34,4 @@ const getMostSoldProducts = async (req, res, next) => {
  
 };
 
-module.exports = getMostSoldProducts;
+module.exports = getMostBoughtProducts;

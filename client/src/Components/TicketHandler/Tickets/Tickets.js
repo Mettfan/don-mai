@@ -30,10 +30,11 @@ function Tickets() {
         dispatch(destroyTicket(id, user?.email))
     }
     let ticketCard = (ticket) => {
+        let ticketDate = new Date(ticket?.createdAt)
         return (<>
             <div onClick={() => {nav(`/tickets/${ticket?.id}`)}} className='ticketsContainer'>
                 <div className='ticketId'>{ticket?.id}</div>
-                <span>{ticket?.createdAt}</span>
+                <span>{JSON.stringify(ticketDate.toLocaleString())}</span>
                 <div className='ticketProducts'>{ticket?.Productos && ticket?.Productos.map((product => (<div className='productTicketCard'>
                     <div className='productTicketsQuantity'>{product["quantity"]}</div>
                     <div className='productTicketsName'>{product["Producto"]}</div>
