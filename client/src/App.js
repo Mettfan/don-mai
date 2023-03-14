@@ -21,6 +21,7 @@ import UserDetail from './Components/User/UserDetail/UserDetail';
 import TicketHandler from './Components/TicketHandler/TicketHandler';
 import TicketDetail from './Components/TicketDetail/TicketDetail';
 import TicketStats from './Components/TicketStats/TicketStats';
+import CompleteProductInfo from './Components/CompleteProductInfo/CompleteProductInfo';
 
 function App() {
   let dispatch = useDispatch()
@@ -49,6 +50,9 @@ function App() {
         <Route path ="/tickets" element={<TicketHandler/>} />
         <Route path ="/tickets/:id" element={<TicketDetail/>} />
         <Route path ="/tickets/stats" element={<TicketStats/>} />
+
+        <Route path ="/complete/product/:attribute" element={<CompleteProductInfo/>} />
+        {/* <Route path ="/complete/product/:attribute" element={<CompletePCompra/>} /> */}
 
       </Routes>
     </div>

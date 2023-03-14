@@ -1,3 +1,4 @@
+import { color } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
@@ -54,8 +55,9 @@ function TicketCreator(props) {
                     {match['id']}
                   </div>
                   <div style={{
-                    backgroundColor: 'Highlight' 
-                  }}>-</div>
+                    backgroundColor: 'Highlight',
+                    color: "white"
+                  }}>{match['quantity']}</div>
 
                 </div>
                 </>)
