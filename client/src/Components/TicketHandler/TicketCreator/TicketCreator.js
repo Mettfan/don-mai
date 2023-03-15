@@ -183,7 +183,10 @@ function TicketCreator(props) {
             }
             if(e?.code === 'ArrowRight'){
                 console.log('AGREGADO!!!');
-                productClicked([...ticketProducts]?.reverse()[productIndex])
+                if(ticketProducts?.length > 0){
+                    productClicked([...ticketProducts]?.reverse()[productIndex])
+
+                }
             }
             if(e?.code === 'ArrowLeft'){
                 console.log('QUITADO');
@@ -198,6 +201,9 @@ function TicketCreator(props) {
     
                 }
                 
+            }
+            if(e?.code === 'F9'){
+                document.getElementById('submitTicket').click()
             }
         }
     }
@@ -245,7 +251,7 @@ function TicketCreator(props) {
                 <div>
                     <label className='formTicketCreatorTotal'>{ state.total && ('Total: ' +( '$' + state?.total) || '$0')}</label>
                 </div>
-                <button className='createTicketSubmitButton' onClick={ () => {submitTicket(state.ticketType)}}>CREAR TICKET</button>
+                <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {submitTicket(state.ticketType)}}>CREAR TICKET</button>
                 {productThumb()}
             </form>
 
