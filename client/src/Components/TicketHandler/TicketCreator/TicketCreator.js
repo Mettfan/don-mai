@@ -13,6 +13,7 @@ function TicketCreator(props) {
     let dispatch = useDispatch()
     let ticketProducts = useSelector(state => state.products.ticketProducts)
     const allProducts = useSelector( state => state.products.products)
+    const selectedProduct = useSelector( state => state.products.selectedProduct)
     useEffect(() => {
         document.getElementById('inputSearch').focus()
         let ticketTotal = 0
@@ -33,6 +34,7 @@ function TicketCreator(props) {
     }, [] )
     
     let [state, setState] = useState({
+        searchValue: '',
         inputSearch: '',
         total: 0,
         matchList: [],
@@ -112,9 +114,11 @@ function TicketCreator(props) {
         console.log(matches);
         setState({
           ...state,
-          matchList: matches
+          matchList: matches,
+          searchValue: searchText
         })
         setProductIndex(0)
+        
     
       }
     function submitTicket (type){
@@ -197,6 +201,25 @@ function TicketCreator(props) {
             }
         }
     }
+    function handleAddProduct2Ticket(e){
+        e?.preventDefault()
+        console.log(state);
+        dispatch(fetchOneProduct({filter: "Código", value: state.searchValue}))
+        console.log(selectedProduct);
+    }
+    useEffect(() => {
+        // selectedProduct && dispatch(addProductToGlobalTicket(selectedProduct))
+        if(selectedProduct["Producto"]){
+            console.log(selectedProduct);
+            dispatch(addProductToGlobalTicket(selectedProduct))
+            setState({...state, 
+                searchValue: '',
+                matchList: [],
+                inputSearch: ''
+            })
+            document.getElementById('inputSearch').value = ''
+        }
+    }, [selectedProduct])
     return ( <>
         {productIndex}
         <div className='ticketCreator'>
@@ -206,17 +229,18 @@ function TicketCreator(props) {
             </div>
     {/* SLIDER */}
         <label className="switch">
+            {JSON.stringify(state.searchValue)}
             <input id='switch' onClick={() => handleSwitch()} type="checkbox"/>
             <span className="slider"></span>
         </label>
         {JSON.stringify(date.toLocaleString())}
     {/*      */}
+            <form onSubmit={(e) => handleAddProduct2Ticket(e) }>
+                <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
+                <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
+            </form>
             <form onSubmit={(e) => {handleOnTicketSubmit(e)} }>
                 <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label>
-                <div>
-                    <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
-                    <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
-                </div>
                 {ticketProducts?.length && ticketProducts?.map( product => productCard(product) )?.reverse() || 'Agregue algunos productos!'}
                 <div>
                     <label className='formTicketCreatorTotal'>{ state.total && ('Total: ' +( '$' + state?.total) || '$0')}</label>
