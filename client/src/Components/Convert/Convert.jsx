@@ -14,15 +14,15 @@ import CreateProduct from "../CreateProduct/CreateProduct";
 // import { Readable } from 'stream';
 // XLSX.set_fs(fs);
 // XLSX.stream.set_readable(Readable);
-export function downloadExcel (data)  {
+export function downloadExcel (data, titulo = 'Respaldo')  {
     //download Excel es una funcion que nos permite descargar un archivo en formato excel a partir de datos entregados
-    const fileName = 'Respaldo.xlsx';
+    const fileName = titulo;
 
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Respaldo');
+    XLSX.utils.book_append_sheet(wb, ws, titulo);
 
-    XLSX.writeFile(wb, fileName);
+    XLSX.writeFile(wb, fileName + '.xlsx');
   };
 export const readExcel = (file) => {
     const promise  = new Promise( ( resolve, reject ) => {
