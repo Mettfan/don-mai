@@ -169,6 +169,9 @@ function TicketCreator(props) {
                 }
                 
             }
+            if(e?.code === 'F9'){
+                document.getElementById('submitTicket').click()
+            }
         }
         else{
             if(e?.code === 'ArrowUp'){
