@@ -28,7 +28,7 @@ function CompleteProductInfo() {
         console.log(e.target.name, barcode)
         console.log(e.target.value)
         console.log(productSelected);
-        dispatch(editOneProduct({id: productSelected?.id, findBy: e.target.name, infoUpdated: productSelected["P. Compra"]})).then(()=>{
+        dispatch(editOneProduct({id: productSelected?.id, findBy: e.target.name, infoUpdated: productSelected[params?.attribute]})).then(()=>{
             window.location.reload()
         })
 
@@ -36,7 +36,7 @@ function CompleteProductInfo() {
     }
 
     useEffect(() => {
-        setState({...state, products4Complete: products?.filter(product => product[params?.attribute] === null)})
+        setState({...state, products4Complete: products?.filter(product => ((product[params?.attribute] === null) || (product[params?.attribute] <= 0) ) )})
     }, [params])
     useEffect(() => {
         if(params?.attribute){
@@ -58,10 +58,15 @@ function CompleteProductInfo() {
         <button id={'P. VentaComplete'} onClick={() => nav('/complete/product/P. Venta')}>
             P. Venta
         </button>
+        <button id={'quantityComplete'} onClick={() => nav('/complete/product/quantity')}>
+            quantity
+        </button>
         <div>
             {state?.products4Complete?.map(product => {
                 return (<form name={params?.attribute} onSubmit={(e) => {attributeOnSubmit(e, product?.Código)}}>
                     <div>{product?.Producto}</div>
+                    <div>{product?.Código}</div>
+                    <div>{product?.quantity}</div>
                     {product?.Producto && <input name={product?.Código}  type={'text'} onChange={(e) => onProductsChangeAttribute(e)}></input>}
                 </form>)
             })}

@@ -22,7 +22,8 @@ import TicketHandler from './Components/TicketHandler/TicketHandler';
 import TicketDetail from './Components/TicketDetail/TicketDetail';
 import TicketStats from './Components/TicketStats/TicketStats';
 import CompleteProductInfo from './Components/CompleteProductInfo/CompleteProductInfo';
-import BackupTickets from './Components/TicketHandler/BackupTickets/BackupTickets';
+import BackupTickets from './Components/TicketHandler/RestoreTickets/BackupTickets/BackupTickets';
+import RestoreTickets from './Components/TicketHandler/RestoreTickets/RestoreTickets';
 
 function App() {
   let dispatch = useDispatch()
@@ -51,7 +52,7 @@ function App() {
         <Route path ="/tickets" element={<TicketHandler/>} />
         <Route path ="/tickets/:id" element={<TicketDetail/>} />
         <Route path ="/tickets/stats" element={<TicketStats/>} />
-        <Route path ="/tickets/backup" element={<BackupTickets/>} />
+        <Route path ="/tickets/backup" element={<RestoreTickets/>} />
 
         <Route path ="/complete/product/:attribute" element={<CompleteProductInfo/>} />
         {/* <Route path ="/complete/product/:attribute" element={<CompletePCompra/>} /> */}
