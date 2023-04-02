@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as XLSX from 'xlsx'
-import { fetchOneProduct } from '../../../../features/products/productSlicetest';
+import { fetchOneProduct, postTicket } from '../../../../features/products/productSlicetest';
 function UploadTickets(props) {
     let [uploadTickets, setUploadTickets] = useState(props.tickets)
     let ticketProducts = useSelector(state => state.products.ticketProducts)
@@ -72,10 +72,19 @@ function UploadTickets(props) {
         console.log(e.target.files[0]);
         readExcel(e.target.files[0])
     }
+    function postTickets(tickets){
+        tickets.forEach(ticket => {
+            uploadTicket({products: ticket['Productos'], total: 10, user: ticket['user'], client: ticket['client'], description: ticket['description']})
+        })
+    }
+    function uploadTicket ({products, total, user, client, description}){
+        dispatch(postTicket({products, total, user, client, description}))
+    }
     return ( <>
     
         <input onChange={(e) => inputOnChange(e)} type="file" id = 'hoja' accept= ".xls, .xlsx"></input>
-        <button onClick={() => saveNonFormattedTickets(uploadTickets)}>Save Tickets</button>
+        <button onClick={() => saveNonFormattedTickets(uploadTickets)}>Load Tickets</button>
+        {formattedTickets.length > 0 && <button onClick={() => postTickets(formattedTickets)}>Post Tickets</button>}
         {JSON.stringify(ticketProducts)}
         {formattedTickets?.map(ticket => {
             return (<div style={{border: "2px solid black"}}>
