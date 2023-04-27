@@ -223,7 +223,7 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
-        
+        /// Here starts Ticket case
         builder.addCase(makeTicket.pending, state => {
             state.loading = true
         })
@@ -265,7 +265,21 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
-
+        
+        builder.addCase(deleteTicket.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(deleteTicket.fulfilled, (state, action) => {
+            state.loading = false
+            state.ticket = action.payload
+            state.error = ''
+        })
+        builder.addCase(deleteTicket.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+    
     }
 })
 
@@ -323,14 +337,15 @@ const decreaseStock = createAsyncThunk('products/sellProducts', ({products}) => 
     })
     .then( response => response.data)
 })
-const makeTicket = createAsyncThunk('products/ticketProducts', ({products, total, user, client, description }) => {
-    console.log(products, total, user, client, description);
+const makeTicket = createAsyncThunk('products/ticketProducts', ({products, total, user, client, description, createdAt }) => {
+    console.log(products, total, user, client, description, createdAt);
     return axios.post(`http://localhost:3001/Tickets`, {
         products,
         total,
         user,
         client,
-        description
+        description,
+        createdAt
 
     })
     .then( response => response.data)
@@ -341,6 +356,13 @@ const getTickets = createAsyncThunk('products/getTickets', () => {
 })
 const getTicket = createAsyncThunk('products/getTicket', (id) => {
     return axios.get(`http://localhost:3001/Tickets/?id=${id}`)
+    .then( response => response.data)
+})
+const deleteTicket = createAsyncThunk('products/deleteTicket', (id, user) => {
+    return axios.post(`http://localhost:3001/Ticket/delete`, {
+        id,
+        user
+    })
     .then( response => response.data)
 })
 export const {
@@ -371,3 +393,4 @@ export const killModal = hideModal
 export const postTicket = makeTicket
 export const fetchTickets = getTickets
 export const getTicketById = getTicket
+export const destroyTicket = deleteTicket

@@ -1,0 +1,9 @@
+.generalStatsIncomeandOutcome{
+    position: relative;    
+    bottom: 10vh;
+}
+.generalStatsContainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

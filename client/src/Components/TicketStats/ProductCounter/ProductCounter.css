@@ -1,0 +1,32 @@
+.productCounterContainer{
+    background-color: beige;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    border: 3px  double black;
+    padding: 5px;
+}
+.productTick{
+    background-color: black;
+    padding-inline: 5px;
+    
+}
+.producTickContainer{
+    border: 3px gold solid;
+
+    
+}
+
+.productCounterBackground{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: none;
+    width: auto;
+    filter: drop-shadow(3px 3px 3px gray);
+    margin-bottom: 5px;
+}

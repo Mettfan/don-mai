@@ -42,19 +42,20 @@ export default function Catalog (props){
                 {    !user && <div>
                     not registered
                     <div>
-                        Registrate y mira nuestros 639 productos existentes
+                        Registrate y mira nuestros {productList?.length} productos existentes
                     </div>
                 </div> }
                 {    user?.privileges === 'usuario' && <div>
                     usuario mode
                 </div> }
-                {/* {JSON.stringify(state.store)} */}
                 {    user?.privileges === 'admin' && <div>
                     admin mode
                     <button onClick={ () => downloadExcel() }> DOWNLOAD EXCEL </button>
                     <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
                 </div> }
-                {/* {JSON.stringify(state.store)} */}
+
+                {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
+                <button onClick={() => nav('/complete/product/info')} >COMPLETE PRODUCT INFO</button>
                 
                 
 

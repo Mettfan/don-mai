@@ -1,0 +1,12 @@
+.ticketStatsContainer{
+    background-color: red;
+}
+/* .ticketStatsMargin{
+    border: 2px solid red;
+} */
+.zoomInButton{
+    background-color: gold;
+}
+.zoomOutButton{
+    background-color: blue;
+}

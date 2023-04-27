@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 
 export const Example = (propsRoot) => {
+  const productState = useSelector( state => state)
+
   let cookie = new Cookies()
   let user = cookie.get('user')
   const date = new Date()
@@ -33,6 +35,7 @@ export const Example = (propsRoot) => {
           <div className="informacionFiscal">
             
             <b className="ticketTitle" >'Tiendas Don May'</b>
+            <img className="mickeyTicket" src={LOGODONMAY}/>
             <div>Miguel Torres Colindres</div>
             <div>R.F.C.: TOCM520906G97 </div>
             <div>Melchor Ocampo 301</div>
@@ -42,7 +45,6 @@ export const Example = (propsRoot) => {
             <div>{currentDate}</div>
             <div>{currentDateTime}</div>
             <div>Ticket  Id{' '+state.ticketId}</div>
-            <img className="mickeyTicket" src={LOGODONMAY}/>
           </div>
           <div className="divisorContainerStart"></div>
           <div>
@@ -69,6 +71,7 @@ export const Example = (propsRoot) => {
       })
       dispatch(sellProducts({products: ticketProducts})).then(() => {
         dispatch(postTicket({products: ticketProducts, total: total, user: user?.email, client: null, description: 'out'})).then(() => {
+          // console.log(productState?.products?.response );
           console.log('posteado');
         })
       })

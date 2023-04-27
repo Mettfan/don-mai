@@ -1,0 +1,18 @@
+.relativeMarginAnalytic{
+    background-color: red;
+    color: white;
+    width: 100%;
+}
+.absoluteMarginAnalytic{
+    background-color: yellowgreen;
+    width: 100%;
+
+}
+.marginValuesContainer{
+    display: flex;
+    justify-content: space-between;
+
+}
+.totalInvestedAnalytic{
+    background-color: gold;
+}

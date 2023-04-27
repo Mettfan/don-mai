@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getTicketById } from '../../features/products/productSlicetest';
 import PrintComponent from '../TicketHandler/PrintComponent.js/PrintComponent';
 import './TicketDetail.css'
@@ -11,9 +11,13 @@ function TicketDetail() {
     let params = useParams()
     let ticket = useSelector(state => state.products.ticket)
     let dispatch = useDispatch()
+    let nav = useNavigate()
     useEffect(() => {
         dispatch(getTicketById(params?.id))
     },[])
+    let ReturnToTickets = () =>{
+        nav('/tickets')
+    }
     let TicketToPrint = ({ticket}) => {
         return (<>
         {/* <div className='ticketContainer'> */}
@@ -75,9 +79,15 @@ function TicketDetail() {
     
         <div className='ticketDetailContainer'>
             {/* {JSON.stringify(params)} */}
-            <PrintComponent buttonComponent= {<img src={printerPng} style={{
-                'width': '50px'
-            }}></img>} component = {<TicketToPrint ticket = { ticket }></TicketToPrint>} ></PrintComponent>            
+            {
+                ticket?.id
+                ? 
+                <PrintComponent buttonComponent= {<img src={printerPng} style={{
+                    'width': '50px'
+                }}></img>} component = {<TicketToPrint ticket = { ticket }></TicketToPrint>} ></PrintComponent>
+                : 
+                <ReturnToTickets></ReturnToTickets>            
+            }
 
         </div>
     
