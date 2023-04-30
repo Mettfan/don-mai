@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { matchProduct, postProduct } from '../../features/products/productSlicetest';
+import { getMyProducts, matchProduct, postProduct } from '../../features/products/productSlicetest';
 import {useNavigate} from 'react-router-dom'
 import Cookies from 'universal-cookie';
 function CreateProduct() {
@@ -23,11 +23,22 @@ function CreateProduct() {
             }
         })
     }
-    let createProduct = (product, userId) => {
+    let createProduct = async (product, userId) => {
         console.log(product);
-        dispatch(postProduct({products: [{...product}], userId: userId})).then(() => {
-            console.log("created!");
+        let promise = new Promise((resolve, reject) => {
+            dispatch(postProduct({products: [{...product}], userId: userId})).then(() => {
+                console.log("created!");
+                resolve('OKCREATED')
+    
+            })
 
+        })
+        await promise.then(result => {
+            dispatch(getMyProducts({userId: userId}))
+            console.log(result);
+
+        }).then(() => {
+            nav('/catalog')
         })
         
     }
@@ -44,10 +55,10 @@ function CreateProduct() {
         <input placeholder='P.Venta' name = {'P. Venta'} type={'number'} onChange={( (e) => {handleInputChange(e)})} />
         <input placeholder='Departamento' name = {'Departamento'} type={'text'} onChange={( (e) => {handleInputChange(e)})} />
         <button onClick={() => { createProduct(state.product, user.id ) } } >CREAR</button>
-        <button onClick={() => { associateProduct(49, 1) }} >associateProduct</button>
-        {JSON.stringify(serverResponse)}
+        {/* <button onClick={() => { associateProduct(49, 1) }} >associateProduct</button> */}
+        {/* {JSON.stringify(serverResponse)}
         {JSON.stringify(serverError)}
-        {JSON.stringify(user)}
+        {JSON.stringify(user)} */}
     
     </> );
     

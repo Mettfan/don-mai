@@ -162,7 +162,7 @@ export default function UpdatePrice(){
                         <form name="pieces" onSubmit={(e)=> {addStock(e)}}>
                             <input id="pieces" placeholder="Agregar Piezas a Inventario" name="pieces" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
-                        {JSON.stringify(globalState.response)}
+                        {/* {JSON.stringify(globalState.response)} */}
 
                     </div>
                     <div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Catalog.css'
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
@@ -15,6 +15,11 @@ import { downloadExcel } from "../Convert/Convert";
 
 
 export default function Catalog (props){
+    useEffect(() => {
+        if(user){
+            getUserProducts()
+        }
+    }, [])
     let nav = useNavigate()
     let todaysDate = new Date()
     let editMode = props.editmode
@@ -44,7 +49,10 @@ export default function Catalog (props){
             window.location.reload()
         })
     }
-
+    let getUserProducts = () => {
+        dispatch(getMyProducts({userId: user.id}))
+    }
+    
     return (<>
     
         <div>
@@ -69,8 +77,8 @@ export default function Catalog (props){
                 </div> }
 
                 {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
-                <button onClick={() => nav('/complete/product/info')} >COMPLETE PRODUCT INFO</button>
-                <MyProducts editMode = {editMode}></MyProducts>
+                {userProducts.length > 0 && <button onClick={() => nav('/complete/product/info')} >COMPLETE PRODUCT INFO</button>}
+                {userProducts.length !==  0 ? <MyProducts editMode = {editMode}></MyProducts> : <button onClick={() => {nav('/convert')}}>Create One Product</button> }
                 
 
             </div>
