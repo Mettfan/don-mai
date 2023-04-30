@@ -36,15 +36,11 @@ export const Example = (propsRoot) => {
             
             <b className="ticketTitle" >'Tiendas Don May'</b>
             <img className="mickeyTicket" src={LOGODONMAY}/>
-            <div>Miguel Torres Colindres</div>
-            <div>R.F.C.: TOCM520906G97 </div>
-            <div>Melchor Ocampo 301</div>
-            <div>San Antonio la Isla, Méx</div>
-            <div>C.P.: 52280</div>
-            <div>Tel: 722 371 1324</div>
+            <div>UserId: {" " + user.id}</div>
+            <div>Este ticket <b>NO</b> es un comprobante Fiscal</div>
             <div>{currentDate}</div>
             <div>{currentDateTime}</div>
-            <div>Ticket  Id{' '+state.ticketId}</div>
+            {/* <div>Ticket  Id{' '+state.ticketId}</div> */}
           </div>
           <div className="divisorContainerStart"></div>
           <div>

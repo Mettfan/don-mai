@@ -26,7 +26,7 @@ export default function Nav (){
             <NavLink className= { 'changePage' } to={'/home'}><div className="navText">HOME</div></NavLink>
             <NavLink className={ 'changePage' } to={'/catalog'}><div className="navText">CATALOG</div></NavLink>
             <NavLink className={ 'changePage' } to={'/search'}><div className="navText">SEARCH</div></NavLink>
-            <NavLink className={ 'changePage' } to={'/tickets'}><div className="navText">Tickets</div></NavLink>
+            {user?.privileges === 'admin' && <NavLink className={ 'changePage' } to={'/tickets'}><div className="navText">Tickets</div></NavLink>}
             <NavLink className={ 'changePage' } to={'/update/price'}><div className="navText">EDIT</div></NavLink>
             <UserNav user = {user} ></UserNav>
             {/* {JSON.stringify(user)} */}

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMyProducts, removeProduct } from '../../../features/products/productSlicetest';
+import { fetchOneProduct, getMyProducts, removeProduct } from '../../../features/products/productSlicetest';
 import Cookies from 'universal-cookie';
-function MyProducts() {
+function MyProducts(props) {
     
     let cookie = new Cookies()
     let userProducts = useSelector(state => state.products.userProducts)
@@ -22,16 +22,23 @@ function MyProducts() {
             getUserProducts()
         })
     }
+    function selectProduct(id){
+        if(props.editMode){
+            dispatch(fetchOneProduct( {filter: 'id' , value: id }))
+
+        }
+      }
     return ( <>
     
         <div>
-            <button onClick={() => {getUserProducts()}}>GET USER PRODUCTS</button>
+            {/* <button onClick={() => {getUserProducts()}}>GET USER PRODUCTS</button> */}
             <div style={{display: 'flex'}}>
                 {userProducts.map(product => {
-                    return (<div className='productBg' >
+                    return (<div onClick={() => {selectProduct(product.id)}} className='productBg' >
                         <div>{product.Producto}</div>
                         <div>{product['P. Venta']}</div>
                         <div>{product['Código']}</div>
+                        <div>{product['quantity']}</div>
                         <button onClick={() => deleteProduct(product['id'], user.id)}>X</button>
                     </div>)
                 })}

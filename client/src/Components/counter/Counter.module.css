@@ -153,3 +153,17 @@
   font-weight: 600;
 
 }
+.userMatchContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100px;
+  background-color: blue;
+  padding: 5px;
+  margin: 2px;
+  font-size: small;
+  font-weight: 600;
+
+}
