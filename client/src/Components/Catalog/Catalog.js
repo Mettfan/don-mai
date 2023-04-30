@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { getProducts } from "../../redux/actions/productActions";
 import { fetchAllProducts } from "../../redux/slices/products/product";
-import { fetchAllProducts  as fetchProducts, setCounter } from '../../features/products/productSlicetest';
+import { fetchAllProducts  as fetchProducts, getMyProducts, matchProduct, setCounter } from '../../features/products/productSlicetest';
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 import { useNavigate } from "react-router-dom";
 import AddProductToCart from "../../app/AddProductToCart/AddProductToCart";
 import CreateProduct from "../CreateProduct/CreateProduct";
+import MyProducts from "./MyProducts/MyProducts";
 export default function Catalog (props){
     let nav = useNavigate()
     let todaysDate = new Date()
@@ -31,6 +32,13 @@ export default function Catalog (props){
         dispatch( fetchProducts() )
     }
     let user = cookie.get('user')
+    let addProduct = (productId, userId) => {
+        console.log(userId, productId);
+        dispatch(matchProduct({userId, productId})).then(() => {
+            dispatch(getMyProducts())
+            window.location.reload()
+        })
+    }
     return (<>
     
         <div>
@@ -56,7 +64,7 @@ export default function Catalog (props){
 
                 {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
                 <button onClick={() => nav('/complete/product/info')} >COMPLETE PRODUCT INFO</button>
-                
+                <MyProducts></MyProducts>
                 
 
             </div>
@@ -66,6 +74,7 @@ export default function Catalog (props){
                     <span className="productBg">
                         <img className="productImage" src={productPlaceholder }/>
                         <div className="productInfoContainer">
+                            <button onClick={() => addProduct(product.id, user.id)}>ADD</button>
                             <div onClick={()=>{ nav('/products/'+product.id) }} >{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
                             {/* <AddProductToCart id={product.id} ></AddProductToCart> */}

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postProduct } from '../../features/products/productSlicetest';
+import { matchProduct, postProduct } from '../../features/products/productSlicetest';
 import {useNavigate} from 'react-router-dom'
+import Cookies from 'universal-cookie';
 function CreateProduct() {
+    let cookie = new Cookies()
+    let user = cookie.get('user')
+    let serverResponse = useSelector( state => state.products.response)
+    let serverError = useSelector( state => state.products.error)
     let nav = useNavigate()
     let [state, setState] = useState({
         product: {}
@@ -18,14 +23,19 @@ function CreateProduct() {
             }
         })
     }
-    let createProduct = (product) => {
+    let createProduct = (product, userId) => {
         console.log(product);
-        dispatch(postProduct([{...product}])).then(() => {
-            nav('/catalog')
-            window.location.reload()
+        dispatch(postProduct({products: [{...product}], userId: userId})).then(() => {
+            console.log("created!");
 
         })
         
+    }
+    let associateProduct = (productId, userId) => {
+        console.log(productId, userId);
+        dispatch(matchProduct({productId, userId})).then(() => {
+            console.log('matched');
+        })
     }
     return ( <>
 
@@ -33,8 +43,11 @@ function CreateProduct() {
         <input placeholder='Código' name = {'Código'} type={'text'} onChange={( (e) => {handleInputChange(e)})} />
         <input placeholder='P.Venta' name = {'P. Venta'} type={'number'} onChange={( (e) => {handleInputChange(e)})} />
         <input placeholder='Departamento' name = {'Departamento'} type={'text'} onChange={( (e) => {handleInputChange(e)})} />
-        <button onClick={() => { createProduct(state.product) } } >CREAR</button>
-        {JSON.stringify(globalState.products.loading)}
+        <button onClick={() => { createProduct(state.product, user.id ) } } >CREAR</button>
+        <button onClick={() => { associateProduct(49, 1) }} >associateProduct</button>
+        {JSON.stringify(serverResponse)}
+        {JSON.stringify(serverError)}
+        {JSON.stringify(user)}
     
     </> );
     
