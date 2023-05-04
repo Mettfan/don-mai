@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createOneSucursal } from '../../../features/sucursal/sucursalSlice';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { associateOneSucursalToUser, createOneSucursal } from '../../../features/sucursal/sucursalSlice';
 import './CreateSucursal.css'
+import LOGODONMAY from '../../../Assets/LOGODONMAY.png'
+import Cookies from 'universal-cookie';
+import { useNavigate } from 'react-router';
+
 function CreateSucursal() {
     let dispatch = useDispatch()
+    let cookie = new Cookies()
+    let user = cookie.get('user')
+    let nav = useNavigate()
+    let serverResponse = useSelector(state => state?.sucursales?.response)
+    let SUCURSALGLOBAL = useSelector(state => state?.sucursales)
+    useEffect(() => {
+        let associatedUserId = serverResponse?.associationResponse?.id
+        if (associatedUserId){
+            nav('/sucursal/' + associatedUserId )
+        }
+    }, [serverResponse])
+
     let [sucursalForm, setSucursalForm] = useState({
         name: '',
         image: '',
@@ -16,10 +32,10 @@ function CreateSucursal() {
             [e.target.name]: e.target.value
         })
     }
-    let handleOnSubmit = (e) => {
+    let handleOnSubmit = async (e) => {
         e.preventDefault && e.preventDefault()
-        console.log('Sucursal SUBMITED: '+ sucursalForm);
-        dispatch( createOneSucursal({sucursal: sucursalForm}))
+        dispatch( createOneSucursal({sucursal: sucursalForm, userId: user.id}))
+       
         // document.getElementsById('userCreateForm').reset()
     }
     return ( <>
@@ -33,11 +49,13 @@ function CreateSucursal() {
                 <label>Imagen</label>
                 <input name='image' type={'text'} onChange={(e)=> handleOnChange(e)}/>
             </div>
+            <img style={{width: '50%'}} src={sucursalForm.image || LOGODONMAY} alt='Imagen no disponible, intente otra'></img>
             <div className='createSucursalFormGroupContainer'>
                 <label>Celular</label>
                 <input name='phone' type={'text'} onChange={(e)=> handleOnChange(e)}/>
             </div>
             <button type='submit'>CREAR</button>
+        {JSON.stringify(SUCURSALGLOBAL)}
         </form>
 
         </div>

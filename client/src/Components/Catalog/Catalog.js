@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { getProducts } from "../../redux/actions/productActions";
 import { fetchAllProducts } from "../../redux/slices/products/product";
-import { fetchOneProduct, fetchAllProducts  as fetchProducts, getMyProducts, matchProduct, setCounter } from '../../features/products/productSlicetest';
+import { fetchOneProduct, fetchAllProducts  as fetchProducts, getMyProducts, matchProduct, postProduct, setCounter } from '../../features/products/productSlicetest';
 import productPlaceholder from '../../Assets/productPlaceholder.png'
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 import { useNavigate } from "react-router-dom";
@@ -42,12 +42,52 @@ export default function Catalog (props){
         dispatch( fetchProducts() )
     }
     let user = cookie.get('user')
-    let addProduct = (productId, userId) => {
-        console.log(userId, productId);
-        dispatch(matchProduct({userId, productId})).then(() => {
-            dispatch(getMyProducts())
-            window.location.reload()
+    let createProduct = async (product, userId) => {
+        // Para crearlo sin Id y no arroje error en el backend quitamos la propiedad Id para que no se refiera al mismo producto, sino a la copia
+        product = {
+            ['Código']: product['Código'] || null,
+            ['Producto']: product['Producto'] || null,
+            ['P. Venta']: product['P. Venta'] || null,
+            ['P. Compra']: product['P. Compra'] || null,
+            // ['updatedAt']: product['updatedAt'] || null,
+            // ['createdAt']: product['createdAt'] || null,
+            // ['quantity']: product['quantity'] || 0,
+            ['Departamento']: product['Departamento'] || null,
+            ['image']: product['image'] || null,
+            // ['sales']: product['sales'] || 0,
+            ['brand']: product['brand'] || null,
+          }
+        console.log(product);
+        let promise = new Promise((resolve, reject) => {
+            dispatch(postProduct({products: [{...product}], userId: userId})).then(() => {
+                console.log("created!");
+                resolve('OKCREATED')
+    
+            })
+
         })
+        await promise.then(result => {
+            dispatch(getMyProducts({userId: userId}))
+            console.log(result);
+
+        }).then(() => {
+            nav('/catalog')
+        })
+        
+    }
+    let addProduct = async (product, userId) => {
+
+        console.log(product, userId);
+        createProduct(product, userId)
+    //     dispatch(getMyProducts())
+
+
+        // Lo siguiente es la version funcional de la asociacion con el producto indicado. Fue reemplazado por la creación de un nuevo producto similar al elegido
+        // console.log(userId, productId);
+        // dispatch(matchProduct({userId, productId})).then(() => {
+        //     dispatch(getMyProducts())
+        //     window.location.reload()
+        // })
     }
     let getUserProducts = () => {
         dispatch(getMyProducts({userId: user.id}))
@@ -88,7 +128,7 @@ export default function Catalog (props){
                     <span className="productBg">
                         <img className="productImage" src={productPlaceholder }/>
                         <div className="productInfoContainer">
-                            <button onClick={() => addProduct(product.id, user.id)}>ADD</button>
+                            <button onClick={() => addProduct(product, user.id)}>ADD</button>
                             <div onClick={()=>{ nav('/products/'+product.id) }} >{product.Producto}</div>
                             <div>{product['P. Venta']}</div>
                             {/* <AddProductToCart id={product.id} ></AddProductToCart> */}

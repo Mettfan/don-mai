@@ -24,6 +24,8 @@ import TicketStats from './Components/TicketStats/TicketStats';
 import CompleteProductInfo from './Components/CompleteProductInfo/CompleteProductInfo';
 import BackupTickets from './Components/TicketHandler/RestoreTickets/BackupTickets/BackupTickets';
 import RestoreTickets from './Components/TicketHandler/RestoreTickets/RestoreTickets';
+import Sucursal from './Components/Sucursal/Sucursal';
+import UserSucursal from './Components/Sucursal/UserSucursal/UserSucursal';
 
 function App() {
   let dispatch = useDispatch()
@@ -53,6 +55,8 @@ function App() {
         <Route path ="/tickets/:id" element={<TicketDetail/>} />
         <Route path ="/tickets/stats" element={<TicketStats/>} />
         <Route path ="/tickets/backup" element={<RestoreTickets/>} />
+        <Route path ="/sucursal/:id" element={<Sucursal/>} />
+        <Route path ="/sucursal/" element={<UserSucursal/>} />
 
         <Route path ="/complete/product/:attribute" element={<CompleteProductInfo/>} />
         {/* <Route path ="/complete/product/:attribute" element={<CompletePCompra/>} /> */}

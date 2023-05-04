@@ -33,20 +33,19 @@ export const sucursalSlice = createSlice({
         //     state.error = action.error.message
         // })
 //////////////////////////////
-        // builder.addCase(fetchSucursal.pending, state => {
-        //     state.loading = true
-        // })
-        // builder.addCase(fetchSucursal.fulfilled, (state, action) => {
-        //     cookie.set('sucursal', action.payload)
-        //     state.loading = false
-        //     state.sucursal = {...action.payload}
-        //     state.error = ''
-        // })
-        // builder.addCase(fetchSucursal.rejected, (state, action) => {
-        //     state.loading = false
-        //     state.sucursal = {}
-        //     state.error = action.error.message
-        // })
+        builder.addCase(fetchSucursal.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(fetchSucursal.fulfilled, (state, action) => {
+            state.loading = false
+            state.sucursal = {...action.payload}
+            state.error = ''
+        })
+        builder.addCase(fetchSucursal.rejected, (state, action) => {
+            state.loading = false
+            state.sucursal = {}
+            state.error = action.error.message
+        })
 ////////////////////////////
         // builder.addCase(editProduct.pending, state => {
         //     state.loading = true
@@ -96,19 +95,19 @@ export const sucursalSlice = createSlice({
     }
 })
 
-const createSucursal = createAsyncThunk('sucursales/createSucursal', ({sucursal}) => {
-    return axios.post('http://localhost:3001/sucursales', {sucursal: sucursal})
-    .then( response => response.data.db)
+const createSucursal = createAsyncThunk('sucursales/createSucursal', ({sucursal, userId}) => {
+    return axios.post('http://localhost:3001/sucursales', {sucursal: sucursal, userId: userId})
+    .then( response => response.data)
 })
 const associateSucursalToUser = createAsyncThunk('sucursales/associateSucursalToUser', ({userId, sucursalId}) => {
     return axios.post('http://localhost:3001/sucursales/add/user', {userId, sucursalId})
     .then( response => response.data)
 })
-// const fetchSucursal = createAsyncThunk('users/fetchSucursal', ({filter, value, password}) => {
-//     console.log(value);
-//     return axios.get(`http://localhost:3001/sucursales/?filter=${filter}&value=${value}&password=${password}`)
-//     .then( response => response.data)
-// })
+const fetchSucursal = createAsyncThunk('sucursales/fetchSucursal', ({filter, value}) => {
+    console.log(value);
+    return axios.get(`http://localhost:3001/sucursales/?filter=${filter}&value=${value}`)
+    .then( response => response.data)
+})
 // const editProduct = createAsyncThunk('products/editProduct', ({id, findBy, infoUpdated}) => {
 //     // console.log(value);
 //     return axios.put(`http://localhost:3001/products/update`, {
@@ -125,5 +124,5 @@ export const {
 // export const productSliceReducer = productSlicetest.reducer
 export const createOneSucursal = createSucursal
 export const associateOneSucursalToUser = associateSucursalToUser
-// export const fetchOneSucursal = fetchSucursal //
+export const fetchOneSucursal = fetchSucursal //
 // export const editOneProduct = editProduct
