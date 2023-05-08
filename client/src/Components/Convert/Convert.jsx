@@ -165,7 +165,6 @@ export default function Convert () {
                 <button onClick={() => nextPage()} className='buttonNext'>Next</button>
             </div>
         }
-        <CreateProduct></CreateProduct>
     </>)
 }
 

@@ -16,7 +16,7 @@ function CreateSucursal() {
     useEffect(() => {
         let associatedUserId = serverResponse?.associationResponse?.id
         if (associatedUserId){
-            nav('/sucursal/' + associatedUserId )
+            window.location.reload()
         }
     }, [serverResponse])
 

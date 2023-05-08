@@ -36,6 +36,9 @@ function UserDetail(props) {
                 <div>
                     {user.privileges}
                 </div>  
+                <div>
+                    {user.id}
+                </div>  
                 {/* {JSON.stringify(user)} */}
                 <button className='logoutButton' onClick={() => {handleOnLogOut()}}>
                     Cerrar Sesión

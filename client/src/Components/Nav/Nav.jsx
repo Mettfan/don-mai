@@ -15,6 +15,7 @@ export default function Nav (){
     let productos = state.productos
     let nav = useNavigate()
     let user = useSelector(state => state.user) || cookie.get('user')
+    let userSucursal = useSelector(state => state.sucursales?.sucursal)
     return (<>
         <div className="nav">
             <img src={Menu} className='menuPng'/>
@@ -27,6 +28,7 @@ export default function Nav (){
             <NavLink className={ 'changePage' } to={'/catalog'}><div className="navText">CATALOG</div></NavLink>
             {user?.privileges && <NavLink className={ 'changePage' } to={'/search'}><div className="navText">SEARCH</div></NavLink>}
             {user?.privileges === 'admin' && <NavLink className={ 'changePage' } to={'/tickets'}><div className="navText">Tickets</div></NavLink>}
+            {userSucursal?.id && <NavLink className={ 'changePage' } to={'/sucursal'}><div className="navText">Sucursal</div></NavLink>}
             <NavLink className={ 'changePage' } to={'/update/price'}><div className="navText">EDIT</div></NavLink>
             <UserNav user = {user} ></UserNav>
             {/* {JSON.stringify(user)} */}

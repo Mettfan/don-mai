@@ -118,7 +118,7 @@ export default function Catalog (props){
 
                 {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
                 {userProducts.length > 0 && <button onClick={() => nav('/complete/product/info')} >COMPLETE PRODUCT INFO</button>}
-                {userProducts.length !==  0 ? <MyProducts editMode = {editMode}></MyProducts> : <button onClick={() => {nav('/convert')}}>Create One Product</button> }
+                {userProducts.length !==  0 ? <MyProducts editMode = {editMode}></MyProducts> : <button onClick={() => {nav('/upload/product')}}>Create One Product</button> }
                 
 
             </div>
