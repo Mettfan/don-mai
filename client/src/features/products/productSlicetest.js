@@ -106,6 +106,31 @@ export const productSlicetest = createSlice({
 
 
         },
+        setProductQuantity: ( state, action) => {
+            
+
+            console.log(action);
+            if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
+                console.log('Ya existe');
+                state.ticketProducts =  state.ticketProducts.map( producto => {
+                        if(action.payload.id == producto.id && producto.quantity > 0){
+                            return {...producto, ['quantity']: action.payload.quantity }
+                        }
+                        else{
+                            return producto
+                        }
+                    })
+                
+            }
+            else{
+
+                console.log('Product currently inexistent: ' + JSON.stringify(action.payload));
+
+            }
+
+
+        },
+        
 
         
 
@@ -436,6 +461,7 @@ export const {
     counterIncrement,
     setCounter,
     addProductToShoppingCart,
+    setProductQuantity
 
 } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer

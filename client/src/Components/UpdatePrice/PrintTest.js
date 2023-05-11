@@ -9,7 +9,7 @@ import Cookies from "universal-cookie";
 
 export const Example = (propsRoot) => {
   const productState = useSelector( state => state)
-
+  let sucursal = useSelector(state => state.sucursales?.sucursal)
   let cookie = new Cookies()
   let user = cookie.get('user')
   const date = new Date()
@@ -34,8 +34,8 @@ export const Example = (propsRoot) => {
         <div ref={ref} className= 'mainTicketContainer' >
           <div className="informacionFiscal">
             
-            <b className="ticketTitle" >'Tiendas Don May'</b>
-            <img className="mickeyTicket" src={LOGODONMAY}/>
+            <b className="ticketTitle" >{sucursal?.name}</b>
+            <img className="mickeyTicket" src={sucursal?.image}/>
             <div>UserId: {" " + user.id}</div>
             <div>Este ticket <b>NO</b> es un comprobante Fiscal</div>
             <div>{currentDate}</div>
@@ -83,7 +83,7 @@ export const Example = (propsRoot) => {
     <div>  
       <ComponentToPrint ref={componentRef} />
       {/* <button className="printButton" onClick={handlePrint}>COBRAR</button> */}
-      <button className="printButton" onClick={handlePrint}>COBRAR</button>
+      {propsRoot?.payment && !propsRoot?.falta && <button className="printButton" onClick={handlePrint}>COBRAR</button>}
     </div>
   );
 };

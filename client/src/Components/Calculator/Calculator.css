@@ -5,6 +5,8 @@
     flex-wrap: wrap ;
     width: 200px;
     position: fixed;
+    top: 10%;
+    left: 20px;
     height: 75px;
     padding: 10px;
 }

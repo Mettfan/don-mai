@@ -1,7 +1,7 @@
 .mickeyTicket{
     width: 100px;
     position: relative;
-    left: 10mm ;
+    left: 15mm ;
     /* right: 10mm;
     bottom: 30mm; */
 }
@@ -25,9 +25,9 @@
     height: 1mm;
 }
 .printButton{
-    position: fixed;
-    right: 10px;
-    bottom:50% ;
+    position: relative;
+    /* right: 10px;
+    bottom:50% ; */
 }
 .informacionFiscal{
     display: flex;

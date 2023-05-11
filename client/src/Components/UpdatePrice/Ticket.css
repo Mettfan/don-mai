@@ -30,10 +30,10 @@
     background-color: orange;
 }
 .paymentInput{
-    position: fixed;
+    position: relative;
     z-index: 1;
-    top: 50%;
-    right: 0px;
+    /* top: 50%;
+    left: 0px; */
 }
 .productTicketAddedContainer{
     display: flex;

@@ -192,6 +192,24 @@ export function Counter() {
                 </>)
               }) :(<div>{'No hay de ese :('}</div>)  }
             </div>
+            <div className={styles.matchList}>
+              { (user.privileges === 'admin') && (state.matchList.length >= 1) ? state.matchList.map(match => {
+                return (<>
+                <div className={styles.matchContainer} onClick={()=>{productClicked(match.id)}}>
+                  <div>
+                    {match['Producto']}
+                  </div>
+                  <div>
+                    {match['P. Venta']}
+                  </div>
+                  <div>
+                    {match['id']}
+                  </div>
+
+                </div>
+                </>)
+              }) :(<div>{'No hay de ese :('}</div>)  }
+            </div>
               
           </form>
               { (<div className={styles.serverState}>
