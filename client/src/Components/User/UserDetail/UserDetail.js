@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { editOneUser } from '../../../features/users/userSlice';
 import './UserDetail.css'
+import LOGODONMAY from '../../../Assets/LOGODONMAY.png'
+
 function UserDetail(props) {
     let dispatch = useDispatch()
-    let [imageUrl, setImageUrl] = useState('')
+    let [imageUrl, setImageUrl] = useState(LOGODONMAY)
     let cookie = new Cookies() 
     let nav = useNavigate()
     let user = props.user || cookie.get('user')
@@ -34,14 +36,17 @@ function UserDetail(props) {
                 <div>
                     {user.privileges}
                 </div>  
+                <div>
+                    {user.id}
+                </div>  
                 {/* {JSON.stringify(user)} */}
                 <button className='logoutButton' onClick={() => {handleOnLogOut()}}>
                     Cerrar Sesión
                 </button>
             </div>
-            <input placeholder='URL de Imagen' type={'text'} onChange={(e) => {onURLchange(e)}}  ></input>
+            {/* <input placeholder='URL de Imagen' type={'text'} onChange={(e) => {onURLchange(e)}}  ></input>
             <button onClick={() => {changeProfileImage(imageUrl) }} >Upload</button>
-            {imageUrl}
+            {imageUrl} */}
         </div>
     
     </> );

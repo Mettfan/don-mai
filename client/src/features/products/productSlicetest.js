@@ -17,7 +17,8 @@ export const productSlicetest = createSlice({
         modalShown: false,
         payment: null,
         tickets: [],
-        ticket: {}
+        ticket: {},
+        userProducts: []
     },
     reducers: {
         
@@ -105,6 +106,31 @@ export const productSlicetest = createSlice({
 
 
         },
+        setProductQuantity: ( state, action) => {
+            
+
+            console.log(action);
+            if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
+                console.log('Ya existe');
+                state.ticketProducts =  state.ticketProducts.map( producto => {
+                        if(action.payload.id == producto.id && producto.quantity > 0){
+                            return {...producto, ['quantity']: action.payload.quantity }
+                        }
+                        else{
+                            return producto
+                        }
+                    })
+                
+            }
+            else{
+
+                console.log('Product currently inexistent: ' + JSON.stringify(action.payload));
+
+            }
+
+
+        },
+        
 
         
 
@@ -280,6 +306,48 @@ export const productSlicetest = createSlice({
             state.response = null
         })
     
+        
+        builder.addCase(associateProduct.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(associateProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(associateProduct.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+        
+        builder.addCase(getUserProducts.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(getUserProducts.fulfilled, (state, action) => {
+            state.loading = false
+            state.userProducts = action.payload
+            state.error = ''
+        })
+        builder.addCase(getUserProducts.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
+        
+        builder.addCase(deleteUserProduct.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(deleteUserProduct.fulfilled, (state, action) => {
+            state.loading = false
+            state.response = action.payload
+            state.error = ''
+        })
+        builder.addCase(deleteUserProduct.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
     }
 })
 
@@ -301,10 +369,11 @@ const editProduct = createAsyncThunk('products/editProduct', ({id, findBy, infoU
     })
     .then( response => response.data)
 })
-const createProduct = createAsyncThunk('products/createProduct', (products) => {
+const createProduct = createAsyncThunk('products/createProduct', ({products, userId}) => {
     // console.log(value);
     return axios.post(`http://localhost:3001/products/upload`, {
-        productos: [...products]
+        productos: [...products],
+        userId: userId || null
     })
     .then( response => response.data)
 })
@@ -365,6 +434,21 @@ const deleteTicket = createAsyncThunk('products/deleteTicket', (id, user) => {
     })
     .then( response => response.data)
 })
+const associateProduct = createAsyncThunk('products/associateProduct', ({userId, productId}) => {
+    return axios.post(`http://localhost:3001/product/add/user`, {
+        userId,
+        productId
+    })
+    .then( response => response.data)
+})
+const getUserProducts = createAsyncThunk('products/getUserProducts', ({userId}) => {
+    return axios.get(`http://localhost:3001/product/get/user/?userId=${userId}`)
+    .then( response => response.data)
+})
+const deleteUserProduct = createAsyncThunk('products/deleteUserProduct', ({userId, productId}) => {
+    return axios.delete(`http://localhost:3001/product/delete/user/?userId=${userId}&productId=${productId}`)
+    .then( response => response.data)
+})
 export const {
     setPayment,
     showModal,
@@ -377,6 +461,7 @@ export const {
     counterIncrement,
     setCounter,
     addProductToShoppingCart,
+    setProductQuantity
 
 } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer
@@ -394,3 +479,6 @@ export const postTicket = makeTicket
 export const fetchTickets = getTickets
 export const getTicketById = getTicket
 export const destroyTicket = deleteTicket
+export const matchProduct = associateProduct
+export const getMyProducts = getUserProducts
+export const removeProduct = deleteUserProduct

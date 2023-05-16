@@ -5,18 +5,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './Counter.module.css';
 import { getProduct } from '../../redux/actions/productActions';
 import Cookies from 'universal-cookie';
-import { addProductToGlobalTicket, fetchAllProducts, fetchOneProduct, nextProduct, previousProduct, sellProducts } from '../../features/products/productSlicetest';
+import { addProductToGlobalTicket, fetchAllProducts, fetchOneProduct, getMyProducts, nextProduct, previousProduct, sellProducts } from '../../features/products/productSlicetest';
 import CreateProduct from '../CreateProduct/CreateProduct';
 // import { fetchProductByBarcode } from '../../features/products/productSlicetest';
 export function Counter() {
   let cookie = new Cookies()
+  let userProducts = useSelector(state => state.products.userProducts)
   let [state, setState] = useState({
     currentProduct: cookie.get('currentProduct'),
     reduxState: useSelector(state => state),
     searchValue: '',
     displayedProduct: {},
-    matchList: []
+    matchList: [],
+    userMatchList: []
   })
+  let user = cookie.get('user')
+  // El siguiente useEffect sirve para mandar a traer los productos del usuario al renderizar el componente
+  useEffect(() =>{
+    // if (!userProducts && user){
+    dispatch(getMyProducts({userId: user?.id}))
+    // }
+  }, [])
 
   // const count = useSelector(selectCount);
   const productState = useSelector( state => state)
@@ -49,13 +58,19 @@ export function Counter() {
       const regex = new RegExp(`^${searchText}`, 'gi')
       return product['Producto']?.match(regex) || product['Código']?.match(regex) || product['Departamento']?.match(regex) 
     })
+    let userMatches = userProducts.filter(product => {
+      const regex = new RegExp(`^${searchText}`, 'gi')
+      return product['Producto']?.match(regex) || product['Código']?.match(regex) || product['Departamento']?.match(regex) 
+    })
     if(searchText.length === 0){
       matches = []
+      userMatches = []
     }
-    console.log(matches);
+    console.log(matches, userMatches);
     setState({
       ...state,
-      matchList: matches
+      matchList: matches,
+      userMatchList: userMatches
     })
 
   }
@@ -92,7 +107,8 @@ export function Counter() {
       document.getElementById('inputBarcode').focus()
       setState({
         ...state,
-        matchList: []
+        matchList: [],
+        userMatchList: []
       })
       
     })
@@ -135,7 +151,7 @@ export function Counter() {
           </button> */}
         </div>
         <div className={styles.row}>
-
+          {/* {JSON.stringify(userProducts)} */}
           <form onSubmit={(e) => onSearch(e)} autoComplete={'off'}>
             <div className={styles.inputSearch}>
               {/* {JSON.stringify(selectedProductCounter)} */}
@@ -157,8 +173,9 @@ export function Counter() {
                 />
 
             </div>
+           
             <div className={styles.matchList}>
-              {state.matchList.length >= 1 ? state.matchList.map(match => {
+              {state.userMatchList.length >= 1 ? state.userMatchList.map(match => {
                 return (<>
                 <div className={styles.matchContainer} onClick={()=>{productClicked(match.id)}}>
                   <div>
@@ -173,13 +190,31 @@ export function Counter() {
 
                 </div>
                 </>)
-              }) :<CreateProduct></CreateProduct>}
+              }) :(<div>{'No hay de ese :('}</div>)  }
+            </div>
+            <div className={styles.matchList}>
+              { (user.privileges === 'admin') && (state.matchList.length >= 1) ? state.matchList.map(match => {
+                return (<>
+                <div className={styles.matchContainer} onClick={()=>{productClicked(match.id)}}>
+                  <div>
+                    {match['Producto']}
+                  </div>
+                  <div>
+                    {match['P. Venta']}
+                  </div>
+                  <div>
+                    {match['id']}
+                  </div>
+
+                </div>
+                </>)
+              }) :(<div>{'No hay de ese :('}</div>)  }
             </div>
               
           </form>
               { (<div className={styles.serverState}>
 
-                {JSON.stringify(productState?.products?.response)}
+                {/* {JSON.stringify(productState?.products?.response)} */}
                   {/* <button onClick={() => {buyProducts({products: ticketProducts})}} >BUY</button> */}
 
               </div>)}

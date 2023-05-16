@@ -1,0 +1,105 @@
+.PrivateProductContainer{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    justify-content: space-around;
+}
+.PrivateProductImage{
+    width: 30%;
+    max-height: 1000px ;
+}
+.PrivateProductPrice{
+    color: black;
+    font-size: xx-large;
+    
+}
+.PrivateProductPriceContainer{
+    position: relative;
+    bottom: 100px;
+    background-color: white;
+    padding: 5px;    
+}
+
+.PrivateProductName{
+    color: black;
+    font-size: large;
+    
+}
+.PrivateProductNameContainer{
+    position: relative;
+    top: 70px;
+    background-color: rgba(255, 255, 255, 0.541);
+    padding-inline: 5px;    
+}
+
+/* PRODUCTS: */
+.PrivateProductsContainer{
+    display: flex;
+    background-color: blue;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.PrivateProductsTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.PublicProductContainer{
+    display: flex;
+    width: 50%;
+    padding-block: 30px ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.PublicProductImage{
+    width: 30%;
+    max-height: 1000px ;
+}
+.PublicProductPrice{
+    color: black;
+    font-size: xx-large;
+    
+}
+.PublicProductPriceContainer{
+    position: relative;
+    /* bottom: 100px; */
+    background-color: white;
+    padding: 5px;    
+}
+
+.PublicProductName{
+    color: black;
+    font-size: large;
+    
+}
+.PublicProductNameContainer{
+    position: relative;
+    /* top: 70px; */
+    background-color: rgba(255, 255, 255, 0.541);
+    padding-inline: 5px;    
+}
+
+/* PRODUCTS: */
+.PublicProductsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-around; */
+}
+
+.PublicProductsTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bothPrivateAndPublicContainer{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+
+}

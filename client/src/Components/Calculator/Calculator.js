@@ -42,7 +42,7 @@ export default function Calculator(){
                 <input id="payed" name="payed" onChange={(e)=>{handleOnChange(e)}} placeholder="Pagado" onKeyDown={(e)=>{handleEnterFocus(e)}}/>
 
             </div>
-            <div>{'Cambio: ' + (state.toPay - state.payed)}</div>
+            <div>{( Number(state.toPay - state.payed) < 0 ? 'Cambio: ' : 'Faltan: ' ) + (state.toPay - state.payed)}</div>
 
         </div>
         

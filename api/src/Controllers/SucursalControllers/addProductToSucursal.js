@@ -12,7 +12,7 @@ const addProductToSucursal = async (req, res, next) => {
     
     console.log(producto);
     console.log(sucursal);
-    await producto.addSucursal(sucursal).then( response => {
+    await sucursal.addProduct(producto).then( response => {
         res.send(response)
     })
 

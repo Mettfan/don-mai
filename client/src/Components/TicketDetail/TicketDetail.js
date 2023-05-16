@@ -39,14 +39,11 @@ function TicketDetail() {
                     })}
                 
             </table>
-                <div className="totalTicket">
+            <div className="totalTicket">
                 {'A pagar: ' + '$' + ticket?.Total}            
-                {/* <div>
-                    {'Pagado: ' + '$' + state.payment}
-                </div>
-                <div>
-                    {'Cambio: ' + '$' + state.change}
-                </div> */}
+            </div>
+            <div className="totalTicket">
+                {'User: ' + ticket?.user}            
             </div>
                 {/* <img src={LOGODONMAY} className= 'ticketsImage'></img>
                 <div className='ticketsName'>

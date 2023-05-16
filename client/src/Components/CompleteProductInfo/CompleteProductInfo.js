@@ -6,7 +6,7 @@ import { editOneProduct, fetchAllProducts, fetchOneProduct } from '../../feature
 function CompleteProductInfo() {
     let params = useParams()
     let nav = useNavigate()
-    let products = useSelector(state => state?.products?.products)
+    let products = useSelector(state => state?.products?.userProducts)
     let [state, setState] = useState({
         products4Complete: []
     })

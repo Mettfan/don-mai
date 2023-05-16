@@ -6,8 +6,11 @@ import Catalog from "../../Catalog/Catalog";
 import Draggable from 'react-draggable'
 import { checkIfProductIsUpdated } from "./updateTools";
 import TotalInvest from "../../TotalInvest/TotalInvest";
+import Cookies from "universal-cookie";
 export default function UpdatePrice(){
     let todaysDate = new Date()
+    let cookie = new Cookies()
+    let user = cookie.get('user')
     let [state, setState] = useState({
         idInput: null,
         nameInput: null,
@@ -159,7 +162,7 @@ export default function UpdatePrice(){
                         <form name="pieces" onSubmit={(e)=> {addStock(e)}}>
                             <input id="pieces" placeholder="Agregar Piezas a Inventario" name="pieces" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
                         </form>
-                        {JSON.stringify(globalState.response)}
+                        {/* {JSON.stringify(globalState.response)} */}
 
                     </div>
                     <div>
@@ -199,7 +202,7 @@ export default function UpdatePrice(){
                 </div>
             </div>
         </Draggable>
-        <TotalInvest></TotalInvest>
+        {  user?.privileges === 'admin' &&  <TotalInvest></TotalInvest>}
         <Catalog editmode={true} filter={''} value={''} ></Catalog>
     </>)
 }

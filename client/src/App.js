@@ -14,7 +14,7 @@ import UpdatePrice from './Components/UpdatePrice/UpdatePrice/UpdatePrice';
 import Calculator from './Components/Calculator/Calculator';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProducts } from './features/products/productSlicetest';
 import SuperUser from './Components/SuperUser/SuperUser';
 import UserDetail from './Components/User/UserDetail/UserDetail';
@@ -24,12 +24,23 @@ import TicketStats from './Components/TicketStats/TicketStats';
 import CompleteProductInfo from './Components/CompleteProductInfo/CompleteProductInfo';
 import BackupTickets from './Components/TicketHandler/RestoreTickets/BackupTickets/BackupTickets';
 import RestoreTickets from './Components/TicketHandler/RestoreTickets/RestoreTickets';
+import Sucursal from './Components/Sucursal/Sucursal';
+import UserSucursal from './Components/Sucursal/UserSucursal/UserSucursal';
+import UploadProduct from './pages/UploadProduct/UploadProduct';
+import { fetchOneSucursal } from './features/sucursal/sucursalSlice';
+import Cookies from 'universal-cookie';
+
 
 function App() {
   let dispatch = useDispatch()
+  let cookie = new Cookies()
+  let user = cookie.get('user')
   useEffect(()=>{
     dispatch( fetchAllProducts() )
   }, [])
+  useEffect(()=>{
+    dispatch( fetchOneSucursal({filter: 'UserId', value: user?.id}) )
+  }, [user])
 
   return (
     <div className="App">
@@ -39,7 +50,7 @@ function App() {
         <Route path ="/home" element={<Home></Home>} />
         <Route path ="/login" element={<Login></Login>} />
         <Route path ="/register" element={<Register></Register>} />
-        <Route path ="/convert" element={<Convert></Convert>} />
+        <Route path ="/upload/product" element={<UploadProduct></UploadProduct>} />
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
         <Route path ="/search" element={<Search/>} />
@@ -53,6 +64,8 @@ function App() {
         <Route path ="/tickets/:id" element={<TicketDetail/>} />
         <Route path ="/tickets/stats" element={<TicketStats/>} />
         <Route path ="/tickets/backup" element={<RestoreTickets/>} />
+        <Route path ="/sucursal/:id" element={<Sucursal/>} />
+        <Route path ="/sucursal/" element={<UserSucursal/>} />
 
         <Route path ="/complete/product/:attribute" element={<CompleteProductInfo/>} />
         {/* <Route path ="/complete/product/:attribute" element={<CompletePCompra/>} /> */}
