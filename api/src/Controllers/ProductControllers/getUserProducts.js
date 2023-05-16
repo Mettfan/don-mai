@@ -5,10 +5,16 @@ const { Product, User, UserProducts } = require("../../db.js");
 const getUserProduct = async (req, res, next) => {
 
   let {userId} = req.query
-  let user = await User.findOne({where: {id: userId}})
-  await user.getProducts().then(result => {
-    res.send(result)
-  })
+  try {
+    let user = await User.findOne({where: {id: userId}})
+    await user.getProducts().then(result => {
+      res.send(result)
+    })
+
+  }
+  catch(error){
+    res.send(error)
+  }
 
 
 //   let user = await User.findOne({where: {id: userId}})

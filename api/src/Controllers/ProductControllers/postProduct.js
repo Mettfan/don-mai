@@ -22,7 +22,8 @@ const postProduct = async (req, res, next) => {
         
       })
       if (!found){
-        await Product.bulkCreate([...[{
+        if (producto['Código']){
+          await Product.bulkCreate([...[{
           ['Código']: producto['Código'] || null,
           ['Producto']: producto['Producto'] || null,
           ['P. Venta']: producto['P. Venta'] || null,
@@ -58,6 +59,7 @@ const postProduct = async (req, res, next) => {
           // })
     
         })
+      }
       }
       else{
         res.send({response: found})
