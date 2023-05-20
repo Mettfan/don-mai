@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOneProduct, getMyProducts, removeProduct } from '../../../features/products/productSlicetest';
 import Cookies from 'universal-cookie';
+import './MyProducts.css'
 function MyProducts(props) {
     
     let cookie = new Cookies()
@@ -32,7 +33,7 @@ function MyProducts(props) {
     
         <div>
             {/* <button onClick={() => {getUserProducts()}}>GET USER PRODUCTS</button> */}
-            <div style={{display: 'flex'}}>
+            <div className='myProducts'>
                 {userProducts.map(product => {
                     return (<div onClick={() => {selectProduct(product.id)}} className='productBg' >
                         <div>{product.Producto}</div>

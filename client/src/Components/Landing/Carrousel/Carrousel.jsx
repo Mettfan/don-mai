@@ -2,9 +2,10 @@ import React from "react";
 import './Carrousel.css'
 export default function Carrousel (props) {
     return (<>
-        <div className="carrouselBg">
+        <div style={{...props.option}}>
             
-            {props.img && <img className="advImg" src={props.img}/>}
+            {props.img && <img style={{...props?.imgOptions}} src={props.img}/>}
+            {props.fixedComponent && <div style={{...props?.fixedComponentOptions}}>{props.fixedComponent}</div>}
             {props.text && props.text }
         </div>
     

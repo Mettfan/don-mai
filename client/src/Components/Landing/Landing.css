@@ -1,0 +1,23 @@
+.toolContainer:hover{
+    /* background-color: red; */
+    transform: scale(1.1, 1.1)  ;
+}
+.toolContainer{
+    background-color: transparent  ;
+    cursor: pointer;
+}
+.logsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.adverTitle{
+    display: flex;
+    justify-content: flex-start;
+    /* background-color: blue; */
+    position: relative;
+    right: 30px;
+    font-size: xx-large;
+
+}

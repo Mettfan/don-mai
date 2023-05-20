@@ -115,8 +115,8 @@ export default function UpdatePrice(){
     }
     
     return (<>
-        <Draggable>
             <div className="editProductContainer">
+            <div className="editContainer">
                 <form onSubmit={(e) => {handleOnSubmit(e)}} autoComplete='off'>
                     <input id="id" name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
                 </form>
@@ -176,11 +176,11 @@ export default function UpdatePrice(){
                         {/* <div>Ultima vez Actualizado: </div> */}
                             {/* <div>
                                 {selectedProduct && 'Día: ' + state.lastDayUpdated }
-                            </div>
-                            <div>
+                                </div>
+                                <div>
                                 { selectedProduct && 'Mes: ' + state.lastMonthUpdated}
-                            </div>
-                            <div>
+                                </div>
+                                <div>
                                 { selectedProduct &&  'Año: ' + state.lastYearUpdated}
                             </div> */}
                         <div>
@@ -200,9 +200,9 @@ export default function UpdatePrice(){
 
                     </div>
                 </div>
+                <Catalog editmode={true} filter={''} value={''} ></Catalog>
             </div>
-        </Draggable>
-        {  user?.privileges === 'admin' &&  <TotalInvest></TotalInvest>}
-        <Catalog editmode={true} filter={''} value={''} ></Catalog>
+            {  user?.privileges === 'admin' &&  <TotalInvest></TotalInvest>}
+        </div>
     </>)
 }

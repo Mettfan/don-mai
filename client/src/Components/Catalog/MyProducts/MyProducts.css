@@ -1,0 +1,8 @@
+.myProducts{
+    display: flex;
+    flex-wrap: wrap;
+}
+.productBg{
+    padding: 5px;
+
+}
