@@ -41,7 +41,7 @@ function Tickets() {
                     <div className='productTicketsPrice'>{product["P. Venta"]}</div>
                     </div>)))}
                     <div className={ ticket?.description === 'out' ? 'ticketTotalOut' : 'ticketTotalEntry'}>
-                        <span  style={{
+                        {Number(user?.kyu) >= 9 && <span  style={{
                             // 'display': 'flex',
                             'flexDirection': 'row-reverse',
                             'justifyContent': 'center',
@@ -54,7 +54,7 @@ function Tickets() {
                             'color': 'white'
 
 
-                        }} onClick={() => {onDeleteTicket(ticket?.id, user)}} >x</span>
+                        }} onClick={() => {onDeleteTicket(ticket?.id, user)}} >x</span>}
                         <span style={{
                             // 'backgroundColor': ticket?.description === 'entry' ? 'red' : 'rgb(81, 208, 81)',
                             'padding': '5px',
