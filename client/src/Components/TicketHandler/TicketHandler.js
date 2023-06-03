@@ -2,9 +2,10 @@ import React from 'react';
 import Tickets from './Tickets/Tickets';
 import "./TicketHandler.css"
 import { useNavigate } from 'react-router';
-import { Cookie } from '@mui/icons-material';
+import Cookies from 'universal-cookie';
+
 function TicketHandler() {
-    let cookie = new Cookie()
+    let cookie = new Cookies()
     let user = cookie.get('user')
     let nav = useNavigate()
     return ( <>

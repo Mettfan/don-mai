@@ -110,7 +110,7 @@ export default function Catalog (props){
                 {    user?.privileges === 'usuario' && <div>
                     usuario mode
                 </div> }
-                {    user?.privileges === 'admin' && <div>
+                {    user?.privileges === 'admin' && Number(user?.kyu)>= 9 &&  <div>
                     admin mode
                     <button onClick={ () => downloadFile() }> DOWNLOAD EXCEL </button>
                     <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
