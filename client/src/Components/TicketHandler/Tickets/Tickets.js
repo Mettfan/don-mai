@@ -35,6 +35,7 @@ function Tickets() {
             <div onClick={() => {nav(`/tickets/${ticket?.id}`)}} className='ticketsContainer'>
                 <div className='ticketId'>{ticket?.id}</div>
                 <span>{JSON.stringify(ticketDate.toLocaleString())}</span>
+                <div>{ticket?.user}</div>
                 <div className='ticketProducts'>{ticket?.Productos && ticket?.Productos.map((product => (<div className='productTicketCard'>
                     <div className='productTicketsQuantity'>{product["quantity"]}</div>
                     <div className='productTicketsName'>{product["Producto"]}</div>
