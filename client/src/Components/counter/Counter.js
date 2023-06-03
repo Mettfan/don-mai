@@ -123,36 +123,7 @@ export function Counter() {
     
       <div>
         <div className={styles.row}>
-            
-            <div className='valueRow'>
-              <div className={styles.value}>
-                <div>
-                  { productState?.products?.selectedProduct['Producto']}
-                </div>
-                <div>
-                  { productState?.products?.selectedProduct['P. Venta']}
-                </div>
-                <div>
-                  { productState?.products?.selectedProduct['Código']}
-                </div>
-                <div>
-                  { productState?.products?.selectedProduct['id']}
-                </div>
-              </div>
-              {/* {JSON.stringify(productState.products.selectedProduct)} */}
-            </div>
-          {/* <button
-            className={styles.buttonadd}
-            aria-label="Increment value"
-            onClick={() => np()}
-            onKeyDown = { (e) => handleKeyPress(e)}
-          >
-            +
-          </button> */}
-        </div>
-        <div className={styles.row}>
-          {/* {JSON.stringify(userProducts)} */}
-          <form onSubmit={(e) => onSearch(e)} autoComplete={'off'}>
+        <form onSubmit={(e) => onSearch(e)} autoComplete={'off'}>
             <div className={styles.inputSearch}>
               {/* {JSON.stringify(selectedProductCounter)} */}
               <input
@@ -190,7 +161,7 @@ export function Counter() {
 
                 </div>
                 </>)
-              }) :(<div>{'No hay de ese :('}</div>)  }
+              }) :null }
             </div>
             <div className={styles.matchList}>
               { (user.privileges === 'admin') && (state.matchList.length >= 1) ? state.matchList.map(match => {
@@ -208,10 +179,39 @@ export function Counter() {
 
                 </div>
                 </>)
-              }) :(<div>{'No hay de ese :('}</div>)  }
+              }) :null }
             </div>
               
           </form>
+            <div className='valueRow'>
+              <div className={styles.value}>
+                <div>
+                  { productState?.products?.selectedProduct['Producto']}
+                </div>
+                <div>
+                  { productState?.products?.selectedProduct['P. Venta']}
+                </div>
+                <div>
+                  { productState?.products?.selectedProduct['Código']}
+                </div>
+                <div>
+                  { productState?.products?.selectedProduct['id']}
+                </div>
+              </div>
+              {/* {JSON.stringify(productState.products.selectedProduct)} */}
+            </div>
+          {/* <button
+            className={styles.buttonadd}
+            aria-label="Increment value"
+            onClick={() => np()}
+            onKeyDown = { (e) => handleKeyPress(e)}
+          >
+            +
+          </button> */}
+        </div>
+        <div className={styles.row}>
+          {/* {JSON.stringify(userProducts)} */}
+          
               { (<div className={styles.serverState}>
 
                 {/* {JSON.stringify(productState?.products?.response)} */}

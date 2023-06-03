@@ -59,15 +59,37 @@
 .productTicketContainer{
     display: flex;
     position: fixed;
+    justify-content: center;
+    align-items: center;
     right: 0px;
     bottom: 3%;
+    flex-wrap: wrap;
 }
 @media (max-width: 800px ){
     .ticketContainer{
-        display: none;
+        /* display: none; */
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        top: -200px;
+        justify-content: center;
+        align-items: center;
     }
     .totalTicketCalculated{
         top: 50%;
         left: 20%;
+    }
+    .productTicketContainer{
+        position: relative;
+        top: -150px;
+    }
+    .totalTicketCalculated{
+        position: relative;
+    }
+    .calc{
+        display: none;
+    }
+    .productTicketContainer{
+
     }
 }

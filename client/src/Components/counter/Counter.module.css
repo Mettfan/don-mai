@@ -11,6 +11,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
   height: 200px;
 }
 
@@ -127,9 +129,10 @@
   transition: 0s;
 }
 .inputSearch{
-  position: fixed;
+  position: relative;
+  /* position: fixed;
   top: 80px;
-  left: 40%;
+  left: 20%; */
 }
 .matchList{
   position: fixed;
@@ -137,6 +140,7 @@
   flex-wrap: wrap;
   top: 110px;
   left: 20%;
+  z-index: 5;
   
 }
 .matchContainer{
@@ -166,4 +170,16 @@
   font-size: small;
   font-weight: 600;
 
+}
+@media (max-width: 400px) {
+  .inputSearch{
+    top: 10px;
+
+  }
+  .value{
+    font-size: medium;
+    margin-top: 20px;
+  }
+  
+  
 }

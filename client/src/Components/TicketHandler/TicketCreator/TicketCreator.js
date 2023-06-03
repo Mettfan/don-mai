@@ -63,7 +63,7 @@ function TicketCreator(props) {
 
                 </div>
                 </>)
-              }) :<CreateProduct></CreateProduct>}
+              }) :null}
             </div>
         
         </>)

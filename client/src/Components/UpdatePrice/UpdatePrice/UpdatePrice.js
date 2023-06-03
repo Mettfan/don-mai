@@ -200,7 +200,7 @@ export default function UpdatePrice(){
 
                     </div>
                 </div>
-                <Catalog editmode={true} filter={''} value={''} ></Catalog>
+                <Catalog items={12} editmode={true} filter={''} value={''} ></Catalog>
             </div>
             {  user?.privileges === 'admin' &&  <TotalInvest></TotalInvest>}
         </div>

@@ -123,7 +123,7 @@ export default function Home(){
     let Departamentos = ( ) => {
         return (<>
             {/* <button className="clgProd" onClick={() => {console.log(userProducts)}}>CONSOLE PROD</button> */}
-             {extractDepartments(userProducts).map(departament => {
+             {extractDepartments(userProducts)?.slice(0, 10)?.map(departament => {
                 let foundProducts = userProducts?.map(product => {
                     if((product?.Departamento === departament)){
                         return product

@@ -13,3 +13,8 @@
 .calculatorTitle{
     font-size: x-small;
 }
+@media (max-width: 400px) {
+    .calculatorContainer{
+        top: 70%;
+    }
+}

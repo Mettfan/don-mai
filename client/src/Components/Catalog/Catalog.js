@@ -122,7 +122,7 @@ export default function Catalog (props){
                 
 
             </div>
-            { user?.privileges === 'admin' &&  productList.map( product => {
+            { user?.privileges === 'admin' &&  productList?.slice(0, props?.items || 20)?.map( product => {
                 // return  product[props.filter] === props.value &&
                 return ( <div className="catalogContainer">
                     <span className="productBg">

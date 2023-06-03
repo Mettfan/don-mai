@@ -209,17 +209,27 @@ export function Ticket(){
     }
     return (<>
         <div className="downSearchContainer">
+            <div className="calc">
                 <Calculator></Calculator>
+
+            </div>
             {/* <div>TICKET</div> */}
             <div className="totalTicketCalculated">
                 {'$' + state.total}            
             </div>
             <div>
+            { ticketProducts.length > 0 && <div className="paymentInput">
+            {/* {state.change} */}
+            </div>}
                 {/* {JSON.stringify(ticketProducts)} */}
             </div>
             <div className="ticketContainer">
 
-            <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} total = {state.total} showTicket = {true} falta = {Number(state.change) > 0 ? true : false}></Example>
+                <Example ticket = {currentTicket()} payment = {state.payment} change = {state.change} total = {state.total} showTicket = {true} falta = {Number(state.change) > 0 ? true : false}></Example>
+                    <form onSubmit={(e) => handlePaymentOnSubmit(e)}>
+                        <input placeholder="Paying with: " onChange={(e) => handleInputPaymentOnChange(e)} /> 
+
+                    </form>
             </div>
             <div className="productTicketContainer" >
                 {ticketProducts && ticketProducts.map( product => {
@@ -246,14 +256,8 @@ export function Ticket(){
                 
             </div>
         </div>
-        { ticketProducts.length > 0 && <div className="paymentInput">
-            <form onSubmit={(e) => handlePaymentOnSubmit(e)}>
-                <input placeholder="Paying with: " onChange={(e) => handleInputPaymentOnChange(e)} /> 
 
-            </form>
-            {state.change}
-        </div>}
-        {productQuantityState}
+        {/* {productQuantityState} */}
         {/* <div>{JSON.stringify(state.ticketSelectedProduct)}</div> */}
         {/* <div>{JSON.stringify(globalTicket)}</div> */}
         
