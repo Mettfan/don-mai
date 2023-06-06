@@ -2,7 +2,7 @@ import { color } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { addProductToGlobalTicket, fetchOneProduct, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
+import { addProductToGlobalTicket, fetchOneProduct, fetchTickets, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
 import CreateProduct from '../../CreateProduct/CreateProduct';
 import './TicketCreator.css'
 function TicketCreator(props) {
@@ -121,7 +121,7 @@ function TicketCreator(props) {
         
     
       }
-    function submitTicket (type){
+    async function submitTicket (type){
         // Suma o resta de acuerdo a type cada producto y manda su total
         let ticket = ticketProducts.map(product => {
             let fixedQuantity = type === 'entry' ? (Number(product?.quantity) * -1) : product?.quantity;
@@ -129,14 +129,21 @@ function TicketCreator(props) {
             return {...product, quantity: fixedQuantity}
 
         })
-        dispatch(sellProducts({products: ticket}))
-        dispatch(postTicket({products: ticketProducts, total: Number(state.total), user: user?.email, client: null, description: String(type), createdAt: JSON.stringify(date) }))
-        console.log('posteado' , ticket );
+        //Creamos una funcion asincrónica para que se puedan ejecutar de manera consecutiva los siguientes dispatch
+        let promise = new Promise((resolve ) => {
+            dispatch(sellProducts({products: ticket}))
+            resolve('SOLD')
+        })
+        await promise.then((result) => {
+            dispatch(postTicket({products: ticketProducts, total: Number(state.total), user: user?.email, client: null, description: String(type), createdAt: JSON.stringify(date) }))
+            console.log('posteado' , ticket );
+            return 'posted'
+        }).then((result) => {
+            dispatch(fetchTickets())
+            console.log(result);
+        })
     }
-    function handleOnTicketSubmit(e){
-        e.preventDefault && e.preventDefault()
-        window.location.reload()
-    }
+
     function handleSwitch(){
         let isSwitchOn = document.getElementById('switch').checked
         setState({...state, ticketType: isSwitchOn ? 'entry' : 'out'})
@@ -248,7 +255,7 @@ function TicketCreator(props) {
                 <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
                 <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
             </form>
-            <form onSubmit={(e) => {handleOnTicketSubmit(e)} }>
+            <form>
                 <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label>
                 {ticketProducts?.length && ticketProducts?.map( product => productCard(product) )?.reverse() || 'Agregue algunos productos!'}
                 <div>
