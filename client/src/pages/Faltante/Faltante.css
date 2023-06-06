@@ -1,0 +1,36 @@
+.faltanteContainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+.faltanteInfoContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    /* background-color: blue; */
+    /* width: 40%; */
+    height: 100px;
+    padding: 3px;
+    margin: 5px;
+}
+.faltanteProductContainer{
+    /* width: 10%; */
+    display: flex;
+    margin: 3px;
+    background-color: white;
+    
+}
+.faltanteName{
+    display: flex;
+}
+.faltanteQuantity{
+    background-color: black;
+    color: white;
+    padding: 2px;
+}

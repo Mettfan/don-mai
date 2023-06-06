@@ -114,7 +114,9 @@ export default function Catalog (props){
                     admin mode
                     <button onClick={ () => downloadFile() }> DOWNLOAD EXCEL </button>
                     <button onClick={ () => getAllProducts() }>  GET ALL PRODUCTS </button>
+                    
                 </div> }
+                    <button onClick={ () => nav('/onlist') }>  VER FALTANTE </button>
 
                 {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
                 {userProducts.length > 0 && <button onClick={() => nav('/complete/product/info')} >COMPLETE PRODUCT INFO</button>}
