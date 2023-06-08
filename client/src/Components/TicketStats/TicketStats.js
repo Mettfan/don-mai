@@ -92,7 +92,7 @@ function TicketStats() {
             return {N: index + 1, ...product}
         })
         console.log(cleanStock);
-        // downloadExcel(cleanStock, 'Inventario: ' + date )
+        downloadExcel(cleanStock, 'Inventario: ' + date )
     }
     let printTickets = () => {
         return (<div  >
