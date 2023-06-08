@@ -79,7 +79,7 @@ function TicketStats() {
             let price = product['P. Venta']
             let buyPrice = product['P. Compra']
             let formattedBuyPrice = (!buyPrice?.includes('$')  ? Number(buyPrice) : Number(buyPrice.slice(1)))
-            let formattedPrice = (!buyPrice?.includes('$')  ? Number(price) : Number(price.slice(1)))
+            let formattedPrice = (!price?.includes('$')  ? Number(price) : Number(price.slice(1)))
             let calculatedPrice = formattedBuyPrice || (formattedPrice - (formattedPrice * 0.10 )) // Aqui se le cambia el porcentaje a calcular
             let totalCalculated = (calculatedPrice* Number(product?.quantity) )
             total += totalCalculated
