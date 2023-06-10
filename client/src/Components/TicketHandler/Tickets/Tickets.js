@@ -73,7 +73,12 @@ function Tickets() {
                 </div>
         </>)
     }
-    let currentTickets = () => tickets?.filter(ticket => Number(ticket["createdAt"].split('T')[0].split('-')[1]) === ticketDate.getMonth() + 1 )?.filter(ticket => Number(ticket["createdAt"].split('T')[0].split('-')[2]) === ticketDate.getDate())
+    let currentTickets = () => tickets?.filter(ticket => Number(ticket["createdAt"].split('T')[0].split('-')[1]) === ticketDate.getMonth() + 1 )?.filter(ticket => {
+        let currentTicketDate = new Date(ticket['createdAt'])
+        console.log(currentTicketDate.toLocaleString()[0]);
+        console.log(ticketDate.getDate());
+        return Number(currentTicketDate.toLocaleString()[0]) === ticketDate.getDate()
+    })
     let currentTicketsCards = () => {
         return currentTickets()?.map((ticket) => {
                         
@@ -91,6 +96,31 @@ function Tickets() {
             console.log(result)
             setTicketsUpload(result)
         })
+    }
+    function calculateDaily(type){
+        //Esta funcion calcula el ingreso o egreso diario de acuerdo a los tickets del dia
+        //Está 'entry' o 'out' para indicar qué se requiere devolver (se especifíca en type)
+        let accumulator = 0
+        currentTickets()?.forEach(ticket => {
+            if (ticket?.description === type){
+                accumulator+= Number(ticket.Total)
+            }
+        })
+        return accumulator
+    }
+    function calculateMeanTicket(type){
+        // Calcula el costo promedio de ticket, ya sea de 'entry' o de 'out'
+        //Devuelve una lista de dos elementos: [mean, ticketCounter]
+        let meanTicket = 0
+        let ticketCounter = 0
+        currentTickets()?.forEach(ticket => {
+            if(ticket.description === type){
+                meanTicket += Number(ticket.Total)
+                ticketCounter += 1
+            }
+        })
+        meanTicket = Math.floor(meanTicket/ticketCounter)
+        return [meanTicket, ticketCounter]
     }
     return ( <>
         {/* {ticketDate.getMonth()+1} */}
@@ -114,6 +144,41 @@ function Tickets() {
                         </div> */}
                         <div>
                             <TicketCreator></TicketCreator>
+                        </div>
+                        {currentTickets()?.length > 0 && <div>
+                            <div className='entryTotal'>
+                                {calculateDaily('entry')}
+                            </div>
+                            <div className='meanEntry'>
+                                <div >
+                                    {String(calculateMeanTicket('entry')[1]) }
+                                </div>
+                                <div>
+                                    {'entry tickets con promedio de: '}
+                                </div>
+                                <div>
+                                    {"$" + String(calculateMeanTicket('entry')[0]) || 'No hay Salida de Dinero'}
+                                </div>
+                            </div>
+                            <div className='outTotal'>
+                                {calculateDaily('out')}
+                            </div>
+                            <div className='meanOut'>
+                                <div>
+                                    {String(calculateMeanTicket('out')[1])}                                    
+                                </div>
+                                <div>
+                                    {'out tickets con promedio de: '}
+                                </div>
+                                <div>
+                                    {"$" + String(calculateMeanTicket('out')[0]) || 'No hay Entrada de Dinero'}
+                                </div>
+                            </div>
+                        </div>}
+                        <div>
+                            <h3>Day Balance</h3>
+                            <h4>{calculateDaily('out') - calculateDaily('entry') }</h4>
+                            
                         </div>
                     </div>
                 </div>
