@@ -75,9 +75,9 @@ function Tickets() {
     }
     let currentTickets = () => tickets?.filter(ticket => Number(ticket["createdAt"].split('T')[0].split('-')[1]) === ticketDate.getMonth() + 1 )?.filter(ticket => {
         let currentTicketDate = new Date(ticket['createdAt'])
-        console.log(currentTicketDate.toLocaleString()[0]);
+        console.log(currentTicketDate.toLocaleString().split('/')[0]);
         console.log(ticketDate.getDate());
-        return Number(currentTicketDate.toLocaleString()[0]) === ticketDate.getDate()
+        return Number(currentTicketDate.toLocaleString().split('/')[0]) === ticketDate.getDate()
     })
     let currentTicketsCards = () => {
         return currentTickets()?.map((ticket) => {
