@@ -75,7 +75,7 @@ export const productSlicetest = createSlice({
                 
             }
             else{
-                state.ticketProducts = [...state.ticketProducts, {...action.payload, quantity: 1}]
+                state.ticketProducts = [...state.ticketProducts, {...action.payload, quantity: (action.payload.adder > 0 ? action.payload.adder : 1 )}]
                 console.log('Product added: ' + JSON.stringify(action.payload));
 
             }
@@ -84,24 +84,29 @@ export const productSlicetest = createSlice({
         },
         removeProductFromGlobalTicket: ( state, action) => {
             
+            let foundProduct = state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )
+            if (!(foundProduct?.quantity === 0)){
+                if(foundProduct){
+                    console.log('Ya existe');
+                    state.ticketProducts =  state.ticketProducts.map( producto => {
+                            if(action.payload.id == producto.id && producto.quantity > 0){
+                                return {...producto, ['quantity']: producto.quantity - 1 }
+                            }
+                            else{
+                                return producto
+                            }
+                        })
+                    
+                }
+                else{
+    
+                    console.log('Product currently inexistent: ' + JSON.stringify(action.payload));
+    
+                }
 
-
-            if(state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )){
-                console.log('Ya existe');
-                state.ticketProducts =  state.ticketProducts.map( producto => {
-                        if(action.payload.id == producto.id && producto.quantity > 0){
-                            return {...producto, ['quantity']: producto.quantity - 1 }
-                        }
-                        else{
-                            return producto
-                        }
-                    })
-                
             }
             else{
-
-                console.log('Product currently inexistent: ' + JSON.stringify(action.payload));
-
+                state.ticketProducts = state.ticketProducts.filter(product => product['id'] !== action.payload['id'])
             }
 
 

@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import { addProductToGlobalTicket, fetchOneProduct, fetchTickets, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
 import CreateProduct from '../../CreateProduct/CreateProduct';
 import './TicketCreator.css'
+import GranelTab from '../../GranelTab/GranelTab';
 function TicketCreator(props) {
     let [date, setDate] = useState(new Date()) 
     let [productIndex, setProductIndex] = useState(0)
@@ -20,7 +21,7 @@ function TicketCreator(props) {
         console.log('AAAAAAAAA');
         ticketProducts?.forEach((product) => {
             let price = product["P. Venta"]
-            ticketTotal += ( price[0]  !== '$' ? Number(price) * Number(product?.quantity) : Number(price.slice(1)) * Number(product?.quantity))
+            ticketTotal += Math.round( price[0]  !== '$' ? Number(price) * Number(product?.quantity) : Number(price.slice(1)) * Number(product?.quantity))
         })
         setState({
             ...state,
@@ -38,8 +39,12 @@ function TicketCreator(props) {
         inputSearch: '',
         total: 0,
         matchList: [],
-        ticketType: 'out'
+        ticketType: 'out',
+        granelTab: false
     })
+    function handleDeleteProduct(product){
+        dispatch(removeProductFromGlobalTicket(product))
+    }
     let productThumb = () => {
         return(<>
             
@@ -69,29 +74,39 @@ function TicketCreator(props) {
         </>)
     }
     function productClicked(product){
-        dispatch(addProductToGlobalTicket(product))
-        document.getElementById('inputSearch').value = ''
-        document.getElementById('inputSearch').focus()
-        setState({
-            ...state,
-            matchList: []
-        })
-        state?.matchList?.length > 0 && setProductIndex(0)
+        if(!(product.Departamento === 'GRANEL')){
+            dispatch(addProductToGlobalTicket(product))
+            document.getElementById('inputSearch').value = ''
+            document.getElementById('inputSearch').focus()
+            setState({
+                ...state,
+                matchList: []
+            })
+            state?.matchList?.length > 0 && setProductIndex(0)
+
+        }
+        else{
+            setState({...state, granelTab: true})
+        }
     }
     function removeClicked(product){
         dispatch(removeProductFromGlobalTicket(product))
     }
     let productCard = (product) => {
         return(<>
+        <div className='productContainerTicketCreator'>
+           { <span className='removeProductFromTicketCreator' onClick={() => {removeClicked(product)}}> - </span>}
             <div onClick={() => productClicked(product)} className='productCardTicketCreatorContainer'> 
-                <div className='productsCTCQuantity'>{product['quantity']}</div>
+                <div className='productsCTCQuantity'>{(!(product?.Departamento === 'GRANEL') ? product['quantity'] : product['quantity'] + 'gr'  )}</div>
                 <div>
                     <div className='productsCTCName'>{product['Producto']}</div>
-                    <div className='productsCTCPrice'>{product['P. Venta']}</div>
+                    <div className='productsCTCPrice'>{(!(product?.Departamento === 'GRANEL') ? product['P. Venta'] : product['P. Venta'] * 1000 )}</div>
                 </div>
             
             </div>
-           { <span className='removeProductFromTicketCreator' onClick={() => {removeClicked(product)}}> - </span>}
+            <h1 onClick={() => {handleDeleteProduct(product)}}>X</h1>
+
+        </div>
         </>)
     }
     async function handleOnChange (e){
@@ -223,6 +238,9 @@ function TicketCreator(props) {
         dispatch(fetchOneProduct({filter: "Código", value: state.searchValue}))
         console.log(selectedProduct);
     }
+    function closeGranelTab(){
+        setState({...state, granelTab: false})
+    }
     useEffect(() => {
         // selectedProduct && dispatch(addProductToGlobalTicket(selectedProduct))
         if(selectedProduct["Producto"]){
@@ -264,7 +282,11 @@ function TicketCreator(props) {
                 <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {submitTicket(state.ticketType)}}>CREAR TICKET</button>
                 {productThumb()}
             </form>
-
+            {state.granelTab  && <div> 
+                <button className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
+                <GranelTab product={state.matchList[0]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
+                
+                </div>}
         </div>
     </> );
 }

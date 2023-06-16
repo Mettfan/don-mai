@@ -1,5 +1,6 @@
 .productCardTicketCreatorContainer{
     background-color: #FFD449;
+    width: 100%;
     border: 1px groove black
 }
 .removeProductFromTicketCreator{
@@ -8,8 +9,8 @@
     color: white;
     font-weight: 500;
     position: relative;
-    right: 50%;
-    bottom: 32px;
+    /* right: 50%;
+    bottom: 32px; */
 }
 .productCardTicketCreatorContainer{
     display: flex;
@@ -109,4 +110,15 @@
   
   .slider.round:before {
     border-radius: 50%;
+  }
+  .closeGranelTab{
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    z-index: 3;
+  }
+  .productContainerTicketCreator{
+    display: flex;
+    justify-content: space-around;
+    
   }

@@ -178,7 +178,6 @@ function Tickets() {
                         <div>
                             <h3>Day Balance</h3>
                             <h4>{calculateDaily('out') - calculateDaily('entry') }</h4>
-                            
                         </div>
                     </div>
                 </div>

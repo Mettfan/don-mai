@@ -1,0 +1,30 @@
+.granelAdderContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: burlywood;
+    padding: 100px;
+    width: auto;
+    height: 10VH;
+    position: fixed;
+    bottom: 50%;
+}
+input{
+    padding: 7px;
+    font-size: x-large;
+}
+.userPaymentGranel{
+    position: relative;
+
+    font-size: xx-large;
+    font-weight: 500;
+}
+.productQuantityGranel{
+    position: relative;
+    font-size: xx-large;
+    font-weight: 500;
+}
+#granelInput{
+    margin: 5px;
+}
