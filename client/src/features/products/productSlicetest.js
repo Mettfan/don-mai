@@ -111,6 +111,32 @@ export const productSlicetest = createSlice({
 
 
         },
+
+        //Next function sets 0 on product quantity at global ticket
+        deleteProductFromGlobalTicket: ( state, action) => {
+            
+            let foundProduct = state.ticketProducts.find( listedProduct => action.payload.id == listedProduct.id )
+            
+            if(foundProduct){
+                console.log('Ya existe');
+                state.ticketProducts =  state.ticketProducts.filter( producto => {
+                        if(!(action.payload.id == producto.id)){
+                            return producto
+                        }
+                    })
+                
+            }
+            else{
+
+                console.log('Product currently inexistent: ' + JSON.stringify(action.payload));
+
+            }
+
+        },
+            
+
+
+        
         setProductQuantity: ( state, action) => {
             
 
@@ -466,7 +492,8 @@ export const {
     counterIncrement,
     setCounter,
     addProductToShoppingCart,
-    setProductQuantity
+    setProductQuantity,
+    deleteProductFromGlobalTicket,
 
 } = productSlicetest.actions
 export const productSliceReducer = productSlicetest.reducer

@@ -122,3 +122,8 @@
     justify-content: space-around;
     
   }
+  .ProductSelector{
+    width: auto;
+    height: 10px;
+    background-color: gold;
+  }

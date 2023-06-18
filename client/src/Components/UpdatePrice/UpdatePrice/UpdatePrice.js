@@ -120,86 +120,78 @@ export default function UpdatePrice(){
                 <form onSubmit={(e) => {handleOnSubmit(e)}} autoComplete='off'>
                     <input id="id" name="idInput" type={'text'} placeholder={selectedProduct.id} onChange= {(e) => {handleInputOnChange(e)}} ></input>
                 </form>
-                {/* <div>
-                    {idInput}
-                </div>
-                <div>
-                    {nameInput}
-                </div>
-                <div>
-                    {priceInput}
-                </div> */}
-                <div>
-                    {/* <button className="previousProductToCheck" onClick={() => {decrementCounter() }}>
-                        {'←'}
-                    </button> */}
-                    <div>
-                        {'Producto: ' + selectedProduct.Producto}
-                        <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
-                            <input id="name" placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
-                        </form>
-                        
-                    </div>
-                    <div>
-                        {'Precio: ' + selectedProduct['P. Venta']}
-                        <form name="P. Venta" onSubmit={(e)=> {handleOnEdit(e, 'P. Venta')}}>
-                            <input id="price" placeholder="Nuevo Precio" name="P. Venta" type={'number'} onChange={(e)=> handleInputOnChange(e)} autofocus='autofocus' onKeyDown={(e)=>{handleKeyPress(e) }}  />
-                        </form>
+                {
 
-                    </div>
-                    <div>
-                        {'Departamento: ' + selectedProduct['Departamento']}
-                        <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
-                            <input id="departament" placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
-                        </form>
-
-                    </div>
-                    <div>
-                        {'Cantidad: ' + selectedProduct['quantity']}
-                        <form name="quantity" onSubmit={(e)=> {handleOnEdit(e, 'quantity')}}>
-                            <input id="quantity" placeholder="Editar Inventario" name="quantity" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
-                        </form>
-                        <form name="pieces" onSubmit={(e)=> {addStock(e)}}>
-                            <input id="pieces" placeholder="Agregar Piezas a Inventario" name="pieces" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
-                        </form>
-                        {/* {JSON.stringify(globalState.response)} */}
-
-                    </div>
-                    <div>
-                        {'Precio de Compra: ' + selectedProduct['P. Compra']}
-                        <form name="P. Compra" onSubmit={(e)=> {handleOnEdit(e, 'P. Compra')}}>
-                            <input id="P. Compra" placeholder="Nuevo precio de compra" name="P. Compra" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
-                        </form>
-
-                    </div>
-                    <div>
-                        {/* <div>Ultima vez Actualizado: </div> */}
-                            {/* <div>
-                                {selectedProduct && 'Día: ' + state.lastDayUpdated }
-                                </div>
-                                <div>
-                                { selectedProduct && 'Mes: ' + state.lastMonthUpdated}
-                                </div>
-                                <div>
-                                { selectedProduct &&  'Año: ' + state.lastYearUpdated}
-                            </div> */}
+                    (<div>
                         <div>
-                            {checkIfProductIsUpdated(state.lastMonthUpdated, state.lastDayUpdated, todaysDate.getMonth()+1, todaysDate.getDate())}
+                            {'Producto: ' + selectedProduct.Producto}
+                            <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
+                                <input id="name" placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
+                            </form>
+                            
                         </div>
-                    </div>
-                    <button onClick={() => {reUpdatePrice()}}>Reupdate</button>
-                    {/* <button className="nextProductToCheck" onClick={() => {incrementCounter() }}>
-                        {'→'}
-                    </button> */}
-                    {/* <div>
-                        
-                        {selectedProduct.quantity}
-                    </div> */}
-                    <div>
-                        {/* {JSON.stringify(globalState)} */}
+                        <div>
+                            {'Precio: ' + selectedProduct['P. Venta']}
+                            <form name="P. Venta" onSubmit={(e)=> {handleOnEdit(e, 'P. Venta')}}>
+                                <input id="price" placeholder="Nuevo Precio" name="P. Venta" type={'number'} onChange={(e)=> handleInputOnChange(e)} autofocus='autofocus' onKeyDown={(e)=>{handleKeyPress(e) }}  />
+                            </form>
 
-                    </div>
-                </div>
+                        </div>
+                        <div>
+                            {'Departamento: ' + selectedProduct['Departamento']}
+                            <form name="Departamento" onSubmit={(e)=> {handleOnEdit(e, 'Departamento')}}>
+                                <input id="departament" placeholder="Nuevo Departamento" name="Departamento" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
+                            </form>
+
+                        </div>
+                        <div>
+                            {'Cantidad: ' + selectedProduct['quantity']}
+                            <form name="quantity" onSubmit={(e)=> {handleOnEdit(e, 'quantity')}}>
+                                <input id="quantity" placeholder="Editar Inventario" name="quantity" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
+                            </form>
+                            <form name="pieces" onSubmit={(e)=> {addStock(e)}}>
+                                <input id="pieces" placeholder="Agregar Piezas a Inventario" name="pieces" type={'number'} onChange={(e)=> handleInputOnChange(e)} />
+                            </form>
+                            {/* {JSON.stringify(globalState.response)} */}
+
+                        </div>
+                        <div>
+                            {'Precio de Compra: ' + selectedProduct['P. Compra']}
+                            <form name="P. Compra" onSubmit={(e)=> {handleOnEdit(e, 'P. Compra')}}>
+                                <input id="P. Compra" placeholder="Nuevo precio de compra" name="P. Compra" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
+                            </form>
+
+                        </div>
+                        <div>
+                            {/* <div>Ultima vez Actualizado: </div> */}
+                                {/* <div>
+                                    {selectedProduct && 'Día: ' + state.lastDayUpdated }
+                                    </div>
+                                    <div>
+                                    { selectedProduct && 'Mes: ' + state.lastMonthUpdated}
+                                    </div>
+                                    <div>
+                                    { selectedProduct &&  'Año: ' + state.lastYearUpdated}
+                                </div> */}
+                            <div>
+                                {checkIfProductIsUpdated(state.lastMonthUpdated, state.lastDayUpdated, todaysDate.getMonth()+1, todaysDate.getDate())}
+                            </div>
+                        </div>
+                        <button onClick={() => {reUpdatePrice()}}>Reupdate</button>
+                        {/* <button className="nextProductToCheck" onClick={() => {incrementCounter() }}>
+                            {'→'}
+                        </button> */}
+                        {/* <div>
+                            
+                            {selectedProduct.quantity}
+                        </div> */}
+                        <div>
+                            {/* {JSON.stringify(globalState)} */}
+
+                        </div>
+                    </div>)
+
+                }
                 <Catalog items={12} editmode={true} filter={''} value={''} ></Catalog>
             </div>
             {  user?.privileges === 'admin' &&  <TotalInvest></TotalInvest>}

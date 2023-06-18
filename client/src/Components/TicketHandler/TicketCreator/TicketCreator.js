@@ -2,7 +2,7 @@ import { color } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { addProductToGlobalTicket, fetchOneProduct, fetchTickets, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
+import { addProductToGlobalTicket, deleteProductFromGlobalTicket, fetchOneProduct, fetchTickets, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
 import CreateProduct from '../../CreateProduct/CreateProduct';
 import './TicketCreator.css'
 import GranelTab from '../../GranelTab/GranelTab';
@@ -15,6 +15,33 @@ function TicketCreator(props) {
     let ticketProducts = useSelector(state => state.products.ticketProducts)
     const allProducts = useSelector( state => state.products.products)
     const selectedProduct = useSelector( state => state.products.selectedProduct)
+    let [state, setState] = useState({
+        searchValue: '',
+        inputSearch: '',
+        total: 0,
+        matchList: [],
+        ticketType: 'out',
+        granelTab: false
+    })
+    useEffect(() => {
+        setState({...state, matchList: state.matchList.map((product) => {
+            if(product?.id == state.matchList[productIndex]?.id ){
+                return {...product, selected: true}
+            }
+            else{
+                return {...product, selected: false}
+            }
+        })})
+    }, [productIndex])
+    useEffect(() => {
+
+        document.getElementById('inputSearch').value = ''
+        if(!state.granelTab){
+            document.getElementById('inputSearch').focus()
+            
+        }
+
+    },[state.granelTab])
     useEffect(() => {
         document.getElementById('inputSearch').focus()
         let ticketTotal = 0
@@ -34,16 +61,12 @@ function TicketCreator(props) {
         }, 1000)
     }, [] )
     
-    let [state, setState] = useState({
-        searchValue: '',
-        inputSearch: '',
-        total: 0,
-        matchList: [],
-        ticketType: 'out',
-        granelTab: false
-    })
+  
     function handleDeleteProduct(product){
         dispatch(removeProductFromGlobalTicket(product))
+    }
+    function handleDestroyProduct(product){
+        dispatch(deleteProductFromGlobalTicket(product))
     }
     let productThumb = () => {
         return(<>
@@ -60,12 +83,12 @@ function TicketCreator(props) {
                   </div>
                   <div>
                     {match['id']}
+                    {match?.selected && <div className='ProductSelector'></div>}
                   </div>
                   <div style={{
                     backgroundColor: 'Highlight',
                     color: "white"
                   }}>{match['quantity']}</div>
-
                 </div>
                 </>)
               }) :null}
@@ -103,8 +126,12 @@ function TicketCreator(props) {
                     <div className='productsCTCPrice'>{(!(product?.Departamento === 'GRANEL') ? product['P. Venta'] : product['P. Venta'] * 1000 )}</div>
                 </div>
             
+                <div>
+                    <div className='productsCTCTotal'>{(Number(product?.quantity) * Number((product['P. Venta'])[0]) === '$' ? product['P. Venta']?.slice(-1) : product['P. Venta'])}</div>
+                </div>
+            
             </div>
-            <h1 onClick={() => {handleDeleteProduct(product)}}>X</h1>
+            <h1 onClick={() => {handleDestroyProduct(product)}}>X</h1>
 
         </div>
         </>)
@@ -121,7 +148,9 @@ function TicketCreator(props) {
         
         let matches = allProducts.filter(product => {
           const regex = new RegExp(`^${searchText}`, 'gi')
-          return product['Producto']?.match(regex) || product['Código']?.match(regex) || product['Departamento']?.match(regex) 
+          if(product){
+              return product['Producto']?.match(regex) || product['Código']?.match(regex) || product['Departamento']?.match(regex)
+          }
         })
         if(searchText.length === 0){
           matches = []
@@ -245,13 +274,16 @@ function TicketCreator(props) {
         // selectedProduct && dispatch(addProductToGlobalTicket(selectedProduct))
         if(selectedProduct["Producto"]){
             console.log(selectedProduct);
-            dispatch(addProductToGlobalTicket(selectedProduct))
-            setState({...state, 
-                searchValue: '',
-                matchList: [],
-                inputSearch: ''
-            })
-            document.getElementById('inputSearch').value = ''
+            if(selectedProduct?.Departamento !== 'GRANEL'){
+                dispatch(addProductToGlobalTicket(selectedProduct))
+                setState({...state, 
+                    searchValue: '',
+                    matchList: [],
+                    inputSearch: ''
+                })
+                document.getElementById('inputSearch').value = ''
+
+            }
         }
     }, [selectedProduct])
     return ( <>
@@ -284,7 +316,7 @@ function TicketCreator(props) {
             </form>
             {state.granelTab  && <div> 
                 <button className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
-                <GranelTab product={state.matchList[0]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
+                <GranelTab product={state.matchList[productIndex]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
                 
                 </div>}
         </div>
