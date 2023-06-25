@@ -30,6 +30,7 @@ import UploadProduct from './pages/UploadProduct/UploadProduct';
 import { fetchOneSucursal } from './features/sucursal/sucursalSlice';
 import Cookies from 'universal-cookie';
 import Faltante from './pages/Faltante/Faltante';
+import Listado from './pages/Listado/Listado';
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
         <Route path ="/sucursal/:id" element={<Sucursal/>} />
         <Route path ="/sucursal/" element={<UserSucursal/>} />
         <Route path ="/onlist/" element={<Faltante/>} />
+        <Route path ="/print/list" element={<Listado/>} />
 
         <Route path ="/complete/product/:attribute" element={<CompleteProductInfo/>} />
         {/* <Route path ="/complete/product/:attribute" element={<CompletePCompra/>} /> */}
