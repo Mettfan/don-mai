@@ -6,6 +6,9 @@ import { addProductToGlobalTicket, deleteProductFromGlobalTicket, fetchOneProduc
 import CreateProduct from '../../CreateProduct/CreateProduct';
 import './TicketCreator.css'
 import GranelTab from '../../GranelTab/GranelTab';
+import CheckoutTab from '../CheckoutTab/CheckoutTab';
+import { useReactToPrint } from 'react-to-print';
+import TicketForPrinting from './TicketForPrinting/TicketForPrinting';
 function TicketCreator(props) {
     let [date, setDate] = useState(new Date()) 
     let [productIndex, setProductIndex] = useState(0)
@@ -15,6 +18,17 @@ function TicketCreator(props) {
     let ticketProducts = useSelector(state => state.products.ticketProducts)
     const allProducts = useSelector( state => state.products.products)
     const selectedProduct = useSelector( state => state.products.selectedProduct)
+    let [isCheckoutVisible, setCheckout] = useState(false)
+    function togglePaymentCheckout(){
+        if(isCheckoutVisible){
+            setCheckout(false)
+            console.log('hidden');
+        }
+        else{
+            setCheckout(true)
+            console.log('shown');
+        }
+    }
     let [state, setState] = useState({
         searchValue: '',
         inputSearch: '',
@@ -221,7 +235,8 @@ function TicketCreator(props) {
                 
             }
             if(e?.code === 'F9'){
-                document.getElementById('submitTicket').click()
+                togglePaymentCheckout()
+                // document.getElementById('submitTicket').click()
             }
         }
         else{
@@ -257,7 +272,8 @@ function TicketCreator(props) {
                 
             }
             if(e?.code === 'F9'){
-                document.getElementById('submitTicket').click()
+                togglePaymentCheckout()
+                // document.getElementById('submitTicket').click()
             }
         }
     }
@@ -286,6 +302,21 @@ function TicketCreator(props) {
             }
         }
     }, [selectedProduct])
+
+    const TicketToPrint = () => {
+        return (<>
+            <div>
+                <TicketForPrinting></TicketForPrinting>
+            </div>
+        </>)
+    }
+
+    const handleOnAfterPrint = () => {
+        console.log('DESPUES DE IMPRESION');
+    }
+    const handleOnBeforePrint = () => {
+        console.log('ANTES DE IMPRESION');
+    }
     return ( <>
         {productIndex}
         <div className='ticketCreator'>
@@ -314,11 +345,21 @@ function TicketCreator(props) {
                 <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {submitTicket(state.ticketType)}}>CREAR TICKET</button>
                 {productThumb()}
             </form>
+            <h1 className='fixedTotal'>{state.total}</h1>
             {state.granelTab  && <div> 
                 <button className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
                 <GranelTab product={state.matchList[productIndex]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
                 
                 </div>}
+            
+            {isCheckoutVisible && <div className='checkoutBoxContainer'> 
+                <CheckoutTab 
+                    total={state.total} 
+                    afterCheckoutCallback={() => {document.getElementById('submitTicket').click()}} 
+                    closeCallback={() => togglePaymentCheckout()} 
+                    Component = {() => <TicketToPrint></TicketToPrint>} 
+                    >
+                </CheckoutTab></div>}
         </div>
     </> );
 }

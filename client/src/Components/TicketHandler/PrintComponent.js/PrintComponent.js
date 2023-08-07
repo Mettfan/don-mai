@@ -19,8 +19,30 @@ function PrintComponent(props) {
           </div>
         );
       });
-      function handleOnAfterPrint (){
+    const SkipPrint = React.forwardRef((childProps, ref) => {
+        return (
+          <div ref={ref} className= 'printContainer' >
+                <div>
+                  SkIPPEDpRINT
+                </div>
+          </div>
+        );
+      });
+      async function handleOnAfterPrint (){
         console.log('AFTER');
+
+        let promise = new Promise(( resolve ) => {
+            props.afterPrintCallback()
+
+            setTimeout(() => {
+              resolve('SUMMITED')
+              
+            }, 1000);
+          
+        })
+        await promise.then((res) => {
+          console.log(res);
+        })
       }
       function handleOnBeforePrint (){
         console.log('BEFORE');
@@ -31,11 +53,28 @@ function PrintComponent(props) {
       onAfterPrint: () => {handleOnAfterPrint()},
       onBeforePrint: () => {handleOnBeforePrint()}
     });
-  
+    let [isPrintable, setPrintable] = useState(true)
+    function handleOnPrintChange(e){
+      console.log(e.target.value);     
+      let isSet = e.target.value === 'on' ? true : false
+    e && setPrintable(isSet)
+  }
+      
     return (
       <div className='componentToPrintContainer'>  
         {/* <button className="printButton" onClick={handlePrint}>COBRAR</button> */}
-        <ComponentToPrint ref={componentRef} />
+        {
+          isPrintable ? <div>
+            <input value={ document.getElementById('isPrintable') ? document.getElementById('isPrintable') : false } id='isPrintable' type='checkbox' name='isPrintable' onChange={(e) => handleOnPrintChange(e)}></input>
+            <ComponentToPrint ref={componentRef} />
+          </div>
+          :
+          <div>
+            <SkipPrint ref={componentRef} />
+            NOPRINTED
+          </div>
+        }
+        
         <button className="printComponentButton" onClick={handlePrint}>{props?.buttonComponent}</button>
       </div>
     );

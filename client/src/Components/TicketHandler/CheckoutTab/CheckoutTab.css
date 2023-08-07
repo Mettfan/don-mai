@@ -1,0 +1,14 @@
+.checkoutResultContainer{
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+.checkoutFaltante{
+    filter: drop-shadow(1px 1px 1px red);
+}
+.checkoutSobrante{
+    filter: drop-shadow(1px 1px 1px green);
+}
+#receiptalue{
+    
+}
