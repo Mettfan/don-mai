@@ -355,7 +355,8 @@ function TicketCreator(props) {
             {isCheckoutVisible && <div className='checkoutBoxContainer'> 
                 <CheckoutTab 
                     total={state.total} 
-                    afterCheckoutCallback={() => {submitTicket(state.ticketType)}} 
+                    afterCheckoutCallback={() => {document.location.reload()}} 
+                    beforeCheckoutCallback={() => {submitTicket(state.ticketType)}} 
                     closeCallback={() => togglePaymentCheckout()} 
                     Component = {() => <TicketToPrint></TicketToPrint>} 
                     >

@@ -30,11 +30,12 @@ function PrintComponent(props) {
       });
       async function handleOnAfterPrint (){
         console.log('AFTER');
-        props.afterPrintCallback()
+        props?.afterPrintCallback && props?.afterPrintCallback() 
         
       }
       function handleOnBeforePrint (){
         console.log('BEFORE');
+        props?.beforePrintCallback && props?.beforePrintCallback()
       }
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
