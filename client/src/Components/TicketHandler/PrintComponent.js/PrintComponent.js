@@ -30,19 +30,8 @@ function PrintComponent(props) {
       });
       async function handleOnAfterPrint (){
         console.log('AFTER');
-
-        let promise = new Promise(( resolve ) => {
-            props.afterPrintCallback()
-
-            setTimeout(() => {
-              resolve('SUMMITED')
-              
-            }, 1000);
-          
-        })
-        await promise.then((res) => {
-          console.log(res);
-        })
+        props.afterPrintCallback()
+        
       }
       function handleOnBeforePrint (){
         console.log('BEFORE');
@@ -75,7 +64,7 @@ function PrintComponent(props) {
           </div>
         }
         
-        <button className="printComponentButton" onClick={handlePrint}>{props?.buttonComponent}</button>
+        <button id='printComponent' className="printComponentButton" onClick={handlePrint}>{props?.buttonComponent}</button>
       </div>
     );
 }

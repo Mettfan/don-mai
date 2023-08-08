@@ -30,8 +30,13 @@ function CheckoutTab({total, afterCheckoutCallback, closeCallback, Component}) {
         if(Number(keycode) === 27){
             closeCallback()
         }
+        if(Number(keycode) === 13  ){
+            document.getElementById('printComponent').focus()
+
+        }
         console.log(keycode);
     }
+
     return ( <>
 
         <div className='checkoutTab'>

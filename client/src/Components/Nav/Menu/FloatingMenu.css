@@ -1,0 +1,31 @@
+.menuContainer{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    padding: 5px;
+    background-color: #f0c024;
+    flex-direction: column;
+}
+.closeMenuButton{
+    width: 20%;
+    height: 90%;
+    padding: 5px;
+}
+.closeButtonContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.menuTitle{
+    position: relative;
+    right: 50%;
+}
+@media (max-width: 400px ) {
+    .menuContainer{
+        width: 100%;
+    }
+}
