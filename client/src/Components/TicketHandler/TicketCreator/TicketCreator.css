@@ -1,3 +1,10 @@
+.ticketCheckoutContainer{
+  width: 52mm;
+}
+.ticketCheckoutContainer{
+  width: 52mm;
+  font-size: xx-small;
+}
 .checkoutBoxContainer{
   position: fixed;
   top: 50%;

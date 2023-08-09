@@ -36,7 +36,14 @@ function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, clos
         }
         console.log(keycode);
     }
-
+    function PrintingComponent(){
+        return (<div>
+            <Component></Component>
+            <h5>{recibido && 'Recibido $' + recibido}</h5>
+            {/* <h5>{faltante && 'Faltan $' + faltante}</h5> */}
+            <h5>{restante && 'Sobran $' + restante}</h5>
+        </div>)
+    }
     return ( <>
 
         <div className='checkoutTab'>
@@ -53,11 +60,11 @@ function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, clos
                             {'SOBRAN: ' + restante + ' PESOS'}     
                         </div>
                         <div>
-                            {restante > 0 &&<PrintComponent component = {<Component/>} afterPrintCallback = {afterCheckoutCallback} beforePrintCallback = {beforeCheckoutCallback} buttonComponent = {<div className='paymentButton'>COBRAR</div>}></PrintComponent>}
+                            {restante > 0 &&<PrintComponent component = {<PrintingComponent/>} afterPrintCallback = {afterCheckoutCallback} beforePrintCallback = {beforeCheckoutCallback} buttonComponent = {<div className='paymentButton'>COBRAR</div>}></PrintComponent>}
                         </div>
                     </div>
                 }
-                {(faltante + restante) === 0 && <PrintComponent component = {  <Component/>} afterPrintCallback = {afterCheckoutCallback} buttonComponent = {<div className='paymentButton'>COBRAR</div>}></PrintComponent> }
+                {(faltante + restante) === 0 && <PrintComponent component = {  <PrintingComponent/>} afterPrintCallback = {afterCheckoutCallback} buttonComponent = {<div className='paymentButton'>COBRAR</div>}></PrintComponent> }
                 
             </div>
         </div>    

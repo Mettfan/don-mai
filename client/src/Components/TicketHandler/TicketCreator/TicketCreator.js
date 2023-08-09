@@ -306,7 +306,7 @@ function TicketCreator(props) {
     const TicketToPrint = () => {
         return (<>
             <div>
-                <TicketForPrinting></TicketForPrinting>
+                <TicketForPrinting total = {state.total}></TicketForPrinting>
             </div>
         </>)
     }

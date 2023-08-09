@@ -18,9 +18,9 @@ function PrintList({products}) {
                     return (<tr>
                         <td>{product?.quantity}</td>
                         <td>{product?.Producto}</td>
-                        <td></td>
-                        <td>{  String(product['P. Venta'][0]) === '$' ? product['P. Venta'].slice(1) : product['P. Venta'] }</td>
-                        <td></td>
+                        <td contentEditable={true}></td>
+                        <td contentEditable={true}>{  String(product['P. Venta'][0]) === '$' ? product['P. Venta'].slice(1) : product['P. Venta'] }</td>
+                        <td contentEditable={true}></td>
                         {/* <td>{product['Código']?.slice(-6, -1)}</td> */}
                         
                     </tr>)
