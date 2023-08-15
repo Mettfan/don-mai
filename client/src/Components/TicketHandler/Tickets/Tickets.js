@@ -10,6 +10,7 @@ import { readExcel } from '../../Convert/Convert';
 import TicketCreator from '../TicketCreator/TicketCreator';
 import Cookies from 'universal-cookie';
 import DownloadIcon from '@mui/icons-material/Download';
+import BackupTickets from '../RestoreTickets/BackupTickets/BackupTickets';
 function Tickets() {
     let cookie = new Cookies()
     let user = cookie.get('user')
@@ -29,6 +30,20 @@ function Tickets() {
     function onDeleteTicket(id, user){
         dispatch(destroyTicket(id, user?.email))
     }
+    // function separateCodebar(char, tickets){
+    //     // Esta funcion ayuda a separar los codigos de barras con un cáracter predefinido
+    //     // Nota: Complementa la funcion de descarga para poder convertir objetos a una lista dentro de la variable definida
+    //     let filteredProductos = tickets?.map(ticket => {
+    //         if (ticket?.Productos){
+    //             return Productos.map(producto => {
+    //                 return producto?.Código
+    //             })
+    //         }
+
+    //     })
+
+    // }
+
     let ticketCard = (ticket) => {
         let ticketDate = new Date(ticket?.createdAt)
         return (<>
@@ -122,6 +137,23 @@ function Tickets() {
         meanTicket = Math.floor(meanTicket/ticketCounter)
         return [meanTicket, ticketCounter]
     }
+    // function confirmDownload(type){
+        
+    //     let convertedTickets;
+    //     console.log(typeof currentTickets());
+    //     console.log( currentTickets());
+    //     console.log(typeof tickets);
+    //     console.log( tickets);
+    //     if(!(type === 'all')){
+    //         currentTickets()
+    //     }
+    //     else{
+    //        tickets[0]
+    //     }
+    //     console.log(convertedTickets);
+
+    //     // downloadExcel(convertedTickets)
+    // }
     return ( <>
         {/* {ticketDate.getMonth()+1} */}
         {/* {JSON.stringify(tickets)} */}
@@ -133,7 +165,9 @@ function Tickets() {
                     <div className='calendarTicket'>
                         {/* {JSON.stringify(ticketDate)} */}
                         <Calendar onChange={setTicketDate} value={ticketDate} defaultView={'month'} />
-                        {tickets?.length && <button className='ticketDownloadButton' onClick={() => downloadExcel(currentTickets())} ><DownloadIcon></DownloadIcon></button>}
+                        {/* Descomentar siguiente linea para activar boton de descarga completa */}
+                        {/* <BackupTickets></BackupTickets> */}
+                        {/* {tickets?.length && <button className='ticketDownloadButton' onClick={() => confirmDownload('all')} ><DownloadIcon></DownloadIcon></button>} */}
                         {/* EXCEL UPLOAD TICKETS PROTOTYPE */}
                         {/* <input onChange={(e) => fileOnChange(e)} type="file" id = 'hoja' accept= ".xls, .xlsx"></input>
                         <div>
