@@ -19,6 +19,12 @@ function TicketCreator(props) {
     const allProducts = useSelector( state => state.products.products)
     const selectedProduct = useSelector( state => state.products.selectedProduct)
     let [isCheckoutVisible, setCheckout] = useState(false)
+    useEffect(() => {
+        if(isCheckoutVisible === false){
+            document.getElementById('inputSearch').focus()
+
+        }
+    }, [isCheckoutVisible])
     function togglePaymentCheckout(){
         if(isCheckoutVisible){
             setCheckout(false)
