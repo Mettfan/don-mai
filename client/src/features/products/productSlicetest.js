@@ -18,7 +18,8 @@ export const productSlicetest = createSlice({
         payment: null,
         tickets: [],
         ticket: {},
-        userProducts: []
+        userProducts: [],
+        userTickets: []
     },
     reducers: {
         
@@ -379,6 +380,19 @@ export const productSlicetest = createSlice({
             state.error = action.error.message
             state.response = null
         })
+        builder.addCase(filterTickets.pending, state => {
+            state.loading = true
+        })
+        builder.addCase(filterTickets.fulfilled, (state, action) => {
+            state.loading = false
+            state.userTickets = action.payload
+            state.error = ''
+        })
+        builder.addCase(filterTickets.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            state.response = null
+        })
     }
 })
 
@@ -480,6 +494,10 @@ const deleteUserProduct = createAsyncThunk('products/deleteUserProduct', ({userI
     return axios.delete(`http://localhost:3001/product/delete/user/?userId=${userId}&productId=${productId}`)
     .then( response => response.data)
 })
+const filterTickets = createAsyncThunk('products/filterTickets', ({filter, value}) => {
+    return axios.get(`http://localhost:3001/Tickets/search/?filter=${filter}&value=${value}`)
+    .then( response => response.data)
+})
 export const {
     setPayment,
     showModal,
@@ -514,3 +532,4 @@ export const destroyTicket = deleteTicket
 export const matchProduct = associateProduct
 export const getMyProducts = getUserProducts
 export const removeProduct = deleteUserProduct
+export const fetchFilteredTickets = filterTickets

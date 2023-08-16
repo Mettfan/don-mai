@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { destroyTicket, fetchTickets } from '../../../features/products/productSlicetest';
+import { destroyTicket, fetchFilteredTickets, fetchTickets } from '../../../features/products/productSlicetest';
 import Calendar from 'react-calendar'
 import './Tickets.css'
 import PrintComponent from '../PrintComponent.js/PrintComponent';
@@ -17,11 +17,19 @@ function Tickets() {
     useEffect(() => {
         getAllTickets()
     }, [])
+    useEffect(() => {
+        getUserTickets()
+    }, [])
     let dispatch = useDispatch()
     let tickets = useSelector(state => state.products.tickets.response)
+    let userTickets = useSelector(state => state.products.userTickets)
     let getAllTickets = () => {
         console.log(tickets);
         dispatch(fetchTickets())
+    }
+    let getUserTickets = () => {
+        console.log(tickets);
+        dispatch(fetchFilteredTickets({filter: 'user', value: user?.name}))
     }
     let nav = useNavigate()
     const date = new Date()
@@ -88,7 +96,7 @@ function Tickets() {
                 </div>
         </>)
     }
-    let currentTickets = () => tickets?.filter(ticket => Number(ticket["createdAt"].split('T')[0].split('-')[1]) === ticketDate.getMonth() + 1 )?.filter(ticket => {
+    let currentTickets = () => userTickets?.filter(ticket => Number(ticket["createdAt"].split('T')[0].split('-')[1]) === ticketDate.getMonth() + 1 )?.filter(ticket => {
         let currentTicketDate = new Date(ticket['createdAt'])
         console.log(currentTicketDate.toLocaleString().split('/')[0]);
         console.log(ticketDate.getDate());
@@ -219,7 +227,7 @@ function Tickets() {
 
                 <div className='allTicketsContainer'>
 
-                    {tickets?.length && currentTicketsCards()}
+                    {userTickets?.length && currentTicketsCards()}
                 </div>
         </div>
     </> );
