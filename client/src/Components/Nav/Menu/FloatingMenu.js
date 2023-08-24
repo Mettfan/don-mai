@@ -16,9 +16,9 @@ function FloatingMenu({ closeCallback }) {
             </div>
             
            
-            {user?.privileges === 'admin' && <NavLink className= { 'changePage' } to={'/upload/product'}><div className="navText">CREATE</div></NavLink>}
-            {user?.privileges === 'admin' &&  <NavLink className={ 'changePage' } to={'/update/price'}><div className="navText">EDIT</div></NavLink>}
-            {user?.privileges === 'admin' && <NavLink className={ 'changePage' } to={'/print/list'}><div className="navText">PRINT</div></NavLink>}
+            {<NavLink className= { 'changePage' } to={'/upload/product'}><div className="navText">CREATE</div></NavLink>}
+            { <NavLink className={ 'changePage' } to={'/update/price'}><div className="navText">EDIT</div></NavLink>}
+            {<NavLink className={ 'changePage' } to={'/print/list'}><div className="navText">PRINT</div></NavLink>}
 
         </div>
     

@@ -431,12 +431,12 @@ const deleteProduct = createAsyncThunk('products/deleteProduct', (id) => {
     })
     .then( response => response.data)
 })
-const addProductStock = createAsyncThunk('products/addProductStock', ({productBarcode, quantity, userId}) => {
+const addProductStock = createAsyncThunk('products/addProductStock', ({productBarcode, quantity, id}) => {
     console.log(productBarcode);
     return axios.put(`http://localhost:3001/add/product/stock`, {
         productBarcode,
         quantity: Number(quantity),
-        userId: userId
+        id: id
     })
     .then( response => response.data)
 })

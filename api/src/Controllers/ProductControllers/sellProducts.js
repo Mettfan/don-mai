@@ -11,9 +11,9 @@ const sellProducts = async (req, res, next) => {
   try{
     if(productos){
         productos.map(async producto => {
-            let foundProduct = await Product.findOne({where: {['Código']: producto['Código'] }})
+            let foundProduct = await Product.findOne({where: {['Código']: producto['Código'], id: producto['id'] }})
             if (foundProduct){
-                await Product.update({quantity: Number(foundProduct.quantity) - Number(producto.quantity) }, {where: { ['Código']: foundProduct['Código'] }}).then(result => {
+                await Product.update({quantity: Number(foundProduct.quantity) - Number(producto.quantity) }, {where: { id: producto.id, ['Código']: foundProduct['Código'] }}).then(result => {
                     console.log(result);
                 })
             }

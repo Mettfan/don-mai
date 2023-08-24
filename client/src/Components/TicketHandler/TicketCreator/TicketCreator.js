@@ -199,7 +199,7 @@ function TicketCreator(props) {
         })
         //Creamos una funcion asincrónica para que se puedan ejecutar de manera consecutiva los siguientes dispatch
         let promise = new Promise((resolve ) => {
-            dispatch(sellProducts({products: ticket}))
+            dispatch(sellProducts({products: ticket, userId: user.id}))
             resolve('SOLD')
         })
         await promise.then((result) => {

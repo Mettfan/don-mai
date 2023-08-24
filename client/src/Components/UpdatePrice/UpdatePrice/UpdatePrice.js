@@ -36,7 +36,7 @@ export default function UpdatePrice(){
         getProduct(counterId)
         document.getElementById('id').focus()
         document.getElementById('price').value = null
-        document.getElementById('name').value = null
+        // document.getElementById('name').value = null
         document.getElementById('departament').value = null
         document.getElementById('id').value = null
         
@@ -78,7 +78,7 @@ export default function UpdatePrice(){
     }
     function handleOnEdit(e, findBy){
         e.preventDefault && e.preventDefault()
-        dispatch(editOneProduct({id: selectedProduct.id, findBy: findBy, infoUpdated: state[e.target.name] })).then(()=>{
+        dispatch(editOneProduct({id: selectedProduct.id, findBy: e.target.name, infoUpdated: state[e.target.name] })).then(()=>{
             getProduct(selectedProduct['Código'])
             getAllProducts()
 
@@ -107,7 +107,7 @@ export default function UpdatePrice(){
     }
     function addStock(e){
         e?.preventDefault && e.preventDefault()
-        dispatch(addProductToStock({productBarcode: selectedProduct['Código'], quantity: state.pieces})).then(()=>{
+        dispatch(addProductToStock({productBarcode: selectedProduct['Código'], quantity: state.pieces, id: selectedProduct['id']})).then(()=>{
             getProduct(selectedProduct['Código'])
             getAllProducts()
 
@@ -125,9 +125,9 @@ export default function UpdatePrice(){
                     (<div>
                         <div>
                             {'Producto: ' + selectedProduct.Producto}
-                            <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
+                            {/* <form name="Producto" onSubmit={(e)=> {handleOnEdit(e, 'Producto')}}>
                                 <input id="name" placeholder="Nuevo Nombre" name="Producto" type={'text'} onChange={(e) => {handleInputOnChange(e)}} />
-                            </form>
+                            </form> */}
                             
                         </div>
                         <div>
