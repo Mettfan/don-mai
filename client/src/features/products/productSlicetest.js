@@ -400,9 +400,11 @@ const fetchProducts = createAsyncThunk('products/fetchProducts', () => {
     return axios.get('http://localhost:3001/products')
     .then( response => response.data.db)
 })
-const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value}) => {
+const fetchProduct = createAsyncThunk('products/fetchProduct', ({filter, value, userId}) => {
     console.log(value);
-    return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}`)
+    console.log(userId);
+    console.log(filter);
+    return axios.get(`http://localhost:3001/products/?filter=${filter}&value=${value}&userId=${userId  || null}`)
     .then( response => response.data)
 })
 const editProduct = createAsyncThunk('products/editProduct', ({id, findBy, infoUpdated}) => {
@@ -429,11 +431,12 @@ const deleteProduct = createAsyncThunk('products/deleteProduct', (id) => {
     })
     .then( response => response.data)
 })
-const addProductStock = createAsyncThunk('products/addProductStock', ({productBarcode, quantity}) => {
+const addProductStock = createAsyncThunk('products/addProductStock', ({productBarcode, quantity, userId}) => {
     console.log(productBarcode);
     return axios.put(`http://localhost:3001/add/product/stock`, {
         productBarcode,
-        quantity: Number(quantity)
+        quantity: Number(quantity),
+        userId: userId
     })
     .then( response => response.data)
 })

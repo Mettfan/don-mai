@@ -144,7 +144,7 @@ export default function Home(){
                                     <h3>{foundProduct?.Producto}</h3>
                                 </div>)
                             }
-                        })}
+                        }).slice(3)}
                         {/* {!(foundProducts.length > 0) ? foundProducts?.Producto : foundProducts?.map( product => {
                             <h3>{product?.Producto}</h3>
                         })} */}

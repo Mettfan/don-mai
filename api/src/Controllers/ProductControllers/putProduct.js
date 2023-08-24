@@ -14,7 +14,7 @@ const putProduct = async (req, res, next) => {
   }
   try{
     // console.log(JSON.stringify(productos) );
-    Product.update( { [key]: infoUpdated }, { where: { id: id }} ).then( result => {
+    await Product.update( { [key]: infoUpdated }, { where: { id: id }} ).then( result => {
         res.status(200).send({result: result})
     })
   }

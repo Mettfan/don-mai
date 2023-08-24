@@ -54,7 +54,7 @@ export default function UpdatePrice(){
         })
     }, [selectedProduct])
     function getProduct(barcode){
-        dispatch( fetchOneProduct({filter: 'Código', value: barcode})  )
+        dispatch( fetchOneProduct({filter: 'Código', value: barcode, userId: user?.id})  )
 
     }
     function handleOnSubmit(e){
@@ -78,7 +78,7 @@ export default function UpdatePrice(){
     }
     function handleOnEdit(e, findBy){
         e.preventDefault && e.preventDefault()
-        dispatch(editOneProduct({id: selectedProduct.id, findBy: e.target.name, infoUpdated: state[e.target.name] })).then(()=>{
+        dispatch(editOneProduct({id: selectedProduct.id, findBy: findBy, infoUpdated: state[e.target.name] })).then(()=>{
             getProduct(selectedProduct['Código'])
             getAllProducts()
 

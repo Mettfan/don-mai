@@ -4,7 +4,7 @@ const { Product, User } = require("../../db.js");
 
 const getProduct = async (req, res, next) => {
 
-  let { filter, value } = req.query
+  let { filter, value, userId } = req.query
   try{
     if(filter == 'barcode'){
       filter = 'Código'
@@ -13,7 +13,7 @@ const getProduct = async (req, res, next) => {
     let respuesta = null
   
     if(filter){
-      Product.findOne( {where: { [filter]: value } } ).then( (producto) => {
+      await Product.findOne( {where: { [filter]: value, UserId: userId } } ).then( (producto) => {
         respuesta = producto
         console.log(respuesta);
         res.send(respuesta)
@@ -24,7 +24,7 @@ const getProduct = async (req, res, next) => {
       })
     }
     else{
-      Product.findAll().then(productos => {
+      await Product.findAll().then(productos => {
         console.log(productos);
         res.send({db: productos})
       })

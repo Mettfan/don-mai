@@ -47,10 +47,10 @@ export function Ticket(){
     useEffect(()=> {
         let newTotal = 0
         console.log('CHANGING NEWTOTAL');
-        newTotal = ticketProducts.reduce((accumulator, currentValue) => {
+        newTotal = ticketProducts?.reduce((accumulator, currentValue) => {
             let currentQuantity = Number(currentValue.quantity)
             let currentPrice = currentValue['P. Venta']
-            let formattedCurrentPrice = currentPrice.includes('$') ? Number(currentPrice.slice(1)   ) : Number(currentPrice)
+            let formattedCurrentPrice = currentPrice?.includes('$') ? Number(currentPrice?.slice(1)   ) : Number(currentPrice)
             let result  = accumulator + (currentQuantity * formattedCurrentPrice )
             console.log(accumulator);
             console.log(currentValue)

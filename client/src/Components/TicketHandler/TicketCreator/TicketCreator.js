@@ -2,7 +2,7 @@ import { color } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { addProductToGlobalTicket, deleteProductFromGlobalTicket, fetchOneProduct, fetchTickets, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
+import { addProductToGlobalTicket, deleteProductFromGlobalTicket, fetchOneProduct, fetchTickets, getMyProducts, postTicket, removeProductFromGlobalTicket, sellProducts } from '../../../features/products/productSlicetest';
 import CreateProduct from '../../CreateProduct/CreateProduct';
 import './TicketCreator.css'
 import GranelTab from '../../GranelTab/GranelTab';
@@ -17,8 +17,12 @@ function TicketCreator(props) {
     let dispatch = useDispatch()
     let ticketProducts = useSelector(state => state.products.ticketProducts)
     const allProducts = useSelector( state => state.products.products)
+    const userProducts = useSelector( state => state.products.userProducts)
     const selectedProduct = useSelector( state => state.products.selectedProduct)
     let [isCheckoutVisible, setCheckout] = useState(false)
+    useEffect(() => {
+        dispatch(getMyProducts({userId: user.id}))
+    }, [])
     useEffect(() => {
         if(isCheckoutVisible === false){
             document.getElementById('inputSearch').focus()
@@ -166,7 +170,7 @@ function TicketCreator(props) {
       }
     function searchStates(searchText){
         
-        let matches = allProducts.filter(product => {
+        let matches = ( user?.privileges === 'admin' ? allProducts : userProducts ).filter(product => {
           const regex = new RegExp(`^${searchText}`, 'gi')
           if(product){
               return product['Producto']?.match(regex) || product['Código']?.match(regex) || product['Departamento']?.match(regex)
@@ -286,7 +290,7 @@ function TicketCreator(props) {
     function handleAddProduct2Ticket(e){
         e?.preventDefault()
         console.log(state);
-        dispatch(fetchOneProduct({filter: "Código", value: state.searchValue}))
+        dispatch(fetchOneProduct({filter: "Código", value: state.searchValue, userId: user?.id}))
         console.log(selectedProduct);
     }
     function closeGranelTab(){
@@ -305,6 +309,9 @@ function TicketCreator(props) {
                 })
                 document.getElementById('inputSearch').value = ''
 
+            }
+            else{
+                setState({...state,  granelTab: true})
             }
         }
     }, [selectedProduct])

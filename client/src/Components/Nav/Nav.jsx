@@ -34,8 +34,8 @@ export default function Nav (){
                     <button className="changePage" onClick={() => { nav('/update/price')}}>SEARCH</button> */}
                     <NavLink className= { 'changePage' } to={'/home'}><div className="navText">HOME</div></NavLink>
                     <NavLink className={ 'changePage' } to={'/catalog'}><div className="navText">CATALOG</div></NavLink>
-                    {user?.privileges && <NavLink className={ 'changePage' } to={'/search'}><div className="navText">SEARCH</div></NavLink>}
-                    {user?.privileges === 'admin' && <NavLink className={ 'changePage' } to={'/tickets'}><div className="navText">Tickets</div></NavLink>}
+                    {/* {user?.privileges && <NavLink className={ 'changePage' } to={'/search'}><div className="navText">SEARCH</div></NavLink>} */}
+                    {<NavLink className={ 'changePage' } to={'/tickets'}><div className="navText">Tickets</div></NavLink>}
                     {userSucursal?.id && <NavLink className={ 'changePage' } to={'/sucursal'}><div className="navText">Sucursal</div></NavLink>}
                     {/* {JSON.stringify(user)} */}
                     <UserNav user = {user} ></UserNav>
