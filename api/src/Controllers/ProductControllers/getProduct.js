@@ -25,7 +25,7 @@ const getProduct = async (req, res, next) => {
     }
     else{
       await Product.findAll().then(productos => {
-        console.log(productos);
+        // console.log(productos);
         res.send({db: productos})
       })
     }
