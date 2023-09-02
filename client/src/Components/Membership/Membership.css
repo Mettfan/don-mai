@@ -1,0 +1,25 @@
+#perrito{
+    width: 50%;
+}
+#plansContainer{
+    display: flex;
+    flex-direction:row;
+    justify-content:space-around;
+    background-color: white;
+    color: rgb(239, 190, 184);
+}
+.planTitle{
+    background-color: white;
+    width: 18%;
+    padding: 10px;
+    border-radius: 38.5%;
+    border: burlywood dotted 3px ;
+    font-size: x-large;
+    font-weight: 800;
+}
+
+@media (max-width: 700px) {
+    #perrito{
+        width: 100%;
+    }
+}

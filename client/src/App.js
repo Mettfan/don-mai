@@ -31,6 +31,7 @@ import { fetchOneSucursal } from './features/sucursal/sucursalSlice';
 import Cookies from 'universal-cookie';
 import Faltante from './pages/Faltante/Faltante';
 import Listado from './pages/Listado/Listado';
+import Membership from './Components/Membership/Membership';
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
         <Route path ="/complete/product/:attribute" element={<CompleteProductInfo/>} />
         {/* <Route path ="/complete/product/:attribute" element={<CompletePCompra/>} /> */}
 
+        <Route path ="/membership" element={<Membership/>} />
       </Routes>
     </div>
   );
