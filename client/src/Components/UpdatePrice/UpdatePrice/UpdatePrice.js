@@ -155,13 +155,16 @@ export default function UpdatePrice(){
                             {/* {JSON.stringify(globalState.response)} */}
 
                         </div>
-                        <div>
+                        {/* Siguiente fragmento deshabilitado por error en produccion (No se edita correctamente) */}
+                        {/* <div>
                             {'Precio de Compra: ' + selectedProduct['P. Compra']}
                             <form name="P. Compra" onSubmit={(e)=> {handleOnEdit(e, 'P. Compra')}}>
                                 <input id="P. Compra" placeholder="Nuevo precio de compra" name="P. Compra" type={'text'} onChange={(e)=> handleInputOnChange(e)} />
                             </form>
+                        </div> */}
 
-                        </div>
+                    
+
                         <div>
                             {/* <div>Ultima vez Actualizado: </div> */}
                                 {/* <div>
