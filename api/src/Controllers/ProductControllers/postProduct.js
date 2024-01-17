@@ -61,9 +61,7 @@ const postProduct = async (req, res, next) => {
         })
       }
       }
-      else{
-        res.send({response: found})
-      }
+
           
       } )
     }
