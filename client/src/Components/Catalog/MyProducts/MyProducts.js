@@ -35,12 +35,12 @@ function MyProducts(props) {
             {/* <button onClick={() => {getUserProducts()}}>GET USER PRODUCTS</button> */}
             <div className='myProducts'>
                 {userProducts && userProducts?.map(product => {
-                    return (<div onClick={() => {selectProduct(product.id)}} className='productBg' >
-                        <div>{product.Producto}</div>
+                    return (<div onClick={() => {selectProduct(product?.id)}} className='productBg' >
+                        <div>{product?.Producto}</div>
                         <div>{product['P. Venta']}</div>
                         <div>{product['Código']}</div>
                         <div>{product['quantity']}</div>
-                        <button onClick={() => deleteProduct(product['id'], user.id)}>X</button>
+                        <button onClick={() => deleteProduct(product['id'], user?.id)}>X</button>
                     </div>)
                 })}
 
