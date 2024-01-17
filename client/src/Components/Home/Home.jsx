@@ -99,7 +99,7 @@ export default function Home(){
     // })
     let cookie = new Cookies()
     let user = cookie.get('user')
-    let userProducts =  useSelector( status => status.products.userProducts )
+    let userProducts =  useSelector( status => status?.products?.userProducts )
 
     useEffect( ( ) => {
         if(user?.id){
@@ -173,7 +173,7 @@ export default function Home(){
 
                     })}
                     <div className="cHome">
-                    {Departamentos()}
+                    {userProducts && Departamentos()}
                     </div>
                 </div>
             </div>
