@@ -17,52 +17,50 @@ const postProduct = async (req, res, next) => {
           [Op.or]: [
             {['Código']: producto['Código'] || null},
             {['id']: producto?.id || null},
-          ]
-        }
-        
-      })
-      if (!found){
-        if (producto['Código']){
-          await Product.bulkCreate([...[{
-          ['Código']: producto['Código'] || null,
-          ['Producto']: producto['Producto'] || null,
-          ['P. Venta']: producto['P. Venta'] || null,
-          ['P. Compra']: producto['P. Compra'] || null,
-          ['updatedAt']: producto['updatedAt'] || null,
-          ['createdAt']: producto['createdAt'] || null,
-          ['quantity']: producto['quantity'] || 0,
-          ['Departamento']: producto['Departamento'] || null,
-          ['image']: producto['image'] || null,
-          ['sales']: producto['sales'] || 0,
-          ['brand']: producto['brand'] || null,
-        }]]).then( async d => {
-          console.log('status: ' + JSON.stringify(d));
-          if (Number(userId) && typeof(userId) === 'number'){
-            console.log('user detected, associating...');
-            let user = await User.findOne({where: {id: Number(userId)}})
-            let product = await Product.findOne({where: {
-              [Op.and]:[
-                {['Código']: producto['Código']},
-                {['Producto']: producto['Producto']}
               ]
-            }})
-            await user.addProduct(product).then((result) => {
-              console.log(result);
-              
-            }).catch((err) => {
-              console.log(err);
-            });
-          }
-          // Product.findAll().then( (d2) => {
-          //   console.log(d2,  ' <-database');
-          //   res.status(200).send({productos: productos, db: d2})
-          // })
-    
-        })
-      }
-      }
-
-          
+            }
+            
+          })
+        if (!found){
+          if (producto['Código']){
+            await Product.bulkCreate([...[{
+            ['Código']: producto['Código'] || null,
+            ['Producto']: producto['Producto'] || null,
+            ['P. Venta']: producto['P. Venta'] || null,
+            ['P. Compra']: producto['P. Compra'] || null,
+            ['updatedAt']: producto['updatedAt'] || null,
+            ['createdAt']: producto['createdAt'] || null,
+            ['quantity']: producto['quantity'] || 0,
+            ['Departamento']: producto['Departamento'] || null,
+            ['image']: producto['image'] || null,
+            ['sales']: producto['sales'] || 0,
+            ['brand']: producto['brand'] || null,
+          }]]).then( async d => {
+            console.log('status: ' + JSON.stringify(d));
+            if (Number(userId) && typeof(userId) === 'number'){
+              console.log('user detected, associating...');
+              let user = await User.findOne({where: {id: Number(userId)}})
+              let product = await Product.findOne({where: {
+                [Op.and]:[
+                  {['Código']: producto['Código']},
+                  {['Producto']: producto['Producto']}
+                ]
+              }})
+              await user.addProduct(product).then((result) => {
+                console.log(result);
+                
+              }).catch((err) => {
+                console.log(err);
+              });
+            }
+            // Product.findAll().then( (d2) => {
+            //   console.log(d2,  ' <-database');
+            //   res.status(200).send({productos: productos, db: d2})
+            // })
+      
+          })
+        }
+        }
       } )
     }
     else{
@@ -76,7 +74,7 @@ const postProduct = async (req, res, next) => {
           let product = await Product.findOne({where: {id: response.id}})  
           console.log(product.Producto);
           await user.addProduct(product).then((result) => {
-            res.send(result)
+            console.log(result)
 
           })
         }
