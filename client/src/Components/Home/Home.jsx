@@ -112,7 +112,7 @@ export default function Home(){
     }
     function extractDepartments (products){
         let departments = []
-        products.forEach(product => {
+        products?.forEach(product => {
             if (!departments.find(department => department === product?.Departamento)){
                 departments.push(product?.Departamento)
             }
