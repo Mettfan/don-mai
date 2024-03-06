@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './CheckoutTab.css'
 import PrintComponent from '../PrintComponent.js/PrintComponent';
+import Pagaré from '../../Pagaré/Pagaré';
 function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, closeCallback, Component}) {
     let [recibido, setRecibido] = useState(0)
     let [faltante, setFaltante] = useState(total)
@@ -49,6 +50,7 @@ function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, clos
         <div className='checkoutTab'>
             <h1>TOTAL A PAGAR:</h1>
             <h2>{total}</h2>       
+            {/* <Pagaré name={'juan'} promised={16} tax={5} accumulated={169}  ></Pagaré> */}
             <input id = 'receiptValue' type='number' placeholder='RECIBIDO' onKeyDown={(e) => handleOnKeyDown(e) } onChange={(e) => handleOnInputChange(e) }></input>
             <div className='checkoutResultContainer'>
                 <div className='checkoutFaltante'>
