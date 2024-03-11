@@ -90,12 +90,10 @@ const fetchUser = createAsyncThunk('users/fetchUser', ({filter, value, password}
     return axios.get(`http://localhost:3001/users/?filter=${filter}&value=${value}&password=${password}`)
     .then( response => response.data)
 })
-const editUser = createAsyncThunk('products/editUser', ({id, findBy, infoUpdated}) => {
-    // console.log(value);
+const editUser = createAsyncThunk('products/editUser', ({editingUser}) => {
+    console.log(editingUser,">");
     return axios.put(`http://localhost:3001/users`, {
-        id,
-        findBy,
-        infoUpdated
+        editingUser
     })
     .then( response => response.data)
 })
