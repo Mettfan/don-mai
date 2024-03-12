@@ -118,7 +118,7 @@ function UserDetail(props) {
           <div>{user.phone ? <div>{user.phone}</div> : null}</div>
           <div>{user.privileges}</div>
           <div>{user.id}</div>
-          <button onClick={openOrCloseModal}>Editar</button>
+          <button onClick={openOrCloseModal} className="editButton">Editar</button>
           {/* {JSON.stringify(user)} */}
           <button
             className="logoutButton"
@@ -134,10 +134,11 @@ function UserDetail(props) {
             {imageUrl} */}
       </div>
       <Modal isOpen={modalIsOpen} onRequestClose={openOrCloseModal}>
-        <button onClick={openOrCloseModal}>X</button>
+        <button onClick={openOrCloseModal} className="modalCloseButton">X</button>
         <form onSubmit={(e) => handleUserEdit(e)}>
           <h2>Editar información personal</h2>
           <input
+            className="inputField"
             maxLength={100}
             name="name"
             value={editingUser.name}
@@ -147,6 +148,7 @@ function UserDetail(props) {
             required
           ></input>
           <input
+            className="inputField"
             name="email"
             value={editingUser.email}
             onChange={handleChangeModalInput}
@@ -156,6 +158,7 @@ function UserDetail(props) {
           ></input>
           {user.phone ? (
             <input
+              className="inputField"
               name="phone"
               value={editingUser.phone}
               onChange={handleChangeModalInput}
@@ -166,6 +169,7 @@ function UserDetail(props) {
             <div>
               <p>Te gustaria agregar un numero de teléfono?</p>
               <input
+                className="inputField"
                 input
                 name="phone"
                 value={editingUser.phone}
@@ -177,6 +181,7 @@ function UserDetail(props) {
           )}
           <p>Quieres cambiar tu clave?</p>
           <input
+            className="inputField"
             name="password"
             value={editingUser.password}
             onChange={handleChangeModalInput}
@@ -186,6 +191,7 @@ function UserDetail(props) {
             required
           ></input>
           <input
+            className="inputField"
             name="confirmPassword"
             value={editingUser.confirmPassword}
             maxLength={100}
@@ -197,20 +203,22 @@ function UserDetail(props) {
           {error && <p>{error}</p>}
           {modalError ? (
             <>
-              <p className="text-sm text-red-600 inline ml-3">
+              <p className="errorMessage">
                 Tienes que hacer cambios para guardar
               </p>
               <button
+                className="saveButton"
                 disabled
-                className="flex items-center justify-center w-16 h-10 mt-8 ml-64 bg-red-600 text-white rounded-xl"
+              
               >
                 Guardar
               </button>
             </>
           ) : (
             <button
+              className="saveButton"
               type="submit"
-              className="flex items-center justify-center w-10 h-10 bg-red-600 text-white rounded-full"
+            
             >
               Guardar
             </button>

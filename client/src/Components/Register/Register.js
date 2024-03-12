@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createOneUser } from "../../features/users/userSlice";
 import "./Register.css";
 
@@ -117,6 +117,7 @@ function Register() {
             />
           </div>
           {error && <p className="errorMessage">{error}</p>}
+          <Link to="/Login">Ya tienes una cuenta? Inicia sesión</Link>
           <button className="registerButton">Register</button>
         </form>
       </div>

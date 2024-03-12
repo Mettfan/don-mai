@@ -3,17 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { destroyTicket, fetchFilteredTickets, fetchTickets } from '../../../features/products/productSlicetest';
 import Calendar from 'react-calendar'
 import './Tickets.css'
-import PrintComponent from '../PrintComponent.js/PrintComponent';
+// import PrintComponent from '../PrintComponent.js/PrintComponent';
 import { useNavigate } from 'react-router-dom'
-import { downloadExcel } from '../../Convert/Convert';
+// import { downloadExcel } from '../../Convert/Convert';
 import { readExcel } from '../../Convert/Convert';
 import TicketCreator from '../TicketCreator/TicketCreator';
 import Cookies from 'universal-cookie';
-import DownloadIcon from '@mui/icons-material/Download';
-import BackupTickets from '../RestoreTickets/BackupTickets/BackupTickets';
+// import DownloadIcon from '@mui/icons-material/Download';
+// import BackupTickets from '../RestoreTickets/BackupTickets/BackupTickets';
 function Tickets() {
+    let nav = useNavigate()
     let cookie = new Cookies()
     let user = cookie.get('user')
+   
+
     useEffect(() => {
         getAllTickets()
     }, [])
@@ -31,7 +34,7 @@ function Tickets() {
         console.log(tickets);
         dispatch(fetchFilteredTickets({filter: 'user', value: user?.name}))
     }
-    let nav = useNavigate()
+    
     const date = new Date()
     let [ticketDate, setTicketDate] = useState(date)
     let [ticketsUpload, setTicketsUpload] = useState([])
@@ -51,7 +54,14 @@ function Tickets() {
     //     })
 
     // }
-
+ if (!user) {
+        return (
+          <div>
+            Please log in to view this page!
+            <button onClick={() => nav("/register")}>Register</button>
+          </div>
+        );
+      }
     let ticketCard = (ticket) => {
         let ticketDate = new Date(ticket?.createdAt)
         return (<>

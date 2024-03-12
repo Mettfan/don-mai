@@ -22,7 +22,7 @@ import TicketHandler from './Components/TicketHandler/TicketHandler';
 import TicketDetail from './Components/TicketDetail/TicketDetail';
 import TicketStats from './Components/TicketStats/TicketStats';
 import CompleteProductInfo from './Components/CompleteProductInfo/CompleteProductInfo';
-import BackupTickets from './Components/TicketHandler/RestoreTickets/BackupTickets/BackupTickets';
+// import BackupTickets from './Components/TicketHandler/RestoreTickets/BackupTickets/BackupTickets';
 import RestoreTickets from './Components/TicketHandler/RestoreTickets/RestoreTickets';
 import Sucursal from './Components/Sucursal/Sucursal';
 import UserSucursal from './Components/Sucursal/UserSucursal/UserSucursal';
@@ -40,10 +40,10 @@ function App() {
   let user = cookie.get('user')
   useEffect(()=>{
     dispatch( fetchAllProducts() )
-  }, [])
+  }, [dispatch])
   useEffect(()=>{
     dispatch( fetchOneSucursal({filter: 'UserId', value: user?.id}) )
-  }, [user])
+  }, [dispatch, user])
 
   return (
     <div className="App">

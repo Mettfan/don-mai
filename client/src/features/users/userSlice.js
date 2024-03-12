@@ -91,7 +91,6 @@ const fetchUser = createAsyncThunk('users/fetchUser', ({filter, value, password}
     .then( response => response.data)
 })
 const editUser = createAsyncThunk('products/editUser', ({editingUser}) => {
-    console.log(editingUser,">");
     return axios.put(`http://localhost:3001/users`, {
         editingUser
     })
