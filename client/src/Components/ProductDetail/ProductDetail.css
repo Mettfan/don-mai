@@ -8,3 +8,47 @@
     color: white;
     cursor: pointer;
 }
+
+.productDetailContainer {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .productDetailTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .productDetailItem {
+    margin-bottom: 10px;
+  }
+  
+  .productDetailLabel {
+    font-weight: bold;
+  }
+  
+  .productDetailValue {
+    margin-left: 10px;
+  }
+  
+  .productDetailBarcode {
+    margin-top: 20px;
+  }
+  
+  .printButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  
+  .printButton:hover {
+    background-color: #0056b3;
+  }
+  
