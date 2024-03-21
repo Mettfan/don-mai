@@ -501,6 +501,12 @@ const filterTickets = createAsyncThunk('products/filterTickets', ({filter, value
     return axios.get(`http://localhost:3001/Tickets/search/?filter=${filter}&value=${value}`)
     .then( response => response.data)
 })
+const editTicket = createAsyncThunk('Ticket/edit', ( editingTicket ) => {
+    return axios.put(`http://localhost:3001/Ticket/edit`, {
+        editingTicket
+    })
+    .then( response => response.data);
+})
 export const {
     setPayment,
     showModal,
@@ -532,6 +538,7 @@ export const postTicket = makeTicket
 export const fetchTickets = getTickets
 export const getTicketById = getTicket
 export const destroyTicket = deleteTicket
+export const editOneTicket = editTicket
 export const matchProduct = associateProduct
 export const getMyProducts = getUserProducts
 export const removeProduct = deleteUserProduct
