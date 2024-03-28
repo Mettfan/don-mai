@@ -30,6 +30,7 @@
   
   .closeButton {
     background-color: transparent;
+    margin-left: 250px;
     border: none;
     cursor: pointer;
   }

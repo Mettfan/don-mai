@@ -56,8 +56,7 @@ function App() {
         <Route path ="/upload/product" element={<UploadProduct></UploadProduct>} />
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
-        {/* Next Line Deprecated */}
-        {/* <Route path ="/search" element={<Search/>} /> */}
+        <Route path ="/search" element={<Search/>} />
         <Route path ="/printest" element={<Example/>} />
         <Route path ="/update/price" element={<UpdatePrice/>} />
         <Route path ="/calculator" element={<Calculator/>} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getTicketById } from '../../features/products/productSlicetest';
@@ -6,12 +6,23 @@ import PrintComponent from '../TicketHandler/PrintComponent.js/PrintComponent';
 import './TicketDetail.css'
 import LOGODONMAY from '../../Assets/LOGODONMAY.png'
 import printerPng from '../../Assets/printer.png'
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import { editOneTicket } from '../../features/products/productSlicetest';
 
 function TicketDetail() {
     let params = useParams()
     let ticket = useSelector(state => state.products.ticket)
     let dispatch = useDispatch()
     let nav = useNavigate()
+    const [ticketid, setTicketId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCredit = (creditData) => {
+        dispatch(editOneTicket(creditData));
+        setIsModalOpen(false);
+        window.location.reload();
+      };
+
     useEffect(() => {
         dispatch(getTicketById(params?.id))
     },[])
@@ -39,8 +50,12 @@ function TicketDetail() {
                     })}
                 
             </table>
+            <div className='totalTicket'>
+                {'Estado: ' + ticket.description}
+            </div>
+            {ticket.description === "pending" ? <div className='totalTicket'>Deudor: {ticket?.client}</div> : null}
             <div className="totalTicket">
-                {'A pagar: ' + '$' + ticket?.Total}            
+                {'A pagar:  $' + ticket?.Total}            
             </div>
             <div className="totalTicket">
                 {'User: ' + ticket?.user}            
@@ -79,15 +94,29 @@ function TicketDetail() {
             {
                 ticket?.id
                 ? 
-                <PrintComponent buttonComponent= {<img src={printerPng} style={{
+                <PrintComponent buttonComponent= {<img alt='' src={printerPng} style={{
                     'width': '50px'
                 }}></img>} component = {<TicketToPrint ticket = { ticket }></TicketToPrint>} ></PrintComponent>
                 : 
                 <ReturnToTickets></ReturnToTickets>            
             }
-
+<button
+            onClick={(e) => {
+              e.stopPropagation();
+              setTicketId(ticket.id);
+              setIsModalOpen(true);
+            }}
+          >
+            Cambiar estado
+          </button>
         </div>
-    
+        <ConfirmationModal
+            TicketId={ticketid}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={handleCredit}
+            question="¿Desea pagar a credito?"
+          />
     </> );
 }
 
