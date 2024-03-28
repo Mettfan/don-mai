@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import {
   destroyTicket,
   fetchFilteredTickets,
@@ -11,10 +10,9 @@ import "./Tickets.css";
 // import PrintComponent from '../PrintComponent.js/PrintComponent';
 import { useNavigate } from "react-router-dom";
 // import { downloadExcel } from '../../Convert/Convert';
-import { readExcel } from "../../Convert/Convert";
+// import { readExcel } from "../../Convert/Convert";
 import TicketCreator from "../TicketCreator/TicketCreator";
 import Cookies from "universal-cookie";
-import { editOneTicket } from "../../../features/products/productSlicetest";
 // import DownloadIcon from '@mui/icons-material/Download';
 // import BackupTickets from '../RestoreTickets/BackupTickets/BackupTickets';
 
@@ -22,20 +20,11 @@ function Tickets() {
   let nav = useNavigate();
   let cookie = new Cookies();
   let user = cookie.get("user");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ticketid, setTicketId] = useState(null);
- 
+
   let dispatch = useDispatch();
 
   let tickets = useSelector((state) => state.products.tickets.response);
 
-  const handleCredit = (creditData) => {
-    dispatch(editOneTicket(creditData));
-    setIsModalOpen(false);
-    getAllTickets();
-    getUserTickets();
-  };
-  
   let userTickets = useSelector((state) => state.products.userTickets);
 
   const getAllTickets = useCallback(() => {
@@ -52,10 +41,10 @@ function Tickets() {
     getAllTickets();
     getUserTickets();
   }, []);
-  
+
   const date = new Date();
   let [ticketDate, setTicketDate] = useState(date);
-  let [ticketsUpload, setTicketsUpload] = useState([]);
+  // let [ticketsUpload, setTicketsUpload] = useState([]);
   function onDeleteTicket(id, user) {
     dispatch(destroyTicket(id, user?.email));
   }
@@ -112,6 +101,8 @@ function Tickets() {
                 className={
                   ticket?.description === "out"
                     ? "ticketTotalOut"
+                    : ticket?.description === "pending"
+                    ? "ticketTotalPending"
                     : "ticketTotalEntry"
                 }
               >
@@ -153,29 +144,6 @@ function Tickets() {
             {/* <div className='ticketUpdatedAt'>{ticket["updatedAt"]}</div> */}
             {/* <PrintComponent component = {<TicketToPrint ticket = { ticket }></TicketToPrint>} ></PrintComponent> */}
           </div>
-          {ticket?.description === "PENDING" ? (
-            <div>
-              <p>Pendiente de pago</p>
-              <p>Deudor: {ticket?.client}</p>
-            </div>
-          ) : null}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setTicketId(ticket.id);
-              setIsModalOpen(true);
-            }}
-          >
-            A crédito
-          </button>
-
-          <ConfirmationModal
-            TicketId={ticketid}
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onConfirm={handleCredit}
-            question="¿Desea pagar a credito?"
-          />
         </div>
       </>
     );
@@ -203,15 +171,15 @@ function Tickets() {
       })
       .reverse();
   };
-  let selectedFile;
-  function fileOnChange(e) {
-    console.log(e.target.files[0]);
-    selectedFile = e.target.files[0];
-    readExcel(e.target.files[0]).then((result) => {
-      console.log(result);
-      setTicketsUpload(result);
-    });
-  }
+  // let selectedFile;
+  // function fileOnChange(e) {
+  //   console.log(e.target.files[0]);
+  //   selectedFile = e.target.files[0];
+  //   readExcel(e.target.files[0]).then((result) => {
+  //     console.log(result);
+  //     // setTicketsUpload(result);
+  //   });
+  // }
   function calculateDaily(type) {
     //Esta funcion calcula el ingreso o egreso diario de acuerdo a los tickets del dia
     //Está 'entry' o 'out' para indicar qué se requiere devolver (se especifíca en type)
