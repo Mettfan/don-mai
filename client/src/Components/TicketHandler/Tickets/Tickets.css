@@ -28,6 +28,10 @@
     padding: 5px;
     /* display: flex; */
 }
+.ticketTotalPending{
+  background-color: rgb(255, 255, 0);
+  padding: 5px;
+}
 .ticketsContainer{
     border: dotted black 3px ;
     width: 20%;
