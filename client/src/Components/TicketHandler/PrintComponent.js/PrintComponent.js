@@ -5,6 +5,7 @@ import Tickets from '../Tickets/Tickets';
 import './PrintComponent.css'
 function PrintComponent(props) {
     const date = new Date()
+    console.log(props);
     let [state, setState] = useState({
       ticketId: 0,
       currentDateTime: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()

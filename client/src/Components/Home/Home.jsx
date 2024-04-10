@@ -12,7 +12,7 @@ import Cookies from "universal-cookie";
 import BOXES from "../../Assets/boxes.png";
 import BARCODE from "../../Assets/barcode.png";
 import CATALOGO from "../../Assets/catalogo.png";
-// import GRAPH from "../../Assets/graph.png";
+import GRAPH from "../../Assets/graph.png";
 import USER from "../../Assets/user.png";
 import LOGODONMAY from "../../Assets/LOGODONMAY.png";
 import RECIBO from "../../Assets/RECIBO.png";
@@ -32,9 +32,10 @@ let tools = [
     img: CATALOGO,
     goto: "/catalog",
   },
-  // {
-  //     img: GRAPH
-  // },
+  {
+      img: GRAPH,
+      goto: "/stats",
+  },
   {
     img: USER,
     goto: "/profile",

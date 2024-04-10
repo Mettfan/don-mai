@@ -1,0 +1,44 @@
+.ticketCard_selected {
+    border: 1px solid #4a47f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.printContainer {
+    font-family: 'Handwriting', cursive; /* Utiliza una fuente que imite la escritura a mano */
+  }
+  
+  .calculation {
+    border-top: 1px solid black;
+    padding-top: 10px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .calculation-line {
+    display: block; 
+    margin-bottom: 2px; /* Reduce el margen inferior */
+  }
+  
+  .label,
+  .value {
+    display: inline-block; /* Alinea los elementos en línea */
+    text-align: left; 
+    margin: 0;
+  }
+  
+  .label {
+    width: 20%; /* Establece el ancho del 70% para la etiqueta */
+  }
+
+  .info {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .l {
+    margin-left: 20%;
+  }
