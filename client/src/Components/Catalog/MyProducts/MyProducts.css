@@ -21,3 +21,8 @@
   height: 18%;
   cursor: pointer;
 }
+
+.selectedProduct {
+  border: 2px solid #007bff; 
+  box-shadow: 0px 0px 5px #007bff; 
+}

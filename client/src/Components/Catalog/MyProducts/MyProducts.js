@@ -8,7 +8,7 @@ import {
 import Cookies from "universal-cookie";
 import "./MyProducts.css";
 import { Link } from "react-router-dom";
-import ConfirmationModal from "./ConfirmationModal"; 
+import ConfirmationModal from "./ConfirmationModal";
 
 function MyProducts(props) {
   let cookie = new Cookies();
@@ -18,17 +18,24 @@ function MyProducts(props) {
   let getUserProducts = () => {
     dispatch(getMyProducts({ userId: user.id }));
   };
+
+  const { selectedProducts } = props;
+  const isSelected = (productId) => {
+    return selectedProducts
+      ? selectedProducts.some((product) => product.id === productId)
+      : false;
+  };
   useEffect(() => {
     if (user) {
       getUserProducts();
     }
   }, []);
-  const [modalOpen, setModalOpen] = useState(false); 
-  const [selectedProductId, setSelectedProductId] = useState(null); 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   let deleteProduct = (productId, userId) => {
     setSelectedProductId(productId);
-    setModalOpen(true); 
+    setModalOpen(true);
   };
 
   function selectProduct(id) {
@@ -48,8 +55,11 @@ function MyProducts(props) {
                   key={product?.id}
                   onClick={() => {
                     selectProduct(product?.id);
+                    props.handleProductSelection(product);
                   }}
-                  className="productBg"
+                  className={`productBg ${
+                    isSelected(product.id) ? "selectedProduct" : ""
+                  }`}
                 >
                   <div>{product?.Producto}</div>
                   <div>{product?.["P. Venta"]}</div>
@@ -73,10 +83,12 @@ function MyProducts(props) {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onConfirm={() => {
-          dispatch(removeProduct({ userId: user.id, productId: selectedProductId })).then(() => {
-            getUserProducts(); 
+          dispatch(
+            removeProduct({ userId: user.id, productId: selectedProductId })
+          ).then(() => {
+            getUserProducts();
           });
-          setModalOpen(false); 
+          setModalOpen(false);
         }}
         question="¿Estás seguro de que deseas eliminar este producto?"
       />

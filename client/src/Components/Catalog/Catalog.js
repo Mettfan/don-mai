@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 // import { getProducts } from "../../redux/actions/productActions";
 // import { fetchAllProducts } from "../../redux/slices/products/product";
 import {
+  editOneProduct,
   fetchOneProduct,
   fetchAllProducts as fetchProducts,
   getMyProducts,
@@ -19,8 +20,88 @@ import { useNavigate } from "react-router-dom";
 // import CreateProduct from "../CreateProduct/CreateProduct";
 import MyProducts from "./MyProducts/MyProducts";
 import { downloadExcel } from "../Convert/Convert";
+import Modal from "react-modal";
 
 export default function Catalog(props) {
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [newPrice, setNewPrice] = useState("");
+  const [quantityToAdd, setQuantityToAdd] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedAction, setSelectedAction] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleEditProduct = () => {
+    setIsEditing(true);
+  };
+
+  const handleActionSelection = (action) => {
+    setSelectedAction(action);
+  };
+
+  const executeAction = () => {
+    if (selectedAction === "updatePrice") {
+      setIsLoading(true); // Inicia la carga
+      updateSelectedProductsPrice();
+    } else if (selectedAction === "addToPrice") {
+      setIsLoading(true); // Inicia la carga
+      addToSelectedProductsPrice();
+    }
+    setSelectedAction(null);
+  };
+  
+  const updateSelectedProductsPrice = () => {
+    selectedProducts.forEach((product) => {
+      dispatch(
+        editOneProduct({
+          id: product.id,
+          findBy: "P. Venta",
+          infoUpdated: `$${newPrice}`,
+        })
+      ).then(() => {
+        setIsLoading(false); // Termina la carga
+        setNewPrice("");
+        window.location.reload(); // Recarga la página
+      });
+    });
+  };
+  
+  const addToSelectedProductsPrice = () => {
+    selectedProducts.forEach((product) => {
+      let currentPrice = parseFloat(product["P. Venta"].replace("$", ""));
+      let quantity = parseFloat(quantityToAdd);
+  
+      if (!isNaN(currentPrice) && !isNaN(quantity)) {
+        const newprice = currentPrice + quantity;
+        console.log(newprice);
+        dispatch(
+          editOneProduct({
+            id: product.id,
+            findBy: "P. Venta",
+            infoUpdated: `$${newprice}`,
+          })
+        ).then(() => {
+          setIsLoading(false); // Termina la carga
+          setQuantityToAdd("");
+          window.location.reload(); // Recarga la página
+        });
+      }
+    });
+  };
+
+  const handleProductSelection = (product) => {
+    const index = selectedProducts.findIndex((p) => p.id === product.id);
+
+    if (index === -1) {
+      // Si el producto no está en el array, lo agregamos
+      setSelectedProducts([...selectedProducts, product]);
+    } else {
+      // Si el producto está en el array, lo eliminamos
+      const updatedProducts = [...selectedProducts];
+      updatedProducts.splice(index, 1);
+      setSelectedProducts(updatedProducts);
+    }
+  };
+
   useEffect(() => {
     if (user) {
       getUserProducts();
@@ -133,7 +214,11 @@ export default function Catalog(props) {
             </button>
           )}
           {userProducts.length !== 0 ? (
-            <MyProducts editMode={editMode}></MyProducts>
+            <MyProducts
+              selectedProducts={selectedProducts}
+              editMode={editMode}
+              handleProductSelection={handleProductSelection}
+            ></MyProducts>
           ) : (
             <button
               onClick={() => {
@@ -143,6 +228,97 @@ export default function Catalog(props) {
               Create One Product
             </button>
           )}
+          <div>
+            {selectedProducts.length > 0 && (
+              <button onClick={handleEditProduct}>
+                Editar Productos Seleccionados
+              </button>
+            )}
+
+            {isEditing && (
+              <Modal isOpen={true}>
+                <div className="modal-estilo">
+                  {isLoading && <h1 className="loading-message">Cargando...</h1>}
+                  <button
+                    onClick={() => handleActionSelection("updatePrice")}
+                    className="boton-accion"
+                  >
+                    Modificar Valor
+                  </button>
+                  <button
+                    onClick={() => handleActionSelection("addToPrice")}
+                    className="boton-accion"
+                  >
+                    Sumar/Restar Cantidad
+                  </button>
+
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="boton-cerrar"
+                  >
+                    X
+                  </button>
+
+                  {selectedAction && (
+                    <div className="contenedor-acciones">
+                      {selectedAction === "updatePrice" && (
+                        <div className="actualizar-precio">
+                          <label>
+                            Nuevo Precio:
+                            <input
+                              type="number"
+                              min={0}
+                              value={newPrice}
+                              onChange={(e) => setNewPrice(e.target.value)}
+                              className="input-precio"
+                            />
+                          </label>
+                          <button
+                            onClick={executeAction}
+                            className="boton-actualizar"
+                          >
+                            Actualizar Precio
+                          </button>
+                        </div>
+                      )}
+
+                      {selectedAction === "addToPrice" && (
+                        <div className="sumar-cantidad">
+                          <label>
+                            Cantidad a Sumar o Restar:
+                            <input
+                              type="number"
+                              value={quantityToAdd}
+                              onChange={(e) => setQuantityToAdd(e.target.value)}
+                              className="input-cantidad"
+                            />
+                          </label>
+                          <button
+                            onClick={executeAction}
+                            className="boton-sumar"
+                          >
+                            {quantityToAdd > 0 ? "Sumar" : "Restar"} Cantidad
+                          </button>
+                        </div>
+                      )}
+
+                      <div className="productos-a-modificar">
+                        <h3>Productos que van a ser modificados:</h3>
+                        <ul>
+                          {selectedProducts.map((product, index) => (
+                            <li key={index}>
+                              {product.Código} - {product["P. Venta"]}{" "}
+                              {console.log(product)}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Modal>
+            )}
+          </div>
         </div>
         {user?.privileges === "admin" &&
           productList?.slice(0, props?.items || 20)?.map((product) => {
