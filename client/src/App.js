@@ -6,6 +6,7 @@ import Nav from './Components/Nav/Nav';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import Convert from './Components/Convert/Convert'
+import Stats from './Components/Stats/Stats';
 import Delivery from './Components/Delivery/Delivery';
 import Catalog from './Components/Catalog/Catalog';
 import { Search } from './Components/UpdatePrice/Search';
@@ -57,6 +58,7 @@ function App() {
         <Route path ="/delivery" element={<Delivery/>} />
         <Route path ="/catalog" element={<Catalog/>} />
         <Route path ="/search" element={<Search/>} />
+        <Route path='/stats' element={<Stats/>}></Route>
         <Route path ="/printest" element={<Example/>} />
         <Route path ="/update/price" element={<UpdatePrice/>} />
         <Route path ="/calculator" element={<Calculator/>} />
