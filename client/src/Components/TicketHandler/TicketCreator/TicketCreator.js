@@ -69,7 +69,6 @@ function TicketCreator(props) {
     useEffect(() => {
         document.getElementById('inputSearch').focus()
         let ticketTotal = 0
-        console.log('AAAAAAAAA');
         ticketProducts?.forEach((product) => {
             let price = product["P. Venta"]
             ticketTotal += Math.round( price[0]  !== '$' ? Number(price) * Number(product?.quantity) : Number(price.slice(1)) * Number(product?.quantity))

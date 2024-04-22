@@ -35,3 +35,7 @@
 .registerButton:hover{
     background-color: yellow;
 }
+
+.errorMessage{
+    color: red;
+}

@@ -55,7 +55,7 @@ function Delivery(props){
                 } )}
             </select>
             
-            <img className="productImg" src=
+            <img alt="" className="productImg" src=
             {productos.find( (producto) => {
                 return producto.nombre === state
             } )?.image}

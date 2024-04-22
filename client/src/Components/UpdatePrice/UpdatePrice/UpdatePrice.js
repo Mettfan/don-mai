@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProductToStock, counterDecrement, counterIncrement, editOneProduct, fetchAllProducts, fetchOneProduct, setCounter } from "../../../features/products/productSlicetest";
 import './UpdatePrice.css'
 import Catalog from "../../Catalog/Catalog";
-import Draggable from 'react-draggable'
+// import Draggable from 'react-draggable'
 import { checkIfProductIsUpdated } from "./updateTools";
 import TotalInvest from "../../TotalInvest/TotalInvest";
 import Cookies from "universal-cookie";
@@ -26,10 +26,10 @@ export default function UpdatePrice(){
         
     })
     let idInput = state.idInput
-    let nameInput = state.Producto
-    let priceInput = state['P. Venta']
+    // let nameInput = state.Producto
+    // let priceInput = state['P. Venta']
     let dispatch = useDispatch()
-    let globalState = useSelector(state => state.products)
+    // let globalState = useSelector(state => state.products)
     let selectedProduct = useSelector(state => state.products.selectedProduct)
     let counterId = useSelector(state => state.products.counterId)
     useEffect(()=>{
