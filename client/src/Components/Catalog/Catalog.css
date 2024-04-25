@@ -115,4 +115,58 @@
   .boton-sumar:hover {
     background-color: #19692c;
   }
-  
+/*   
+.container {
+  position: fixed;
+    top: 0px;
+   
+    width: 100%;
+    background-color: #ffc768;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+} */
+/* Estilos específicos para botones */
+button.verFaltante {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  padding: 14px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.completeInfo {
+  background-color: #008CBA; /* Azul */
+  color: white;
+  padding: 14px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.editarProductos {
+  background-color: #f44336; /* Rojo */
+  color: white;
+  padding: 14px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.seleccionarTodos {
+  background-color: #555555; /* Gris oscuro */
+  color: white;
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}

@@ -245,7 +245,7 @@ export function Stats() {
         <button className="printButton" onClick={handlePrint}>
           Imprimir Detalles
         </button>
-        <div>
+        <div className="tik">
           {userTicketsP
             ?.filter((ticket) =>
               ticket.client.toLowerCase().includes(searchTerm.toLowerCase())

@@ -1,7 +1,4 @@
-.myProducts {
-  display: flex;
-  flex-wrap: wrap;
-}
+
 
 .productBg {
   position: relative;
@@ -25,4 +22,25 @@
 .selectedProduct {
   border: 2px solid #007bff; 
   box-shadow: 0px 0px 5px #007bff; 
+}
+
+.cont {
+
+    width: 100%;
+    /* background-color: #ffc768; */
+
+    justify-content: center;
+    padding: 5px 20px;
+    z-index: 1000;
+  
+}
+
+.todo {
+  margin-top: 200px;
+}
+
+.myProducts {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }

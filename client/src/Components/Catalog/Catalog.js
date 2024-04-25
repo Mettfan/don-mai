@@ -29,6 +29,7 @@ export default function Catalog(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [allSelected, setAllSelected] = useState(false);
 
   const handleEditProduct = () => {
     setIsEditing(true);
@@ -48,7 +49,7 @@ export default function Catalog(props) {
     }
     setSelectedAction(null);
   };
-  
+
   const updateSelectedProductsPrice = () => {
     selectedProducts.forEach((product) => {
       dispatch(
@@ -64,12 +65,12 @@ export default function Catalog(props) {
       });
     });
   };
-  
+
   const addToSelectedProductsPrice = () => {
     selectedProducts.forEach((product) => {
       let currentPrice = parseFloat(product["P. Venta"].replace("$", ""));
       let quantity = parseFloat(quantityToAdd);
-  
+
       if (!isNaN(currentPrice) && !isNaN(quantity)) {
         const newprice = currentPrice + quantity;
         console.log(newprice);
@@ -92,13 +93,14 @@ export default function Catalog(props) {
     const index = selectedProducts.findIndex((p) => p.id === product.id);
 
     if (index === -1) {
-      // Si el producto no está en el array, lo agregamos
-      setSelectedProducts([...selectedProducts, product]);
+      const newSelectedProducts = [...selectedProducts, product];
+      setSelectedProducts(newSelectedProducts);
+      setAllSelected(newSelectedProducts.length === productList.length);
     } else {
-      // Si el producto está en el array, lo eliminamos
       const updatedProducts = [...selectedProducts];
       updatedProducts.splice(index, 1);
       setSelectedProducts(updatedProducts);
+      setAllSelected(false);
     }
   };
 
@@ -113,6 +115,19 @@ export default function Catalog(props) {
   const productState = useSelector((state) => state);
   const productList = productState.products.products;
   let cookie = new Cookies();
+
+  const [filteredProducts, setFilteredProducts] = useState(productList);
+
+  useEffect(() => {
+    if (!productList.length) {
+      getAllProducts();
+    }
+  }, []); // El array vacío como segundo argumento asegura que esto se ejecute solo una vez
+
+  useEffect(() => {
+    setFilteredProducts(productList);
+  }, [productList]); // Esta línea asegura que filteredProducts se actualice cuando productList cambie
+
   // let store = useSelector( status => status )
   let dispatch = useDispatch();
   // let [state, setState] = useState({
@@ -178,42 +193,73 @@ export default function Catalog(props) {
     dispatch(getMyProducts({ userId: user.id }));
   };
 
+  const selectAllProducts = () => {
+    if (!selectedProducts.length > 0) {
+      setSelectedProducts(productList);
+      setAllSelected(true);
+    } else {
+      setSelectedProducts([]);
+      setAllSelected(false);
+    }
+  };
+
   return (
     <>
       <div>
         {/* <div>
             <CreateProduct></CreateProduct>
         </div> */}
-        <div>
-          {!user && (
-            <div>
-              not registered
-              <div>
-                Registrate y mira nuestros {productList?.length} productos
-                existentes
-              </div>
-            </div>
-          )}
-          {user?.privileges === "usuario" && <div>usuario mode</div>}
-          {user?.privileges === "admin" && Number(user?.kyu) >= 9 && (
-            <div>
-              admin mode
-              <button onClick={() => downloadFile()}> DOWNLOAD EXCEL </button>
-              <button onClick={() => getAllProducts()}>
-                {" "}
-                GET ALL PRODUCTS{" "}
-              </button>
-            </div>
-          )}
-          <button onClick={() => nav("/onlist")}> VER FALTANTE </button>
 
-          {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
-          {userProducts.length > 0 && (
-            <button onClick={() => nav("/complete/product/info")}>
-              COMPLETE PRODUCT INFO
+        {!user && (
+          <div>
+            not registered
+            <div>
+              Registrate y mira nuestros {productList?.length} productos
+              existentes
+            </div>
+          </div>
+        )}
+        {user?.privileges === "usuario" && <div>usuario mode</div>}
+        <div>
+          <div className="container">
+            {user?.privileges === "admin" && Number(user?.kyu) >= 9 && (
+              <div>
+                admin mode
+                <button onClick={() => downloadFile()}> DOWNLOAD EXCEL </button>
+                <button onClick={() => getAllProducts()}>
+                  {" "}
+                  GET ALL PRODUCTS{" "}
+                </button>
+              </div>
+            )}
+            <button onClick={() => nav("/onlist")} className="verFaltante">
+              {" "}
+              VER FALTANTE{" "}
             </button>
-          )}
-          {userProducts.length !== 0 ? (
+
+            {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
+            {userProducts.length > 0 && (
+              <button
+                onClick={() => nav("/complete/product/info")}
+                className="completeInfo"
+              >
+                COMPLETE PRODUCT INFO
+              </button>
+            )}
+
+            {selectedProducts.length > 0 && (
+              <button onClick={handleEditProduct} className="editarProductos">
+                Editar Productos Seleccionados
+              </button>
+            )}
+          
+          <button onClick={selectAllProducts} className="seleccionarTodos">
+            {selectedProducts.length > 0
+              ? "Deseleccionar Todos"
+              : "Seleccionar Todos"}
+          </button>
+          </div>
+          {filteredProducts.length !== 0 ? (
             <MyProducts
               selectedProducts={selectedProducts}
               editMode={editMode}
@@ -229,16 +275,12 @@ export default function Catalog(props) {
             </button>
           )}
           <div>
-            {selectedProducts.length > 0 && (
-              <button onClick={handleEditProduct}>
-                Editar Productos Seleccionados
-              </button>
-            )}
-
             {isEditing && (
               <Modal isOpen={true}>
                 <div className="modal-estilo">
-                  {isLoading && <h1 className="loading-message">Cargando...</h1>}
+                  {isLoading && (
+                    <h1 className="loading-message">Cargando...</h1>
+                  )}
                   <button
                     onClick={() => handleActionSelection("updatePrice")}
                     className="boton-accion"

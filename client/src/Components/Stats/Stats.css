@@ -9,8 +9,8 @@
 
 .printContainerStat {
   font-family: "Handwriting";
-  margin-left: 120px;
-  width: 80%;
+  margin-left: 20%;
+  width: 60%; /* Ajusta al ancho de la pantalla */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +22,6 @@
   margin: 5px;
   padding: 10px;
   font-size: 12px;
-  display: inline-block;
 }
 
 .printContainerStat .lspan {
@@ -31,6 +30,7 @@
 
 .printContainerStat .p {
   margin: 2px 0;
+  margin-left: 15px;
 }
 
 .printContainerStat .label {
@@ -97,14 +97,17 @@
 }
 
 .search-inputs {
+  position: fixed;
+
+  top: 61px;
+  width: 230px;
+  padding: 20px;
+  background-color: #ffd449;
   display: flex;
-  justify-content: space-evenly;
+
   gap: 10px;
-  margin-left: 100px;
-  margin-right: 50px;
-  margin-top: 20px;
-  flex-wrap: nowrap;
-  flex-direction: row;
+  height: 30vh;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -129,4 +132,11 @@
 
 .search-inputs select {
   cursor: pointer;
+}
+
+.tik {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  margin-right: 100px;
 }

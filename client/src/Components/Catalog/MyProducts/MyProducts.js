@@ -18,6 +18,7 @@ function MyProducts(props) {
   let getUserProducts = () => {
     dispatch(getMyProducts({ userId: user.id }));
   };
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { selectedProducts } = props;
   const isSelected = (productId) => {
@@ -44,14 +45,36 @@ function MyProducts(props) {
     }
   }
 
+  const filteredProducts = userProducts
+    ? userProducts.filter((product) => {
+        const productName = product.Producto || "";
+        const productCode = product.Código || "";
+
+        return (
+          productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          productCode.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      })
+    : [];
+
   return (
     <>
       <div>
+        <div className="cont">
+          <input
+            type="text"
+            className="busca"
+            placeholder="Buscar productos..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        
         <div className="myProducts">
           {userProducts &&
-            userProducts?.map((product) => {
+            filteredProducts?.map((product) => {
               return (
-                <div
+                <div 
                   key={product?.id}
                   onClick={() => {
                     selectProduct(product?.id);
