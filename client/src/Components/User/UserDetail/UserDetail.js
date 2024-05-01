@@ -6,6 +6,8 @@ import { editOneUser, fetchOneUser } from "../../../features/users/userSlice";
 import "./UserDetail.css";
 import LOGODONMAY from "../../../Assets/LOGODONMAY.png";
 import Modal from "react-modal";
+import CambiarPlan from "../../CambiarPlan/CambiarPlan";
+import axios from "axios";
 
 function UserDetail(props) {
   let cookie = new Cookies();
@@ -16,8 +18,40 @@ function UserDetail(props) {
   const [modalValues, setModalValues] = useState({});
   const [editingUser, setEditingUser] = useState({});
   const [error, setError] = useState();
-  const [ user, setUser ] = useState(props.user || cookie.get("user"))
-  
+  const [user, setUser] = useState(props.user || cookie.get("user"));
+  console.log(user,"USEEER");
+
+  useEffect(() => {
+    if (!user) {
+      // Redirect to login or handle accordingly
+      console.log('No user data available, please login');
+      return;
+    }
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/users`, {
+          params: {
+            filter: 'email',
+            value: user.email,
+            password: user.password // Not recommended to handle passwords like this
+          }
+        });
+
+        if (response.data && !response.data.error) {
+          setUser(response.data);
+          cookie.set('user', JSON.stringify(response.data), { path: '/' });
+        } else if (response.data.error) {
+          console.error('Error fetching user:', response.data.error);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user details', error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+
   const handleChangeModalInput = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -32,14 +66,15 @@ function UserDetail(props) {
       modalValues.name === editingUser.name &&
       modalValues.email === editingUser.email &&
       modalValues.phone === editingUser.phone &&
-      modalValues.password && editingUser.password &&
+      modalValues.password &&
+      editingUser.password &&
       modalValues.password === editingUser.password
     ) {
       setModalError(true);
     } else {
       setModalError(false);
     }
-  }, [editingUser, modalValues]);
+  }, [editingUser, modalValues, user]);
 
   let nav = useNavigate();
   // let user = props.user || cookie.get("user");
@@ -87,21 +122,22 @@ function UserDetail(props) {
       return;
     }
     delete editingUser.confirmPassword;
-  
-   
+
     dispatch(editOneUser({ editingUser })).then((response) => {
       if (response.error) {
         alert(response.error);
       } else {
-        alert('Usuario editado correctamente')
+        alert("Usuario editado correctamente");
         setModalIsOpen(false);
-        dispatch(fetchOneUser({
-          filter: "email",
-          value: editingUser.email,
-          password: editingUser.password,
-        })).then((response) => {
+        dispatch(
+          fetchOneUser({
+            filter: "email",
+            value: editingUser.email,
+            password: editingUser.password,
+          })
+        ).then((response) => {
           if (!response.error) {
-            setUser(response.payload); 
+            setUser(response.payload);
           }
         });
       }
@@ -116,9 +152,12 @@ function UserDetail(props) {
           <div>{user.name}</div>
           <div>{user.email}</div>
           <div>{user.phone ? <div>{user.phone}</div> : null}</div>
-          <div>{user.privileges}</div>
+          <div>Privileges: {user.privileges}</div>
           <div>{user.id}</div>
-          <button onClick={openOrCloseModal} className="editButton">Editar</button>
+          <button onClick={openOrCloseModal} className="editButton">
+            Editar
+          </button>
+          <CambiarPlan userId={user.id}/>
           {/* {JSON.stringify(user)} */}
           <button
             className="logoutButton"
@@ -134,7 +173,9 @@ function UserDetail(props) {
             {imageUrl} */}
       </div>
       <Modal isOpen={modalIsOpen} onRequestClose={openOrCloseModal}>
-        <button onClick={openOrCloseModal} className="modalCloseButton">X</button>
+        <button onClick={openOrCloseModal} className="modalCloseButton">
+          X
+        </button>
         <form onSubmit={(e) => handleUserEdit(e)}>
           <h2>Editar información personal</h2>
           <input
@@ -206,20 +247,12 @@ function UserDetail(props) {
               <p className="errorMessage">
                 Tienes que hacer cambios para guardar
               </p>
-              <button
-                className="saveButton"
-                disabled
-              
-              >
+              <button className="saveButton" disabled>
                 Guardar
               </button>
             </>
           ) : (
-            <button
-              className="saveButton"
-              type="submit"
-            
-            >
+            <button className="saveButton" type="submit">
               Guardar
             </button>
           )}

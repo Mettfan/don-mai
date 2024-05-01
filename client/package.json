@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mercadopago/sdk-react": "^0.0.19",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.5",
     "@progress/kendo-react-pdf": "^5.4.0",

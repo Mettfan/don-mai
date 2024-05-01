@@ -6,10 +6,8 @@ import Cookies from "universal-cookie";
 // import { fetchAllProducts } from "../../redux/slices/products/product";
 import {
   editOneProduct,
-  fetchOneProduct,
   fetchAllProducts as fetchProducts,
   getMyProducts,
-  matchProduct,
   postProduct,
   setCounter,
 } from "../../features/products/productSlicetest";
@@ -29,7 +27,7 @@ export default function Catalog(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [allSelected, setAllSelected] = useState(false);
+
 
   const handleEditProduct = () => {
     setIsEditing(true);
@@ -95,12 +93,10 @@ export default function Catalog(props) {
     if (index === -1) {
       const newSelectedProducts = [...selectedProducts, product];
       setSelectedProducts(newSelectedProducts);
-      setAllSelected(newSelectedProducts.length === productList.length);
     } else {
       const updatedProducts = [...selectedProducts];
       updatedProducts.splice(index, 1);
       setSelectedProducts(updatedProducts);
-      setAllSelected(false);
     }
   };
 
@@ -108,7 +104,9 @@ export default function Catalog(props) {
     if (user) {
       getUserProducts();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   let nav = useNavigate();
   let todaysDate = new Date();
   let editMode = props.editmode;
@@ -122,7 +120,8 @@ export default function Catalog(props) {
     if (!productList.length) {
       getAllProducts();
     }
-  }, []); // El array vacío como segundo argumento asegura que esto se ejecute solo una vez
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
 
   useEffect(() => {
     setFilteredProducts(productList);
@@ -147,17 +146,17 @@ export default function Catalog(props) {
   let createProduct = async (product, userId) => {
     // Para crearlo sin Id y no arroje error en el backend quitamos la propiedad Id para que no se refiera al mismo producto, sino a la copia
     product = {
-      ["Código"]: product["Código"] || null,
-      ["Producto"]: product["Producto"] || null,
-      ["P. Venta"]: product["P. Venta"] || null,
-      ["P. Compra"]: product["P. Compra"] || null,
+      "Código": product["Código"] || null,
+      "Producto": product["Producto"] || null,
+      "P. Venta": product["P. Venta"] || null,
+      "P. Compra": product["P. Compra"] || null,
       // ['updatedAt']: product['updatedAt'] || null,
       // ['createdAt']: product['createdAt'] || null,
       // ['quantity']: product['quantity'] || 0,
-      ["Departamento"]: product["Departamento"] || null,
-      ["image"]: product["image"] || null,
+      "Departamento": product["Departamento"] || null,
+      "image": product["image"] || null,
       // ['sales']: product['sales'] || 0,
-      ["brand"]: product["brand"] || null,
+      "brand": product["brand"] || null,
     };
     console.log(product);
     let promise = new Promise((resolve, reject) => {
@@ -196,10 +195,10 @@ export default function Catalog(props) {
   const selectAllProducts = () => {
     if (!selectedProducts.length > 0) {
       setSelectedProducts(productList);
-      setAllSelected(true);
+      
     } else {
       setSelectedProducts([]);
-      setAllSelected(false);
+     
     }
   };
 
