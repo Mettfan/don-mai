@@ -4,25 +4,29 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { fetchOneUser } from "../../features/users/userSlice";
 import "./Login.css";
+import LOGODONMAY from "../../Assets/LOGODONMAY.png";
+
 function Login() {
   let cookie = new Cookies();
   let user = useSelector((state) => state.users.user) || cookie.get("user");
-  useEffect(() => {
-    if (user?.name) {
-      nav("/home");
-    }
-  }, [user]);
-  
+  let errorMessage = useSelector((state) => state.users.error);
+  console.log(errorMessage);
   let dispatch = useDispatch();
   let nav = useNavigate();
-  let serverResponse = useSelector((state) => state.users?.response);
-  let serverError = useSelector((state) => state.users.error);
   let [state, setState] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (user?.name) {
+      nav("/home");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   let handleLoginSubmit = (e) => {
-    e.preventDefault && e.preventDefault();
+    e.preventDefault();
     dispatch(
       fetchOneUser({
         filter: "email",
@@ -31,8 +35,8 @@ function Login() {
       })
     );
   };
+
   let handleOnChange = (e) => {
-    console.log(state);
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -40,53 +44,51 @@ function Login() {
   };
 
   return (
-    <>
-      <div className="loginContainer">
-        <h1>Inicia Sesión</h1>
-        <form
-          className="formContainer"
-          onSubmit={(e) => {
-            handleLoginSubmit(e);
-          }}
-        >
-          <div className="inputGroup">
-            <label>E-mail</label>
-            <input name="email" onChange={(e) => handleOnChange(e)} required />
-          </div>
-          <div className="inputGroup">
-            <label>Contraseña</label>
-            <input
-              name="password"
-              type={"password"}
-              onChange={(e) => handleOnChange(e)}
-              required
-            />
-          </div>
-          <button className="loginButton">Login</button>
-        </form>
+    <div className="loginPageContainer">
+      <img alt="Don May Logo" src={LOGODONMAY} className="loginPageLogo" />
+      <h1>Inicia Sesión</h1>
+      <form
+        className="loginPageFormContainer"
+        onSubmit={(e) => {
+          handleLoginSubmit(e);
+        }}
+      >
+        <div className="loginPageInputGroup">
+          <label>E-mail</label>
+          <input
+            name="email"
+            onChange={(e) => handleOnChange(e)}
+            required
+            className="loginPageInputField"
+          />
+        </div>
+        <div className="loginPageInputGroup">
+          <label>Contraseña</label>
+          <input
+            name="password"
+            type="password"
+            onChange={(e) => handleOnChange(e)}
+            required
+            className="loginPageInputField"
+          />
+        </div>
+        <button className="loginPageLoginButton">Login</button>
+
         <button
-          className="loginButton"
+          className="loginPageRegisterButton"
           onClick={() => {
             nav("/register");
           }}
         >
           Register
         </button>
-        {/* {JSON.stringify(user)}
-                {JSON.stringify(serverResponse)}
-                {JSON.stringify(serverError)} */}
-        {JSON.stringify(user) !== ""
-          ? JSON.parse(JSON.stringify(user)).message
-          : null}
-        {JSON.stringify(user) !== ""
-          ? JSON.parse(JSON.stringify(user)).error
-          : null}
-        {JSON.stringify(serverError) !== "" ?  JSON.parse(JSON.stringify(serverError)) : null}
-        {console.log(JSON.stringify(user), "USER")}
-        {console.log(JSON.stringify(serverResponse), "SERVER RESPONSE")}
-        {console.log(JSON.stringify(serverError), "ERROR")}
-      </div>
-    </>
+        {errorMessage && (
+          <div className="loginPageErrorMessage">
+            {errorMessage || "Error de inicio de sesión"}
+          </div>
+        )}
+      </form>
+    </div>
   );
 }
 

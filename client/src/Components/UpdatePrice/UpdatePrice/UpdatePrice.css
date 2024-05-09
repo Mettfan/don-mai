@@ -1,44 +1,104 @@
-.editContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap ;
-    width: 50%;
+.editContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 80%;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
-.nextProductToCheck{
-    display: flex;
-    position: absolute;
-    right: 3%;
-    top: 75px;
-    width: 50px;
-    height: 50px;
-    font-size: xx-large;
+
+.nextProductToCheck {
+  display: flex;
+  position: absolute;
+  right: 3%;
+  top: 75px;
+  width: 50px;
+  height: 50px;
+  font-size: xx-large;
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-.previousProductToCheck{
-    display: flex;
-    position: fixed;
-    left: 3%;
-    top: 75px;
-    width: 50px;
-    height: 50px;
-    font-size: xx-large;
+
+.nextProductToCheck:hover {
+  background-color: #0056b3;
 }
-.editProductContainer{
-    
-    /* position: fixed; */
-    /* background-color: rgb(165, 42, 42, 0.9); */
-    /* color: white; */
-    padding: 20px;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-around ;
-    flex-wrap: wrap;
-    /* top: 50vh;
-    left: 50vw; */
+
+.previousProductToCheck {
+  display: flex;
+  position: fixed;
+  left: 3%;
+  top: 75px;
+  width: 50px;
+  height: 50px;
+  font-size: xx-large;
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-.inputFormEdit{
-    display: flex;
-    flex-direction: column;
-    
+
+.previousProductToCheck:hover {
+  background-color: #0056b3;
+}
+
+.editProductContainer {
+  padding: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.inputFormEdit {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.inputFormEdit input {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.inputFormEdit input:focus {
+  border: 1px solid #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.buttonSubmit {
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.buttonSubmit:hover {
+  background-color: #19692c;
+}
+
+.catalogContainer {
+  margin-top: 20px;
+  width: 100%;
 }

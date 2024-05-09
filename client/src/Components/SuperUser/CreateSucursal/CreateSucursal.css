@@ -1,11 +1,63 @@
-.createSucursalFormContainer{
-    display: flex;
-    width: 100%;
-    background-color: rgb(240, 132, 16);
-    justify-content: center;
+.createSucursalFormContainer {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgb(240, 132, 16);
+  min-height: 100vh;
 }
-.createSucursalFormGroupContainer{
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
+
+.createSucursalForm {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.createSucursalFormGroupContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.createSucursalFormGroupContainer label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.createSucursalFormGroupContainer input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.createSucursalFormGroupContainer input:focus {
+  border: 1px solid #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.sucursalImage {
+  width: 100%;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.createSucursalButton {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.createSucursalButton:hover {
+  background-color: #0056b3;
 }

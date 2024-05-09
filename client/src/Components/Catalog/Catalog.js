@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Catalog.css";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
-// import { getProducts } from "../../redux/actions/productActions";
-// import { fetchAllProducts } from "../../redux/slices/products/product";
 import {
   editOneProduct,
   fetchAllProducts as fetchProducts,
@@ -14,8 +12,6 @@ import {
 import productPlaceholder from "../../Assets/productPlaceholder.png";
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
 import { useNavigate } from "react-router-dom";
-// import AddProductToCart from "../../app/AddProductToCart/AddProductToCart";
-// import CreateProduct from "../CreateProduct/CreateProduct";
 import MyProducts from "./MyProducts/MyProducts";
 import { downloadExcel } from "../Convert/Convert";
 import Modal from "react-modal";
@@ -27,7 +23,6 @@ export default function Catalog(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
 
   const handleEditProduct = () => {
     setIsEditing(true);
@@ -104,7 +99,7 @@ export default function Catalog(props) {
     if (user) {
       getUserProducts();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let nav = useNavigate();
@@ -120,74 +115,58 @@ export default function Catalog(props) {
     if (!productList.length) {
       getAllProducts();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setFilteredProducts(productList);
   }, [productList]); // Esta línea asegura que filteredProducts se actualice cuando productList cambie
 
-  // let store = useSelector( status => status )
   let dispatch = useDispatch();
-  // let [state, setState] = useState({
-  //     store: store,
-  //     response: cookie.get('response')
-  // })
-  // let response = state.response
-
   let userProducts = useSelector((state) => state.products?.userProducts);
+
   function downloadFile() {
     downloadExcel(userProducts);
   }
+
   function getAllProducts() {
     dispatch(fetchProducts());
   }
+
   let user = cookie.get("user");
+
   let createProduct = async (product, userId) => {
-    // Para crearlo sin Id y no arroje error en el backend quitamos la propiedad Id para que no se refiera al mismo producto, sino a la copia
     product = {
-      "Código": product["Código"] || null,
-      "Producto": product["Producto"] || null,
+      Código: product["Código"] || null,
+      Producto: product["Producto"] || null,
       "P. Venta": product["P. Venta"] || null,
       "P. Compra": product["P. Compra"] || null,
-      // ['updatedAt']: product['updatedAt'] || null,
-      // ['createdAt']: product['createdAt'] || null,
-      // ['quantity']: product['quantity'] || 0,
-      "Departamento": product["Departamento"] || null,
-      "image": product["image"] || null,
-      // ['sales']: product['sales'] || 0,
-      "brand": product["brand"] || null,
+      Departamento: product["Departamento"] || null,
+      image: product["image"] || null,
+      brand: product["brand"] || null,
     };
-    console.log(product);
+
     let promise = new Promise((resolve, reject) => {
       dispatch(
         postProduct({ products: [{ ...product }], userId: userId })
       ).then(() => {
-        console.log("created!");
         resolve("OKCREATED");
       });
     });
+
     await promise
       .then((result) => {
         dispatch(getMyProducts({ userId: userId }));
-        console.log(result);
       })
       .then(() => {
         nav("/catalog");
       });
   };
-  let addProduct = async (product, userId) => {
-    console.log(product, userId);
-    createProduct(product, userId);
-    //     dispatch(getMyProducts())
 
-    // Lo siguiente es la version funcional de la asociacion con el producto indicado. Fue reemplazado por la creación de un nuevo producto similar al elegido
-    // console.log(userId, productId);
-    // dispatch(matchProduct({userId, productId})).then(() => {
-    //     dispatch(getMyProducts())
-    //     window.location.reload()
-    // })
+  let addProduct = async (product, userId) => {
+    createProduct(product, userId);
   };
+
   let getUserProducts = () => {
     dispatch(getMyProducts({ userId: user.id }));
   };
@@ -195,20 +174,14 @@ export default function Catalog(props) {
   const selectAllProducts = () => {
     if (!selectedProducts.length > 0) {
       setSelectedProducts(productList);
-      
     } else {
       setSelectedProducts([]);
-     
     }
   };
 
   return (
     <>
-      <div>
-        {/* <div>
-            <CreateProduct></CreateProduct>
-        </div> */}
-
+      <div className="catalogPage">
         {!user && (
           <div>
             not registered
@@ -219,161 +192,153 @@ export default function Catalog(props) {
           </div>
         )}
         {user?.privileges === "usuario" && <div>usuario mode</div>}
-        <div>
-          <div className="container">
-            {user?.privileges === "admin" && Number(user?.kyu) >= 9 && (
-              <div>
-                admin mode
-                <button onClick={() => downloadFile()}> DOWNLOAD EXCEL </button>
-                <button onClick={() => getAllProducts()}>
-                  {" "}
-                  GET ALL PRODUCTS{" "}
-                </button>
-              </div>
-            )}
-            <button onClick={() => nav("/onlist")} className="verFaltante">
-              {" "}
-              VER FALTANTE{" "}
-            </button>
-
-            {/* La siguiente linea de Código dirige a un apartado para completar cierta información acerca de los Productos */}
-            {userProducts.length > 0 && (
+        <div className="container">
+          {user?.privileges === "admin" && Number(user?.kyu) >= 9 && (
+            <div>
+              admin mode
+              <button onClick={() => downloadFile()} className="catalogButton">
+                DOWNLOAD EXCEL
+              </button>
               <button
-                onClick={() => nav("/complete/product/info")}
-                className="completeInfo"
+                onClick={() => getAllProducts()}
+                className="catalogButton"
               >
-                COMPLETE PRODUCT INFO
+                GET ALL PRODUCTS
               </button>
-            )}
+            </div>
+          )}
+          <button onClick={() => nav("/onlist")} className="verFaltante">
+            VER FALTANTE
+          </button>
 
-            {selectedProducts.length > 0 && (
-              <button onClick={handleEditProduct} className="editarProductos">
-                Editar Productos Seleccionados
-              </button>
-            )}
-          
+          {userProducts.length > 0 && (
+            <button
+              onClick={() => nav("/complete/product/info")}
+              className="completeInfo"
+            >
+              COMPLETE PRODUCT INFO
+            </button>
+          )}
+
+          {selectedProducts.length > 0 && (
+            <button onClick={handleEditProduct} className="editarProductos">
+              Editar Productos Seleccionados
+            </button>
+          )}
+
           <button onClick={selectAllProducts} className="seleccionarTodos">
             {selectedProducts.length > 0
               ? "Deseleccionar Todos"
               : "Seleccionar Todos"}
           </button>
-          </div>
-          {filteredProducts.length !== 0 ? (
-            <MyProducts
-              selectedProducts={selectedProducts}
-              editMode={editMode}
-              handleProductSelection={handleProductSelection}
-            ></MyProducts>
-          ) : (
-            <button
-              onClick={() => {
-                nav("/upload/product");
-              }}
-            >
-              Create One Product
-            </button>
-          )}
-          <div>
-            {isEditing && (
-              <Modal isOpen={true}>
-                <div className="modal-estilo">
-                  {isLoading && (
-                    <h1 className="loading-message">Cargando...</h1>
-                  )}
-                  <button
-                    onClick={() => handleActionSelection("updatePrice")}
-                    className="boton-accion"
-                  >
-                    Modificar Valor
-                  </button>
-                  <button
-                    onClick={() => handleActionSelection("addToPrice")}
-                    className="boton-accion"
-                  >
-                    Sumar/Restar Cantidad
-                  </button>
+        </div>
+        {filteredProducts.length !== 0 ? (
+          <MyProducts
+            selectedProducts={selectedProducts}
+            editMode={editMode}
+            handleProductSelection={handleProductSelection}
+          />
+        ) : (
+          <button onClick={() => nav("/upload/product")}>
+            Create One Product
+          </button>
+        )}
+        <div>
+          {isEditing && (
+            <Modal isOpen={true}>
+              <div className="modal-estilo">
+                {isLoading && <h1 className="loading-message">Cargando...</h1>}
+                <button
+                  onClick={() => handleActionSelection("updatePrice")}
+                  className="boton-accion"
+                >
+                  Modificar Valor
+                </button>
+                <button
+                  onClick={() => handleActionSelection("addToPrice")}
+                  className="boton-accion"
+                >
+                  Sumar/Restar Cantidad
+                </button>
 
-                  <button
-                    onClick={() => setIsEditing(false)}
-                    className="boton-cerrar"
-                  >
-                    X
-                  </button>
+                <button
+                  onClick={() => setIsEditing(false)}
+                  className="boton-cerrar"
+                >
+                  X
+                </button>
 
-                  {selectedAction && (
-                    <div className="contenedor-acciones">
-                      {selectedAction === "updatePrice" && (
-                        <div className="actualizar-precio">
-                          <label>
-                            Nuevo Precio:
-                            <input
-                              type="number"
-                              min={0}
-                              value={newPrice}
-                              onChange={(e) => setNewPrice(e.target.value)}
-                              className="input-precio"
-                            />
-                          </label>
-                          <button
-                            onClick={executeAction}
-                            className="boton-actualizar"
-                          >
-                            Actualizar Precio
-                          </button>
-                        </div>
-                      )}
-
-                      {selectedAction === "addToPrice" && (
-                        <div className="sumar-cantidad">
-                          <label>
-                            Cantidad a Sumar o Restar:
-                            <input
-                              type="number"
-                              value={quantityToAdd}
-                              onChange={(e) => setQuantityToAdd(e.target.value)}
-                              className="input-cantidad"
-                            />
-                          </label>
-                          <button
-                            onClick={executeAction}
-                            className="boton-sumar"
-                          >
-                            {quantityToAdd > 0 ? "Sumar" : "Restar"} Cantidad
-                          </button>
-                        </div>
-                      )}
-
-                      <div className="productos-a-modificar">
-                        <h3>Productos que van a ser modificados:</h3>
-                        <ul>
-                          {selectedProducts.map((product, index) => (
-                            <li key={index}>
-                              {product.Código} - {product["P. Venta"]}{" "}
-                              {console.log(product)}
-                            </li>
-                          ))}
-                        </ul>
+                {selectedAction && (
+                  <div className="contenedor-acciones">
+                    {selectedAction === "updatePrice" && (
+                      <div className="actualizar-precio">
+                        <label>
+                          Nuevo Precio:
+                          <input
+                            type="number"
+                            min={0}
+                            value={newPrice}
+                            onChange={(e) => setNewPrice(e.target.value)}
+                            className="input-precio"
+                          />
+                        </label>
+                        <button
+                          onClick={executeAction}
+                          className="boton-actualizar"
+                        >
+                          Actualizar Precio
+                        </button>
                       </div>
+                    )}
+
+                    {selectedAction === "addToPrice" && (
+                      <div className="sumar-cantidad">
+                        <label>
+                          Cantidad a Sumar o Restar:
+                          <input
+                            type="number"
+                            value={quantityToAdd}
+                            onChange={(e) => setQuantityToAdd(e.target.value)}
+                            className="input-cantidad"
+                          />
+                        </label>
+                        <button onClick={executeAction} className="boton-sumar">
+                          {quantityToAdd > 0 ? "Sumar" : "Restar"} Cantidad
+                        </button>
+                      </div>
+                    )}
+
+                    <div className="productos-a-modificar">
+                      <h3>Productos que van a ser modificados:</h3>
+                      <ul>
+                        {selectedProducts.map((product, index) => (
+                          <li key={index}>
+                            {product.Código} - {product["P. Venta"]}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  )}
-                </div>
-              </Modal>
-            )}
-          </div>
+                  </div>
+                )}
+              </div>
+            </Modal>
+          )}
         </div>
         {user?.privileges === "admin" &&
           productList?.slice(0, props?.items || 20)?.map((product) => {
-            // return  product[props.filter] === props.value &&
             return (
-              <div className="catalogContainer" key={user.id}>
+              <div className="catalogCard" key={product.id}>
                 <span className="productBg">
                   <img
                     alt=""
                     className="productImage"
-                    src={productPlaceholder}
+                    src={product.image || productPlaceholder}
                   />
                   <div className="productInfoContainer">
-                    <button onClick={() => addProduct(product, user.id)}>
+                    <button
+                      onClick={() => addProduct(product, user.id)}
+                      className="catalogButton"
+                    >
                       ADD
                     </button>
                     <div
@@ -384,8 +349,6 @@ export default function Catalog(props) {
                       {product.Producto}
                     </div>
                     <div>{product["P. Venta"]}</div>
-                    {/* <AddProductToCart id={product.id} ></AddProductToCart> */}
-                    {/* <RemoveProductToCart></RemoveProductToCart> */}
                     {editMode && <div>{product.id}</div>}
                     {editMode && (
                       <div>

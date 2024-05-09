@@ -1,68 +1,88 @@
-.mickeyTicket{
-    width: 100px;
-    position: relative;
-    left: 15mm ;
-    /* right: 10mm;
-    bottom: 30mm; */
+.mickeyTicket {
+  width: 100px;
+  position: relative;
+  left: 15mm;
 }
-.mainTicketContainer{
-    display: flex;
-    flex-direction: column;
-    width: 58mm;
-    font-size: x-small;
-    position: relative;
-    
+
+.mainTicketContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 58mm;
+  font-size: x-small;
+  background-color: #fff;
+  border: 2px solid #000;
+  padding: 5mm;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
-.ticketTitle{
-    font-size: medium;
+
+.ticketTitle {
+  font-size: medium;
+  text-align: center;
+  margin-bottom: 5mm;
 }
-.divisorContainerStart{
-    background-color: black;
-    height: 0.5mm;
+
+.divisorContainerStart,
+.divisorContainerEnd {
+  background-color: black;
+  height: 0.5mm;
+  width: 100%;
+  margin: 2mm 0;
 }
-.divisorContainerEnd{
-    background-color: black;
-    height: 1mm;
+
+.printButton {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
-.printButton{
-    position: relative;
-    /* right: 10px;
-    bottom:50% ; */
+
+.printButton:hover {
+  background-color: #0056b3;
 }
-.informacionFiscal{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    font-size: xx-small;
+
+.informacionFiscal {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: xx-small;
 }
-.modalBox{
-    position: fixed;
-    top: 25%;
-    left: 25%;
-    width: 50%;
-    height: 50%;
-    background-color: red;
-    z-index: 6;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    
+
+.modalBox {
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background-color: #ff0000;
+  z-index: 6;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
 }
-.modalText{
-    color: #FFD449;
-    filter: drop-shadow(black 3px 3px 3px);
-    font-weight: 500;
-    font-size: xx-large;
+
+.modalText {
+  color: #ffd449;
+  filter: drop-shadow(black 3px 3px 3px);
+  font-weight: 500;
+  font-size: xx-large;
 }
-.inputPayment{
-    width: 50%;
-    height: 30%;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    font-size: xx-large;
-    background-color: #ffffff;
-    border: double black 10px;
-    
+
+.inputPayment {
+  width: 50%;
+  height: 30%;
+  font-size: xx-large;
+  background-color: #ffffff;
+  border: double black 10px;
 }

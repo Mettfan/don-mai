@@ -19,38 +19,36 @@ function UserDetail(props) {
   const [editingUser, setEditingUser] = useState({});
   const [error, setError] = useState();
   const [user, setUser] = useState(props.user || cookie.get("user"));
-  console.log(user,"USEEER");
 
   useEffect(() => {
     if (!user) {
       // Redirect to login or handle accordingly
-      console.log('No user data available, please login');
+      console.log("No user data available, please login");
       return;
     }
     const fetchUserInfo = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/users`, {
           params: {
-            filter: 'email',
+            filter: "email",
             value: user.email,
-            password: user.password // Not recommended to handle passwords like this
-          }
+            password: user.password, // Not recommended to handle passwords like this
+          },
         });
 
         if (response.data && !response.data.error) {
           setUser(response.data);
-          cookie.set('user', JSON.stringify(response.data), { path: '/' });
+          cookie.set("user", JSON.stringify(response.data), { path: "/" });
         } else if (response.data.error) {
-          console.error('Error fetching user:', response.data.error);
+          console.error("Error fetching user:", response.data.error);
         }
       } catch (error) {
-        console.error('Failed to fetch user details', error);
+        console.error("Failed to fetch user details", error);
       }
     };
 
     fetchUserInfo();
   }, []);
-
 
   const handleChangeModalInput = useCallback(
     (e) => {
@@ -77,34 +75,15 @@ function UserDetail(props) {
   }, [editingUser, modalValues, user]);
 
   let nav = useNavigate();
-  // let user = props.user || cookie.get("user");
   let handleOnLogOut = () => {
     cookie.remove("user");
     nav("/");
     window.location.reload();
   };
-  if (!user) {
-    return (
-      <div>
-        Please log in to view this page!
-        <button onClick={() => nav("/register")}>Register</button>
-      </div>
-    );
-  }
-  // let onURLchange = (e) => {
-  //     setImageUrl(e.target.value)
-  // }
-  // let changeProfileImage = (url) => {
-  //     console.log({id: user.id, findBy: 'image', infoUpdated: url});
-  //     dispatch(editOneUser({id: user.id, findBy: 'image', infoUpdated: url}))
-  // }
-
   const openOrCloseModal = () => {
     if (!modalIsOpen) {
       setModalValues(user);
-
       setEditingUser(user);
-      console.log(user);
       setModalIsOpen(!modalIsOpen);
     }
     setModalIsOpen(!modalIsOpen);
@@ -149,34 +128,32 @@ function UserDetail(props) {
       <div className="userDetailContainer">
         <img alt="" className="userDetailImage" src={imageUrl || user.image} />
         <div className="userDetailInfo">
-          <div>{user.name}</div>
-          <div>{user.email}</div>
-          <div>{user.phone ? <div>{user.phone}</div> : null}</div>
-          <div>Privileges: {user.privileges}</div>
-          <div>{user.id}</div>
+          <div className="userInfo">{user.name}</div>
+          <div className="userInfo">{user.email}</div>
+          <div className="userInfo">
+            {user.phone ? <div>{user.phone}</div> : null}
+          </div>
+          <div className="userInfo">Privileges: {user.privileges}</div>
+          <div className="userInfo">User ID: {user.id}</div>
           <button onClick={openOrCloseModal} className="editButton">
             Editar
           </button>
-          <CambiarPlan userId={user.id}/>
-          {/* {JSON.stringify(user)} */}
-          <button
-            className="logoutButton"
-            onClick={() => {
-              handleOnLogOut();
-            }}
-          >
+          <CambiarPlan userId={user.id} />
+          <button className="logoutButton" onClick={handleOnLogOut}>
             Cerrar Sesión
           </button>
         </div>
-        {/* <input placeholder='URL de Imagen' type={'text'} onChange={(e) => {onURLchange(e)}}  ></input>
-            <button onClick={() => {changeProfileImage(imageUrl) }} >Upload</button>
-            {imageUrl} */}
       </div>
-      <Modal isOpen={modalIsOpen} onRequestClose={openOrCloseModal}>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={openOrCloseModal}
+        className="modalContent"
+        overlayClassName="modalOverlay"
+      >
         <button onClick={openOrCloseModal} className="modalCloseButton">
           X
         </button>
-        <form onSubmit={(e) => handleUserEdit(e)}>
+        <form onSubmit={handleUserEdit}>
           <h2>Editar información personal</h2>
           <input
             className="inputField"
@@ -208,10 +185,9 @@ function UserDetail(props) {
             ></input>
           ) : (
             <div>
-              <p>Te gustaria agregar un numero de teléfono?</p>
+              <p>Te gustaría agregar un número de teléfono?</p>
               <input
                 className="inputField"
-                input
                 name="phone"
                 value={editingUser.phone}
                 onChange={handleChangeModalInput}

@@ -1,24 +1,43 @@
-.statsMostSoldbackGround{
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    font-weight: 500;
-    font-family:'Courier New';
-    letter-spacing: 3px;
-    width: 25%;
-    padding: 5px;
-    font-size: small;
+.statsMostSoldContainer {
+  background-color: #ffd449;
+  color: #000000;
+  font-weight: 500;
+  font-family: "Courier New";
+  letter-spacing: 3px;
+  width: 25%;
+  padding: 15px;
+  font-size: small;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
 }
-.productTopName{
-    filter: drop-shadow(1px 1px 1px black);
+
+.statsTitle {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: medium;
+  color: #d91e18;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
-.pairContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 3px solid black;
-    padding: 3px;
+
+.pairContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid black;
+  padding: 5px;
+  margin: 5px 0;
+  background-color: #ffffff;
+  border-radius: 5px;
 }
-.productTopQuantity{
-    color: rgb(0, 0, 0);
-    filter: drop-shadow(2px 2px 1px green);
+
+.productTopName {
+  filter: drop-shadow(1px 1px 1px black);
+}
+
+.productTopQuantity {
+  color: rgb(0, 0, 0);
+  filter: drop-shadow(2px 2px 1px green);
+  font-weight: bold;
 }

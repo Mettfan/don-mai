@@ -141,6 +141,9 @@ export function Search() {
 
   return (
     <>
+      <div className="search-header">
+        <h1>Buscar Tickets</h1>
+      </div>
       <div className="filtros-container">
         <div className="input-container">
           <input
@@ -176,24 +179,38 @@ export function Search() {
           </select>
         </div>
       </div>
-      {sortedAndFilteredTickets?.map((ticket) => (
-        <div
-          className="ticketCard"
-          key={ticket.id}
-          onClick={() => {
-            nav(`/tickets/${ticket.id}`);
-          }}
-        >
-          <p className="ticketInfo">Id: {ticket.id}</p>
-          <p className="ticketInfo">Descripción: {ticket.description}</p>
-          <p className="ticketInfo">Total: ${ticket.Total}</p>
-          <p className="ticketInfo">Cliente: {ticket.client}</p>
-          <p className="ticketInfo">Fecha de creación: {ticket.createdAt}</p>
-          {ticket.createdAt !== ticket.updatedAt && (
-            <p className="ticketInfo">Último cambio: {ticket.updatedAt}</p>
-          )}
-        </div>
-      ))}
+      <div className="ticket-list">
+        {sortedAndFilteredTickets?.map((ticket) => (
+          <div
+            className="ticket-card"
+            key={ticket.id}
+            onClick={() => {
+              nav(`/tickets/${ticket.id}`);
+            }}
+          >
+            <p className="ticket-info">
+              <strong>Id:</strong> {ticket.id}
+            </p>
+            <p className="ticket-info">
+              <strong>Descripción:</strong> {ticket.description}
+            </p>
+            <p className="ticket-info">
+              <strong>Total:</strong> ${ticket.Total}
+            </p>
+            <p className="ticket-info">
+              <strong>Cliente:</strong> {ticket.client}
+            </p>
+            <p className="ticket-info">
+              <strong>Fecha de creación:</strong> {ticket.createdAt}
+            </p>
+            {ticket.createdAt !== ticket.updatedAt && (
+              <p className="ticket-info">
+                <strong>Último cambio:</strong> {ticket.updatedAt}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
     </>
   );
 }

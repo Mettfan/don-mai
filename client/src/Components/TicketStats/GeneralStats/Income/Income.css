@@ -1,0 +1,21 @@
+.incomeContainer {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+  width: 200px;
+}
+
+.incomeLabel {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.incomeValue {
+  font-weight: normal;
+}
