@@ -25,8 +25,8 @@ export default function UpdatePrice() {
     priceInput: null,
     Producto: "",
     id: null,
-    ["P. Venta"]: null,
-    ["P. Compra"]: null,
+    "P. Venta": null,
+    "P. Compra": null,
     lastDayUpdated: "",
     lastMonthUpdated: "",
     lastYearUpdated: "",
@@ -43,6 +43,7 @@ export default function UpdatePrice() {
     document.getElementById("price").value = null;
     document.getElementById("departament").value = null;
     document.getElementById("id").value = null;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counterId]);
 
   useEffect(() => {
@@ -61,6 +62,7 @@ export default function UpdatePrice() {
         selectedProduct["updatedAt"]?.split("T")[0]?.split("-")[0]
       ),
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProduct]);
 
   function getProduct(barcode) {
@@ -76,7 +78,6 @@ export default function UpdatePrice() {
   }
 
   function handleInputOnChange(e) {
-    console.log(state[e.target.name]);
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -134,7 +135,6 @@ export default function UpdatePrice() {
     if (keyCode === 39) {
       incrementCounter();
     }
-    console.log(e.keyCode);
   }
 
   function addStock(e) {

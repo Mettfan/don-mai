@@ -12,7 +12,7 @@ import axios from "axios";
 function UserDetail(props) {
   let cookie = new Cookies();
   let dispatch = useDispatch();
-  let [imageUrl, setImageUrl] = useState(LOGODONMAY);
+  let [imageUrl] = useState(LOGODONMAY);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalError, setModalError] = useState(true);
   const [modalValues, setModalValues] = useState({});
@@ -22,7 +22,6 @@ function UserDetail(props) {
 
   useEffect(() => {
     if (!user) {
-      // Redirect to login or handle accordingly
       console.log("No user data available, please login");
       return;
     }
@@ -48,6 +47,7 @@ function UserDetail(props) {
     };
 
     fetchUserInfo();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeModalInput = useCallback(

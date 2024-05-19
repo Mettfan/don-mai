@@ -15,10 +15,11 @@ function UploadProduct() {
     <>
       {user?.privileges ? (
         <div className="uploadProductContainer">
-          <h1 className="uploadTitle">Subir Producto</h1>
+          
           <div className="toolWrapper">
-            <Convert />
             <CreateProduct />
+            <h1 className="uploadTitle">Subir Producto</h1>
+            <Convert />
           </div>
         </div>
       ) : (

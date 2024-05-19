@@ -1,63 +1,60 @@
 .createSucursalFormContainer {
   display: flex;
   justify-content: center;
-  padding: 20px;
-  background-color: rgb(240, 132, 16);
-  min-height: 100vh;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
 }
 
 .createSucursalForm {
-  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 500px;
-  width: 100%;
 }
 
 .createSucursalFormGroupContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 0;
+  margin-bottom: 20px;
 }
 
 .createSucursalFormGroupContainer label {
+  display: block;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
 .createSucursalFormGroupContainer input {
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 14px;
-  outline: none;
-  transition: border 0.3s;
-}
-
-.createSucursalFormGroupContainer input:focus {
-  border: 1px solid #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-sizing: border-box;
 }
 
 .sucursalImage {
   width: 100%;
-  margin: 10px 0;
-  border: 1px solid #ccc;
+  height: auto;
+  margin: 20px 0;
   border-radius: 4px;
+  object-fit: cover;
 }
 
 .createSucursalButton {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
+  width: 100%;
+  padding: 15px;
+  background-color: #28a745;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .createSucursalButton:hover {
-  background-color: #0056b3;
+  background-color: #218838;
 }

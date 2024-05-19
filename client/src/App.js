@@ -32,6 +32,9 @@ import Faltante from "./pages/Faltante/Faltante";
 import Listado from "./pages/Listado/Listado";
 import Membership from "./Components/Membership/Membership";
 import Modal from "react-modal";
+import SuperUserDashboard from "./Components/SuperUserDashBoard/SuperUserDashBoard";
+import SuperCatalog from "./Components/SuperCatalog/SuperCatalog";
+import SuperTickets from "./Components/SuperTickets/SuperTickets";
 
 Modal.setAppElement("#root");
 
@@ -60,7 +63,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/upload/product" element={<UploadProduct />} />
         <Route path="/delivery" element={<Delivery />} />
-        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/catalog/" element={<Catalog />} />
         <Route path="/search" element={<Search />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/printest" element={<Example />} />
@@ -71,12 +74,15 @@ function App() {
         <Route path="/profile" element={<UserDetail />} />
         <Route path="/tickets" element={<TicketHandler />} />
         <Route path="/tickets/:id" element={<TicketDetail />} />
-        <Route path="/tickets/stats" element={<TicketStats />} />{/* hasta aca llegue */}
-        <Route path="/tickets/backup" element={<RestoreTickets />} />
-        <Route path="/sucursal/:id" element={<Sucursal />} />
-        <Route path="/sucursal/" element={<UserSucursal />} />
-        <Route path="/onlist/" element={<Faltante />} />
+        <Route path="/tickets/stats" element={<TicketStats />} />
+        <Route path="/tickets/backup" element={<RestoreTickets />} />  
+        <Route path="/sucursal/:id" element={<Sucursal />} /> 
+        <Route path="/sucursal/" element={<UserSucursal />} /> 
+        <Route path="/onlist/" element={<Faltante />} />{/* hasta aca llegue */}
         <Route path="/print/list" element={<Listado />} />
+        <Route path="/DashBoard" element={<SuperUserDashboard />} />
+        <Route path="/SuperCatalog/:id" element={<SuperCatalog />} />
+        <Route path="/SuperTickets/:id" element={<SuperTickets />} />
         <Route
           path="/complete/product/:attribute"
           element={<CompleteProductInfo />}

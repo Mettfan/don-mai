@@ -6,6 +6,7 @@ import {
   fetchTickets,
 } from "../../../features/products/productSlicetest";
 import Calendar from "react-calendar";
+import Switch from "react-switch"; // Asegúrate de instalar react-switch
 import "./Tickets.css";
 import { useNavigate } from "react-router-dom";
 import TicketCreator from "../TicketCreator/TicketCreator";
@@ -24,21 +25,23 @@ function Tickets() {
   const getAllTickets = useCallback(() => {
     console.log(tickets);
     dispatch(fetchTickets());
-  }, [dispatch, tickets]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getUserTickets = useCallback(() => {
     console.log(tickets);
     dispatch(fetchFilteredTickets({ filter: "user", value: user?.name }));
-  }, [dispatch, tickets, user?.name]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getAllTickets();
     getUserTickets();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getAllTickets, getUserTickets]);
 
   const date = new Date();
   let [ticketDate, setTicketDate] = useState(date);
+  let [showCalendar, setShowCalendar] = useState(true);
 
   function onDeleteTicket(id, user) {
     dispatch(destroyTicket(id, user?.email));
@@ -87,17 +90,7 @@ function Tickets() {
             >
               {Number(user?.kyu) >= 9 && (
                 <span
-                  style={{
-                    flexDirection: "row-reverse",
-                    justifyContent: "center",
-                    width: "10%",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    position: "relative",
-                    right: "40%",
-                    padding: "5px",
-                    color: "white",
-                  }}
+                  className="deleteTicketButton"
                   onClick={() => {
                     onDeleteTicket(ticket?.id, user);
                   }}
@@ -105,13 +98,7 @@ function Tickets() {
                   x
                 </span>
               )}
-              <span
-                style={{
-                  padding: "5px",
-                }}
-              >
-                {ticket["Total"]}
-              </span>
+              <span className="ticketTotal">{ticket["Total"]}</span>
             </div>
           </div>
           <div className="ticketCreatedAt">
@@ -173,13 +160,23 @@ function Tickets() {
       <div className="ticketMiniApp">
         <div className="calendarMiniApp">
           <h1>Seleccionar Fecha de Tickets</h1>
+          <div className="switchContainer">
+            <label htmlFor="showCalendarSwitch">Mostrar Calendario</label>
+            <Switch
+              onChange={() => setShowCalendar(!showCalendar)}
+              checked={showCalendar}
+              id="showCalendarSwitch"
+            />
+          </div>
+          {showCalendar && (
+            <Calendar
+              onChange={setTicketDate}
+              value={ticketDate}
+              defaultView={"month"}
+            />
+          )}
           <div className="calendarTicketContainer">
             <div className="calendarTicket">
-              <Calendar
-                onChange={setTicketDate}
-                value={ticketDate}
-                defaultView={"month"}
-              />
               <TicketCreator />
               {currentTickets()?.length > 0 && (
                 <div>

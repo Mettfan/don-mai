@@ -31,7 +31,6 @@
 
 .ticketsContainer {
   border: dotted black 3px;
-  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -107,6 +106,33 @@
   padding: 5px;
 }
 
+.switchContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.deleteTicketButton {
+  flex-direction: row-reverse;
+  justify-content: center;
+  width: 10%;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  right: 40%;
+  padding: 5px;
+  color: white;
+}
+
+.ticketTotal {
+  padding: 5px;
+}
+
+.ticketCreatedAt {
+  font-weight: bold;
+}
+
 @media (max-width: 1260px) {
   .ticketsContainer {
     width: 60%;
@@ -122,7 +148,7 @@
 .react-calendar {
   width: 350px;
   max-width: 100%;
-  background: white;
+  background: rgb(182, 182, 182);
   border: 1px solid #a0a096;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
@@ -146,8 +172,6 @@
 .react-calendar *,
 .react-calendar *:before,
 .react-calendar *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -173,11 +197,11 @@
 
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: #9a9a9a;
 }
 
 .react-calendar__navigation button[disabled] {
-  background-color: #f0f0f0;
+  background-color: #6d6d6d;
 }
 
 .react-calendar__month-view__weekdays {
@@ -222,6 +246,7 @@
   text-align: center;
   padding: 0.75em 0.5em;
   background: none;
+  color: black; 
 }
 
 .react-calendar__tile:disabled {
