@@ -4,16 +4,19 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { editOneUser } from "../../features/users/userSlice";
+import Modal from "react-modal";
 import "./SuperUserDashBoard.css";
+import CrearUser from "./CrearUser/CrearUser";
 
 function SuperUserDashboard(props) {
   let cookie = new Cookies();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.users);
-  const [user, setUser] = useState(props.user || cookie.get("user"));
+  const [user] = useState(props.user || cookie.get("user"));
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [editError, setEditError] = useState("");
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (!user) {
@@ -33,6 +36,7 @@ function SuperUserDashboard(props) {
 
         if (response.data && !response.data.error) {
           setUsers(response.data);
+          console.log(response.data);
         } else if (response.data.error) {
           console.error("Error:", response.data.error);
         }
@@ -84,9 +88,26 @@ function SuperUserDashboard(props) {
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/deleteUser/${id}`
+      );
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   return (
     <div className="super-user-dashboard">
       <h1>Super User Dashboard</h1>
+      <button onClick={() => setOpen(true)}>Crear usuario</button>
+      <Modal  isOpen={open}>
+        <button onClick={() => setOpen(false)}>x</button>
+        <CrearUser></CrearUser>
+      </Modal>
       <ul>
         {users.map((user) => (
           <div key={user.id} className="user-card">
@@ -96,9 +117,11 @@ function SuperUserDashboard(props) {
                 <div>
                   <label>Nombre:</label>
                   <input
-                  type="text"
-                  value={editingUser.name}
-                  onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                    type="text"
+                    value={editingUser.name}
+                    onChange={(e) =>
+                      setEditingUser({ ...editingUser, name: e.target.value })
+                    }
                   />
                 </div>
                 <div>
@@ -109,6 +132,7 @@ function SuperUserDashboard(props) {
                     onChange={(e) =>
                       setEditingUser({ ...editingUser, email: e.target.value })
                     }
+                    disabled
                   />
                 </div>
                 <div>
@@ -223,7 +247,12 @@ function SuperUserDashboard(props) {
                 <button onClick={() => handleEditClick(user)}>Editar</button>
                 <Link to={`/SuperCatalog/${user.id}`}>Productos</Link>
                 <Link to={`/SuperTickets/${user.id}`}>Tickets</Link>
-                
+                <button
+                  className="borrarUsuario"
+                  onClick={() => handleDelete(user.id)}
+                >
+                  Borrar
+                </button>
               </>
             )}
           </div>

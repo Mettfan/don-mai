@@ -5,9 +5,9 @@ import axios from "axios";
 import "./CambiarPlan.css";
 
 const Planes = [
-  { id: 1, nombre: "Plan Básico", precio: "10.00" },
-  { id: 2, nombre: "Plan Avanzado", precio: "20.00" },
-  { id: 3, nombre: "Plan Premium", precio: "30.00" },
+  // { id: 1, nombre: "Plan Básico", precio: "10.00" },
+  { id: 2, name: "basic" , nombre: "Plan Basico", precio: "20.00" },
+  { id: 3, name: "premium" , nombre: "Plan Premium", precio: "30.00" },
 ];
 
 //PARA QUE FUNCINE EN LA CUENTA REAL, SE CAMBIA EL INITMERCADOPAGO DE AQUI ABAJO
@@ -29,7 +29,7 @@ const CambiarPlan = (userId) => {
       const response = await axios.post(
         "http://localhost:3001/pago/create_preference",
         {
-          title: plan.nombre,
+          title: plan.name,
           quantity: 1,
           price: plan.precio,
           userId: userId,

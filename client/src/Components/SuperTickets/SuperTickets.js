@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -9,25 +9,23 @@ function SuperTickets() {
   const [sortByDate, setSortByDate] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
   const [selectedDescription, setSelectedDescription] = useState("");
-  const cookie = new Cookies();
-  const user = cookie.get("user");
-  const { id } = useParams(); // Obtén el id de los parámetros de la ruta
+  // const cookie = new Cookies();
+  // const user = cookie.get("user");
+  const { id } = useParams();
   const nav = useNavigate();
-console.log(id, "???????????????????????");
-  // Verificar si el usuario tiene privilegios de administrador
-  useEffect(() => {
-    if (!user || user.privileges !== "admin") {
-      // nav("/"); // Redirigir a la página de inicio o a otra página si no es admin
-    }
-  }, [user, nav]);
+
+
+ //IMPORTANTE!!!!!!!!!!!!!!!
+  // useEffect(() => {
+  //   if (!user || user.privileges !== "admin") {
+  //     nav("/"); // Redirigir a la página de inicio o a otra página si no es admin
+  //   }
+  // }, [user, nav]);
 
   const getUserTickets = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/Tickets/search`, {
-        params: { filter: "userId", value: id },
-      });
-      console.log(response.data);
-      setTickets(response.data || []);
+      const response = await axios.get(`http://localhost:3001/users/allTickets?userId=${id}`);
+      setTickets(response.data.tickets || []);
     } catch (error) {
       console.error("Error fetching user tickets:", error);
     }
@@ -38,7 +36,7 @@ console.log(id, "???????????????????????");
       await getUserTickets();
     };
     fetchData();
-  }, [getUserTickets]);
+  }, [ id, getUserTickets]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
