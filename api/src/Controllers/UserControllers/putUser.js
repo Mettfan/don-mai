@@ -1,8 +1,9 @@
 const { User } = require("../../db.js");
+const bcrypt = require("bcrypt");
 
 const putUser = async (req, res, next) => {
   const { editingUser, userId, newStatus } = req.body;
-
+console.log(editingUser, userId, newStatus, "?????????");
   try {
     if (userId && newStatus) {
       const result = await User.update(
@@ -11,7 +12,8 @@ const putUser = async (req, res, next) => {
       );
 
       if (result[0] === 1) {
-        res.status(200).send({ message: "Privileges updated successfully." });
+        const updatedUser = await User.findOne({ where: { id: userId } });
+        res.status(200).send(updatedUser);
       } else {
         res.status(404).send({ message: "User not found." });
       }
@@ -29,9 +31,6 @@ const putUser = async (req, res, next) => {
       }
       if (editingUser.email && editingUser.email !== user.email) {
         updates.email = editingUser.email;
-      }
-      if (editingUser.password && editingUser.password !== user.password) {
-        updates.password = editingUser.password;
       }
       if (editingUser.phone && editingUser.phone !== user.phone) {
         updates.phone = editingUser.phone;
@@ -52,8 +51,15 @@ const putUser = async (req, res, next) => {
         updates.privileges = editingUser.privileges;
       }
 
+      if (editingUser.newPassword) {
+        const isPasswordSame = await bcrypt.compare(editingUser.newPassword, user.password);
+        if (!isPasswordSame) {
+          updates.password = await bcrypt.hash(editingUser.newPassword, 10);
+        }
+      }
+
       if (Object.keys(updates).length === 0) {
-        return res.status(200).send({ message: "No changes detected." });
+        return res.status(200).send(user);
       }
 
       const result = await User.update(updates, {
@@ -61,7 +67,8 @@ const putUser = async (req, res, next) => {
       });
 
       if (result[0] === 1) {
-        res.status(200).send({ message: "User updated successfully." });
+        const updatedUser = await User.findOne({ where: { id: editingUser.id } });
+        res.status(200).send(updatedUser);
       } else {
         res.status(404).send({ message: "User not found." });
       }

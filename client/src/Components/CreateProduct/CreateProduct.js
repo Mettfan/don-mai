@@ -59,6 +59,8 @@ function CreateProduct() {
       .then(() => {
         nav("/catalog");
       });
+      // alert("Creado")
+      // window.location.reload()
   };
 
   return (

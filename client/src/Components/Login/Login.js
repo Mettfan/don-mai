@@ -7,25 +7,24 @@ import "./Login.css";
 import LOGODONMAY from "../../Assets/LOGODONMAY.png";
 
 function Login() {
-  let cookie = new Cookies();
-  let user = useSelector((state) => state.users.user) || cookie.get("user");
-  let errorMessage = useSelector((state) => state.users.error);
-  console.log(errorMessage);
-  let dispatch = useDispatch();
-  let nav = useNavigate();
-  let [state, setState] = useState({
+  const cookie = new Cookies();
+  const user = useSelector((state) => state.users.user) || cookie.get("user");
+  const errorMessage = useSelector((state) => state.users.error);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [state, setState] = useState({
     email: "",
     password: "",
   });
 
   useEffect(() => {
     if (user?.name) {
-      nav("/home");
+      navigate("/home");
+      window.location.reload();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, navigate]);
 
-  let handleLoginSubmit = (e) => {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
     dispatch(
       fetchOneUser({
@@ -36,7 +35,7 @@ function Login() {
     );
   };
 
-  let handleOnChange = (e) => {
+  const handleOnChange = (e) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -47,17 +46,12 @@ function Login() {
     <div className="loginPageContainer">
       <img alt="Don May Logo" src={LOGODONMAY} className="loginPageLogo" />
       <h1>Inicia Sesión</h1>
-      <form
-        className="loginPageFormContainer"
-        onSubmit={(e) => {
-          handleLoginSubmit(e);
-        }}
-      >
+      <form className="loginPageFormContainer" onSubmit={handleLoginSubmit}>
         <div className="loginPageInputGroup">
           <label>E-mail</label>
           <input
             name="email"
-            onChange={(e) => handleOnChange(e)}
+            onChange={handleOnChange}
             required
             className="loginPageInputField"
           />
@@ -67,18 +61,15 @@ function Login() {
           <input
             name="password"
             type="password"
-            onChange={(e) => handleOnChange(e)}
+            onChange={handleOnChange}
             required
             className="loginPageInputField"
           />
         </div>
         <button className="loginPageLoginButton">Login</button>
-
         <button
           className="loginPageRegisterButton"
-          onClick={() => {
-            nav("/register");
-          }}
+          onClick={() => navigate("/register")}
         >
           Register
         </button>

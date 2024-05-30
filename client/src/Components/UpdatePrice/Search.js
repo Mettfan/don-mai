@@ -8,6 +8,8 @@ import {
   fetchTickets,
 } from "../../features/products/productSlicetest";
 
+//PERMISOS LINEA 140
+
 export function Search() {
   let nav = useNavigate();
   let dispatch = useDispatch();
@@ -137,6 +139,7 @@ export function Search() {
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
+  //IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!
   const filteredTickets =
     user?.privileges === "usuario"
       ? tickets.filter((ticket) => new Date(ticket.createdAt) >= oneWeekAgo)

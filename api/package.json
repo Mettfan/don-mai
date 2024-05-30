@@ -17,6 +17,7 @@
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.75",
     "axios": "^0.27.2",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",

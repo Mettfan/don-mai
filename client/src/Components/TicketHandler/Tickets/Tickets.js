@@ -6,7 +6,7 @@ import {
   fetchTickets,
 } from "../../../features/products/productSlicetest";
 import Calendar from "react-calendar";
-import Switch from "react-switch"; // Asegúrate de instalar react-switch
+import Switch from "react-switch";
 import "./Tickets.css";
 import { useNavigate } from "react-router-dom";
 import TicketCreator from "../TicketCreator/TicketCreator";
@@ -19,25 +19,44 @@ function Tickets() {
 
   let dispatch = useDispatch();
 
-  let tickets = useSelector((state) => state.products.tickets.response);
   let userTickets = useSelector((state) => state.products.userTickets);
+  const [filteredUserTickets, setFilteredUserTickets] = useState([]);
 
   const getAllTickets = useCallback(() => {
-    console.log(tickets);
     dispatch(fetchTickets());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getUserTickets = useCallback(() => {
-    console.log(tickets);
     dispatch(fetchFilteredTickets({ filter: "user", value: user?.name }));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    getAllTickets();
-    getUserTickets();
+    const fetchData = async () => {
+      await getAllTickets();
+      await getUserTickets();
+    };
+    fetchData();
   }, [getAllTickets, getUserTickets]);
+
+  useEffect(() => {
+    console.log(user?.privileges, fetchFilteredTickets, userTickets);
+    //IMPORTANTE!!!!!!!
+    if (user?.privileges === "usuario") {
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+      const filteredTickets = userTickets?.filter((ticket) => {
+        const ticketDate = new Date(ticket.createdAt);
+        return ticketDate >= oneWeekAgo;
+      });
+
+      setFilteredUserTickets(filteredTickets);
+    } else {
+      setFilteredUserTickets(userTickets);
+    }
+  }, [userTickets, user?.privileges]);
 
   const date = new Date();
   let [ticketDate, setTicketDate] = useState(date);
@@ -110,7 +129,7 @@ function Tickets() {
   };
 
   let currentTickets = () =>
-    userTickets
+    filteredUserTickets
       ?.filter(
         (ticket) =>
           Number(ticket["createdAt"].split("T")[0].split("-")[1]) ===
@@ -208,7 +227,7 @@ function Tickets() {
           </div>
         </div>
         <div className="allTicketsContainer">
-          {userTickets?.length && currentTicketsCards()}
+          {filteredUserTickets?.length && currentTicketsCards()}
         </div>
       </div>
     </>

@@ -20,7 +20,7 @@ function UploadProduct() {
       case "basic":
         return 100;
       case "usuario":
-        return 30;
+        return 7;
       default:
         return 0;
     }

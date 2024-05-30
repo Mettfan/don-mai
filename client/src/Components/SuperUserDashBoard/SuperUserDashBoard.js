@@ -10,6 +10,7 @@ import CrearUser from "./CrearUser/CrearUser";
 
 function SuperUserDashboard(props) {
   let cookie = new Cookies();
+  const token = cookie.get("token");
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.users);
   const [user] = useState(props.user || cookie.get("user"));
@@ -91,7 +92,10 @@ function SuperUserDashboard(props) {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/deleteUser/${id}`
+        `http://localhost:3001/deleteUser/${id}`,
+       { headers: {
+          Authorization: `Bearer ${token}`,
+        },}
       );
       alert(response.data.message);
       window.location.reload();

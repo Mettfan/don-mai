@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-// import Cookies from "universal-cookie";
+import Cookies from "universal-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -9,7 +9,8 @@ function SuperTickets() {
   const [sortByDate, setSortByDate] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
   const [selectedDescription, setSelectedDescription] = useState("");
-  // const cookie = new Cookies();
+  const cookies = new Cookies();
+  const token = cookies.get('token');
   // const user = cookie.get("user");
   const { id } = useParams();
   const nav = useNavigate();
@@ -24,12 +25,16 @@ function SuperTickets() {
 
   const getUserTickets = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/allTickets?userId=${id}`);
+      const response = await axios.get(`http://localhost:3001/users/allTickets?userId=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Incluye el token en los encabezados
+        },
+      });
       setTickets(response.data.tickets || []);
     } catch (error) {
       console.error("Error fetching user tickets:", error);
     }
-  }, [id]);
+  }, [id, token]);
 
   useEffect(() => {
     const fetchData = async () => {
