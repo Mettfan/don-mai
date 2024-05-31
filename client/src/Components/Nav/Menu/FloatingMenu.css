@@ -1,31 +1,72 @@
-.menuContainer{
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 4;
-    display: flex;
-    justify-content: center;
-    width: 25%;
-    padding: 5px;
-    background-color: #f0c024;
-    flex-direction: column;
+.menuContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 10%;
+  padding: 10px;
+  background-color: #ffd449;
+  flex-direction: column;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0 10px 10px 0;
 }
-.closeMenuButton{
-    width: 20%;
-    height: 90%;
-    padding: 5px;
+
+.closeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
-.closeButtonContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+
+.closeMenuButton {
+  width: 20%;
+  height: 100%;
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #8a0202;
+  transition: color 0.2s;
 }
-.menuTitle{
-    position: relative;
-    right: 50%;
+
+.closeMenuButton:hover {
+  color: #ff1803;
 }
-@media (max-width: 400px ) {
-    .menuContainer{
-        width: 100%;
-    }
+
+.menuTitle {
+  color: #8a0202;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+}
+
+.menuLink {
+  display: block;
+  text-decoration: none;
+  background-color: #8a0202;
+  color: #ffd449;
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.menuLink:hover,
+.menuLink.active {
+  background-color: #ffd449;
+  color: #8a0202;
+}
+
+@media (max-width: 400px) {
+  .menuContainer {
+    width: 100%;
+    border-radius: 0;
+  }
 }

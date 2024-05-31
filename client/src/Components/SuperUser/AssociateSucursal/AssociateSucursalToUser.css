@@ -1,11 +1,56 @@
-.associateSucursalToUserFormContainer{
-    display: flex;
-    width: 100%;
-    background-color: rgb(215, 101, 35);
-    justify-content: center;
+.associateSucursalFormContainer {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgb(215, 101, 35);
+  min-height: 100vh;
 }
-.associateSucursalToUserFormGroupContainer{
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
+
+.associateSucursalForm {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.associateSucursalFormGroupContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.associateSucursalFormGroupContainer label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.associateSucursalFormGroupContainer input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.associateSucursalFormGroupContainer input:focus {
+  border: 1px solid #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.associateButton {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.associateButton:hover {
+  background-color: #0056b3;
 }

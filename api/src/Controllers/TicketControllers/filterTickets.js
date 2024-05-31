@@ -1,38 +1,34 @@
 const { Ticket } = require("../../db.js");
 
 const filterTickets = async (req, res, next) => {
+  const { filter, value } = req.query;
 
-    let { filter, value } = req.query
+  console.log(req.query);
+  let respuesta = null;
 
-    console.log(req.query);
-    let respuesta = null
-
-    if(filter){
-        Ticket.findAll( {where: { [filter]: value } } ).then( (tickets) => {
-        respuesta = tickets
-        if(respuesta !== null){
-            res.send(respuesta)
-
-        }
-        else{
-            res.send({message: 'No hay Tickets con esos parámetros'})
-        }
-        
-    })
-    .catch(error => {
+  if (filter && value) {
+    try {
+      const tickets = await Ticket.findAll({ where: { [filter]: value } });
+      if (tickets.length > 0) {
+        res.send(tickets);
+      } else {
+        res.status(404).send({ message: "No hay Tickets con esos parámetros" });
+      }
+    } catch (error) {
       console.log(error);
-      res.send(error)
-    })
-
+      res.status(500).send({ error: "Ocurrió un error al buscar los tickets" });
+    }
+  } else {
+    try {
+      const tickets = await Ticket.findAll();
+      res.send(tickets);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .send({ error: "Ocurrió un error al obtener los tickets" });
+    }
   }
-  else{
-    Ticket.findAll().then(ticket => {
-      console.log(ticket);
-      res.send(ticket)
-    })
-  }
-
- 
 };
 
 module.exports = filterTickets;

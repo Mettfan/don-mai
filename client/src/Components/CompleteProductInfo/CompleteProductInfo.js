@@ -41,7 +41,8 @@ function CompleteProductInfo() {
     useEffect(() => {
         if(params?.attribute){
             setTimeout(() => {
-                document.getElementById(params?.attribute + 'Complete').click()
+                document.getElementById(params?.attribute + 'Complete')
+                //.click()
                 console.log(params?.attribute);
 
             }, 2000)

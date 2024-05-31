@@ -1,47 +1,93 @@
-.ticketsName{
-    font-size: x-small;
+.ticketsName {
+  font-size: x-small;
 }
-.ticketsProducts{
-    font-size: x-small;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFD449;
-}
-.ticketsTotal{
 
+.ticketsProducts {
+  font-size: x-small;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 }
-.ticketsImage{
-    width: 40mm;
-}
-.ticketProductContainer{
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    background-color: #FFD449;
-    color: black;
-}
-.ticketTable{
-    /* display: flex;
-    justify-content: center; */
-}
-.ticketContainer{
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
-    background-color: #FFD449;
-}
-.ticketDetailContainer{
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center; */
 
+.ticketsTotal {
 }
-.ticketsProductRow{
-    font-size: xx-small;
+
+.ticketsImage {
+  width: 40mm;
 }
-.ticketTableTitles{
-    font-size: small;
+
+.ticketProductContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  background-color: white;
+  color: black;
+}
+
+.ticketTable {
+  width: 100%;
+  margin: auto;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.ticketTableTitles {
+  font-size: small;
+  background-color: white;
+  color: black;
+  text-align: left;
+  border-bottom: 2px solid black;
+}
+
+.ticketsProductRow {
+  font-size: xx-small;
+  border-bottom: 1px solid black;
+}
+
+.totalTicket {
+  padding: 5px;
+  margin-top: 10px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+.ticketContainer {
+  background-color: white;
+}
+
+.ticketDetailContainer {
+  display: flex;
+  height: 50%;
+  margin: 50px auto;
+  background-color: white;
+  width: 80%;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  flex-direction: column;
+}
+
+.changeStatusButton {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.changeStatusButton:hover {
+  background-color: #0056b3;
+}
+
+.printComponentButton {
+  margin-top: 10px;
 }

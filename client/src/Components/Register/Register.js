@@ -63,65 +63,64 @@ function Register() {
   };
 
   return (
-    <>
-      <div className="registerContainer">
-        <h1>Regístrate</h1>
-
-        <form
-          className="formContainer"
-          onSubmit={(e) => {
-            handleRegisterSubmit(e);
-          }}
-        >
-          <div className="inputGroup">
-            <label>Nombre</label>
-            <input
-              required
-              name="name"
-              onChange={(e) => handleOnChange(e)}
-              maxLength={100}
-            />
-          </div>
-          <div className="inputGroup">
-            <label>Edad</label>
-            <input
-              required
-              name="age"
-              type={"number"}
-              min="1"
-              onChange={(e) => handleOnChange(e)}
-            />
-          </div>
-          <div className="inputGroup">
-            <label>E-mail</label>
-            <input required name="email" onChange={(e) => handleOnChange(e)} />
-          </div>
-          <div className="inputGroup">
-            <label>Contraseña</label>
-            <input
-              required
-              name="password"
-              type={"password"}
-              onChange={(e) => handleOnChange(e)}
-              maxLength={100}
-            />
-          </div>
-          <div className="inputGroup">
-            <label>Confirmar Contraseña</label>
-            <input
-              required
-              name="confirmPassword"
-              type={"password"}
-              maxLength={100}
-              onChange={(e) => handleOnChange(e)}
-            />
-          </div>
-          {error && <p className="errorMessage">{error}</p>}
-          <Link to="/Login">Ya tienes una cuenta? Inicia sesión</Link>
-          <button className="registerButton">Register</button>
-        </form>
-      </div>
-    </>
+    <div className="registerContainer">
+      <h1>Regístrate</h1>
+      <form
+        className="registerFormContainer"
+        onSubmit={(e) => {
+          handleRegisterSubmit(e);
+        }}
+      >
+        <div className="registerInputGroup">
+          <label>Nombre</label>
+          <input
+            required
+            name="name"
+            onChange={(e) => handleOnChange(e)}
+            maxLength={100}
+          />
+        </div>
+        <div className="registerInputGroup">
+          <label>Edad</label>
+          <input
+            required
+            name="age"
+            type={"number"}
+            min="1"
+            onChange={(e) => handleOnChange(e)}
+          />
+        </div>
+        <div className="registerInputGroup">
+          <label>E-mail</label>
+          <input required name="email" onChange={(e) => handleOnChange(e)} />
+        </div>
+        <div className="registerInputGroup">
+          <label>Contraseña</label>
+          <input
+            required
+            name="password"
+            type={"password"}
+            onChange={(e) => handleOnChange(e)}
+            maxLength={100}
+          />
+        </div>
+        <div className="registerInputGroup">
+          <label>Confirmar Contraseña</label>
+          <input
+            required
+            name="confirmPassword"
+            type={"password"}
+            maxLength={100}
+            onChange={(e) => handleOnChange(e)}
+          />
+        </div>
+        {error && <p className="registerErrorMessage">{error}</p>}
+        <Link to="/Login" className="registerLink">
+          ¿Ya tienes una cuenta? Inicia sesión
+        </Link>
+        <button className="registerButton">Registrar</button>
+      </form>
+    </div>
   );
 }
 

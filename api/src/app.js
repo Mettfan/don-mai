@@ -3,6 +3,7 @@ const userRoutes = require('./routes/user')
 const sucursalRoutes = require('./routes/sucursal')
 const ticketRoutes = require('./routes/ticket')
 const analyticRoutes = require('./routes/analytic')
+const mercadoPagoRoute = require('./routes/mercadopago')
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -36,6 +37,7 @@ server.use('/', userRoutes);
 server.use('/', sucursalRoutes);
 server.use('/', ticketRoutes);
 server.use('/', analyticRoutes);
+server.use('/', mercadoPagoRoute);
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars

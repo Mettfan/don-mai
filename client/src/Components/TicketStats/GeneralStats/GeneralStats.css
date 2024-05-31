@@ -1,9 +1,63 @@
-.generalStatsIncomeandOutcome{
-    position: relative;    
-    bottom: 10vh;
+.generalStatsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffd449;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  width: 90%;
+  margin: auto;
 }
-.generalStatsContainer{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+
+.switchButtonContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.switchButton {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.switchButton:hover {
+  background-color: #0056b3;
+}
+
+.topInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100px;
+}
+
+.generalStatsIncomeandOutcome {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.investTypeButton {
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.investTypeButton:hover {
+  background-color: #218838;
 }

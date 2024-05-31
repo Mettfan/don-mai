@@ -1,173 +1,139 @@
-import React from "react";
-import { useState } from "react";
-import { useSelector  } from "react-redux/es/exports";
-import * as XLSX from 'xlsx'
+import React, { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as XLSX from "xlsx";
 import Barcode from "react-barcode";
-import './Convert.css'
-import { addProducts } from "../../redux/actions/productActions";
-import { useDispatch } from "react-redux";
+import "./Convert.css";
 import { PDFExport } from "@progress/kendo-react-pdf";
-import { postProduct } from "../../features/products/productSlicetest";
-import CreateProduct from "../CreateProduct/CreateProduct";
 import Cookies from "universal-cookie";
-// import { JsonToExcel } from "react-json-to-excel"
-// import {fs} from 'fs';
-// import { Readable } from 'stream';
-// XLSX.set_fs(fs);
-// XLSX.stream.set_readable(Readable);
-export function downloadExcel (data, titulo = 'Respaldo')  {
-    //download Excel es una funcion que nos permite descargar un archivo en formato excel a partir de datos entregados
-    const fileName = titulo;
+import { postProduct } from "../../features/products/productSlicetest";
 
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, titulo);
+export function downloadExcel(data, titulo = "Respaldo") {
+  const fileName = titulo;
 
-    XLSX.writeFile(wb, fileName + '.xlsx');
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, titulo);
+
+  XLSX.writeFile(wb, fileName + ".xlsx");
+}
+
+export default function Convert() {
+  const pdf = useRef();
+  const dispatch = useDispatch();
+  const cookie = new Cookies();
+  const user = useSelector((state) => state.user) || cookie.get("user");
+  const [state, setState] = useState({
+    productos: null,
+    li: 0,
+    ls: 9,
+  });
+
+  const productos = state.productos;
+  const li = state.li;
+  const ls = state.ls;
+
+  const readExcel = (file) => {
+    const promise = new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(file);
+      fileReader.onload = (e) => {
+        const bufferArray = e.target.result;
+        const wb = XLSX.read(bufferArray, { type: "buffer" });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws);
+        resolve(data);
+      };
+      fileReader.onerror = (error) => reject(error);
+    });
+
+    promise.then((d) => {
+      setState({ ...state, productos: d });
+    });
   };
-export const readExcel = (file) => {
-    const promise  = new Promise( ( resolve, reject ) => {
-        const fileReader = new FileReader()
-        fileReader.readAsArrayBuffer(file)
-        fileReader.onload = (e) =>{
-            const bufferArray = e.target.result
-            const wb = XLSX.read( bufferArray , { type: 'buffer'});
-            const wsname = wb.SheetNames[0]
-            const ws = wb.Sheets[wsname]
-            const data = XLSX.utils.sheet_to_json(ws)
-            resolve(data)
-        } 
-        fileReader.onerror = ( error ) => {
-            reject(error)
-        }
-    })
-    return promise
-}
-export default function Convert () {
-    let pdf = React.createRef()
-    let dispatch = useDispatch()
-    let cookie = new Cookies()
-    let user = useSelector(state => state.user) || cookie.get('user')
-    let selectedFile;
-    let [ state, setState ] = useState({
-        productos: null,
-        li: 0,
-        ls: 9,
-        status: useSelector( status => status)
-    })
-    let status = state.status
-    let productos = state.productos
-    let li = state.li
-    let ls = state.ls
-    const readExcel =(file) => {
-        const promise  = new Promise( ( resolve, reject ) => {
-            const fileReader = new FileReader()
-            fileReader.readAsArrayBuffer(file)
-            fileReader.onload = (e) =>{
-                const bufferArray = e.target.result
-                const wb = XLSX.read( bufferArray , { type: 'buffer'});
-                const wsname = wb.SheetNames[0]
-                const ws = wb.Sheets[wsname]
-                const data = XLSX.utils.sheet_to_json(ws)
-                resolve(data)
-            } 
-            fileReader.onerror = ( error ) => {
-                reject(error)
-            }
-        })
-        promise.then((d) => {
-            console.log(d);
-            setState({...state, productos: d})
 
-            
-            
-        })
+  const inputOnChange = (e) => {
+    const selectedFile = e.target.files[0];
+    readExcel(selectedFile);
+  };
 
+  const saveAsPDF = () => {
+    if (pdf.current) {
+      pdf.current.save();
     }
-    function saveProducts(){
-        if (productos){
-            saveAsPDF()
-        }
-        
-    }
-    function uploadProducts(){
-        if(productos){
-            dispatch(postProduct({products: productos, userId: user?.id}))
-            console.log(status);
-            
-        }
-    }
-    function nextPage(){
-        ls < productos?.length && setState({...state, li: state.li + 9, ls: state.ls + 9})
-    }
-    
-    function previousPage(){
-        li > 0 && setState({...state, li: state.li - 9, ls: state.ls - 9})
-    }
-    
-    
-    function inputOnChange (e){
-        console.log(e.target.files[0]);
-        selectedFile = e.target.files[0];
-        readExcel(e.target.files[0])
-    }
+  };
 
-    function saveAsPDF() {
-        if (!pdf.current){
-            return
-        }
-        pdf.current.save()
+  const saveProducts = () => {
+    if (productos) {
+      saveAsPDF();
     }
+  };
 
+  const uploadProducts = () => {
+    if (productos) {
+      dispatch(postProduct({ products: productos, userId: user?.id }));
+    }
+  };
 
-    return ( <> 
-        {
-            // !productos && <div>
-            //     <button onClick={ () => downloadExcel([{"wawa": "añeñe", "quita": "bomba"}])}>Crear Copia de Base </button>
-            // </div>
-        }
-      
-        <input onChange={(e) => inputOnChange(e)} type="file" id = 'hoja' accept= ".xls, .xlsx"></input>
-        {productos && <div>
-            <button onClick={ () => saveProducts()}>Guardar Productos y Etiquetar</button>
-            <button onClick={ () => uploadProducts()}>Subir Productos</button>
-        </div>}
-        <PDFExport fileName = 'barcodes.pdf' paperSize = 'A4' margin={'0cm'} ref= {pdf}>
+  const nextPage = () => {
+    ls < productos?.length &&
+      setState({ ...state, li: state.li + 9, ls: state.ls + 9 });
+  };
 
-            {
-                <div className="products">
-                    {/* { status && JSON.stringify(status)} */}
+  const previousPage = () => {
+    li > 0 && setState({ ...state, li: state.li - 9, ls: state.ls - 9 });
+  };
 
-                    {productos && productos?.slice(li, ls)?.map( (producto) => {
-                        return (<div className="productContainer">
-        
-                            <div>
-                                <div>
-                                    <Barcode 
-                                        value = {producto.Código} 
-                                        width = {3} 
-                                        height = {100}
-                                    />
-                                </div>
-                                {producto.Producto + ' > '}
-                                {producto["P. Venta"]}
-                            </div>
-                            <div> 
-                                -
-                            </div>
-        
-                        </div>)
-                    })}
+  return (
+    <div className="convertContainer">
+      <h2>Convertir y Subir Productos</h2>
+      <input
+        onChange={(e) => inputOnChange(e)}
+        type="file"
+        id="hoja"
+        accept=".xls, .xlsx"
+        className="convertInput"
+      />
+      {productos && (
+        <div className="convertButtonWrapper">
+          <button onClick={() => saveProducts()} className="convertButton">
+            Guardar Productos y Etiquetar
+          </button>
+          <button onClick={() => uploadProducts()} className="convertButton">
+            Subir Productos
+          </button>
+        </div>
+      )}
+      <PDFExport
+        fileName="barcodes.pdf"
+        paperSize="A4"
+        margin={"0cm"}
+        ref={pdf}
+      >
+        {productos && (
+          <div className="productsWrapper">
+            {productos.slice(li, ls).map((producto) => (
+              <div className="productContainer" key={producto.Código}>
+                <div>
+                  <Barcode value={producto.Código} width={3} height={100} />
                 </div>
-            }
-        </PDFExport>
-        {
-            productos && 
-            <div>
-                <button onClick={() => previousPage()} className='buttonPrevious'>Previous</button>
-                <button onClick={() => nextPage()} className='buttonNext'>Next</button>
-            </div>
-        }
-    </>)
+                {producto.Producto + " > "}
+                {producto["P. Venta"]}
+              </div>
+            ))}
+          </div>
+        )}
+      </PDFExport>
+      {productos && (
+        <div className="convertPagination">
+          <button onClick={() => previousPage()} className="convertNavButton">
+            Anterior
+          </button>
+          <button onClick={() => nextPage()} className="convertNavButton">
+            Siguiente
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
-

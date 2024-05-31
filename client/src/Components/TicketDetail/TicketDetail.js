@@ -10,7 +10,7 @@ import Cookies from "universal-cookie";
 import PrintComponent from "../TicketHandler/PrintComponent.js/PrintComponent";
 import "./TicketDetail.css";
 import printerPng from "../../Assets/printer.png";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import ConfirmationModal from "../EditModal/EditModal";
 
 function TicketDetail() {
   let params = useParams();
@@ -86,6 +86,7 @@ function TicketDetail() {
           <ReturnToTickets></ReturnToTickets>
         )}
         <button
+          className="changeStatusButton"
           onClick={(e) => {
             e.stopPropagation();
             setTicketId(ticket.id);
