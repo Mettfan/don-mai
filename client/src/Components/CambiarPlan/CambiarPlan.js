@@ -6,8 +6,19 @@ import "./CambiarPlan.css";
 
 const Planes = [
   // { id: 1, nombre: "Plan Básico", precio: "10.00" },
-  { id: 2, name: "basic" , nombre: "Plan Basico", precio: "20.00" },
-  { id: 3, name: "premium" , nombre: "Plan Premium", precio: "30.00" },
+  { id: 2, name: "basic", nombre: "Plan Basico", precio: "20.00" },
+  {
+    id: 3,
+    name: "premium",
+    nombre: "Plan Premium",
+    precio: "30.00",
+  },
+  {
+    id: 4,
+    name: "extraProducts",
+    nombre: "Más Productos",
+    precio: "5.00",
+  }, // Nuevo plan para más productos
 ];
 
 //PARA QUE FUNCINE EN LA CUENTA REAL, SE CAMBIA EL INITMERCADOPAGO DE AQUI ABAJO
@@ -18,6 +29,7 @@ const CambiarPlan = (userId) => {
   });
   const [modalVisible, setModalVisible] = useState(false);
   const [preferenceId, setPreferenceId] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   const abrirModal = () => {
     setModalVisible(true);
@@ -26,13 +38,14 @@ const CambiarPlan = (userId) => {
 
   const createPreference = async (plan) => {
     try {
+      console.log(parseInt(quantity), "?");
       const response = await axios.post(
         "http://localhost:3001/pago/create_preference",
         {
-          title: plan.name,
-          quantity: 1,
+          title: plan.nombre,
+          quantity: plan.name === "extraProducts" ? parseInt(quantity) : 1,
           price: plan.precio,
-          userId: userId,
+          userId: userId.userId,  
         }
       );
       const { id } = response.data;
@@ -40,7 +53,7 @@ const CambiarPlan = (userId) => {
     } catch (error) {
       console.log("Error al crear preferencia", error);
     }
-  };
+  };  
 
   const handleBuy = async (plan) => {
     const id = await createPreference(plan);
@@ -72,7 +85,23 @@ const CambiarPlan = (userId) => {
             {Planes.map((plan) => (
               <div key={plan.id} className={`planCard ${plan.estilo}`}>
                 <h3>{plan.nombre}</h3>
-                <p>Precio: ${plan.precio}</p>
+                {plan.name === "extraProducts" ? (
+                  <p>Precio: ${plan.precio * quantity}</p>
+                ) : (
+                  <p>Precio: ${plan.precio}</p>
+                )}
+                {plan.name === "extraProducts" && (
+                  <div>
+                    <label htmlFor="quantity">Cantidad:</label>
+                    <input
+                      type="number"
+                      id="quantity"
+                      min="1"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                  </div>
+                )}
                 <button className="payButton" onClick={() => handleBuy(plan)}>
                   Pagar con Mercado Pago
                 </button>

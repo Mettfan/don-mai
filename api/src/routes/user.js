@@ -9,7 +9,7 @@ const authenticate = require("../Middleware/auth");
 
 const router = express.Router();
 
-router.put("/users", authenticate, putUser);
+router.put("/users", putUser);
 router.post("/users", postUser);
 router.get("/users", getUser);
 router.get("/users/getAllUsers", getAllUsers);

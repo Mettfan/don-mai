@@ -17,7 +17,15 @@ function SuperUserDashboard(props) {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [editError, setEditError] = useState("");
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterByEmail, setFilterByEmail] = useState("");
+  const [filterByPrivileges, setFilterByPrivileges] = useState("");
+  const [filterByAge, setFilterByAge] = useState("");
+  const [ uniqueNames, setUniqueNames] = useState([]);
+  const [uniqueEmails, setUniqueEmails] = useState([]);
+  const [uniquePrivileges, setUniquePrivileges] = useState([]);
+  const [uniqueAges, setUniqueAges] = useState([]);
 
   useEffect(() => {
     if (!user) {
@@ -37,7 +45,20 @@ function SuperUserDashboard(props) {
 
         if (response.data && !response.data.error) {
           setUsers(response.data);
-          console.log(response.data);
+          console.log(response.data, "!!!!!!!!");
+
+          // Extraer opciones únicas para los filtros
+          const names = [...new Set(response.data.map((user) => user.name))];
+          const emails = [...new Set(response.data.map((user) => user.email))];
+          const privileges = [
+            ...new Set(response.data.map((user) => user.privileges)),
+          ];
+          const ages = [...new Set(response.data.map((user) => user.age))];
+
+          setUniqueNames(names);
+          setUniqueEmails(emails);
+          setUniquePrivileges(privileges);
+          setUniqueAges(ages);
         } else if (response.data.error) {
           console.error("Error:", response.data.error);
         }
@@ -47,10 +68,13 @@ function SuperUserDashboard(props) {
     };
 
     getAllUsers();
+    console.log(uniqueEmails, "??????");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const handleEditClick = (user) => {
-    setEditingUser({ ...user, confirmPassword: user.password });
+    // Eliminar el hash de la contraseña y establecer confirmPassword en blanco
+    setEditingUser({ ...user, newPassword: "", confirmPassword: "" });
   };
 
   const handleUserEdit = async (e) => {
@@ -60,7 +84,7 @@ function SuperUserDashboard(props) {
       setEditError("El correo electrónico no es válido");
       return;
     }
-    if (editingUser.password !== editingUser.confirmPassword) {
+    if (editingUser.newPassword !== editingUser.confirmPassword) {
       setEditError("Las contraseñas no coinciden");
       return;
     }
@@ -86,6 +110,32 @@ function SuperUserDashboard(props) {
     setEditError("");
   };
 
+  const normalizeText = (text) => {
+    return text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  };
+
+  const filterUsers = (user) => {
+    const normalizedSearchTerm = normalizeText(searchTerm);
+    const normalizedName = normalizeText(user.name);
+    const normalizedEmail = normalizeText(user.email);
+    // const normalizedPrivileges = normalizeText(user.privileges);
+    // const normalizedAge = user.age.toString();
+
+    const matchesSearchTerm =
+      normalizedName.includes(normalizedSearchTerm) ||
+      normalizedEmail.includes(normalizedSearchTerm);
+
+    const matchesEmail = !filterByEmail || user.email === filterByEmail;
+    const matchesPrivileges =
+      !filterByPrivileges || user.privileges === filterByPrivileges;
+    const matchesAge = !filterByAge || user.age.toString() === filterByAge;
+
+    return matchesSearchTerm && matchesEmail && matchesPrivileges && matchesAge;
+  };
+
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -93,9 +143,11 @@ function SuperUserDashboard(props) {
     try {
       const response = await axios.delete(
         `http://localhost:3001/deleteUser/${id}`,
-       { headers: {
-          Authorization: `Bearer ${token}`,
-        },}
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       alert(response.data.message);
       window.location.reload();
@@ -104,16 +156,64 @@ function SuperUserDashboard(props) {
     }
   };
 
+  const filteredUsers = users.filter(filterUsers);
+
   return (
     <div className="super-user-dashboard">
       <h1>Super User Dashboard</h1>
       <button onClick={() => setOpen(true)}>Crear usuario</button>
-      <Modal  isOpen={open}>
+      <Modal isOpen={open}>
         <button onClick={() => setOpen(false)}>x</button>
         <CrearUser></CrearUser>
       </Modal>
+      <div className="search-filters-dashboard">
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input-dashboard"
+        />
+        <select
+          value={filterByEmail}
+          onChange={(e) => setFilterByEmail(e.target.value)}
+          className="select-filter-dashboard"
+        >
+          <option value="">Filtrar por email</option>
+          {uniqueEmails.map((email) => (
+            <option key={email} value={email}>
+              {email}
+            </option>
+          ))}
+        </select>
+        <select
+          value={filterByPrivileges}
+          onChange={(e) => setFilterByPrivileges(e.target.value)}
+          className="select-filter-dashboard"
+        >
+          <option value="">Filtrar por privilegios</option>
+          {uniquePrivileges.map((privilege) => (
+            <option key={privilege} value={privilege}>
+              {privilege}
+            </option>
+          ))}
+        </select>
+        <select
+          value={filterByAge}
+          onChange={(e) => setFilterByAge(e.target.value)}
+          className="select-filter-dashboard"
+        >
+          <option value="">Filtrar por edad</option>
+          {uniqueAges.map((age) => (
+            <option key={age} value={age}>
+              {age}
+            </option>
+          ))}
+        </select>
+      </div>
+      <h2>Total de usuarios: {filteredUsers.length}</h2>
       <ul>
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <div key={user.id} className="user-card">
             {editingUser && editingUser.id === user.id ? (
               <form onSubmit={handleUserEdit} className="edit-form">
@@ -189,11 +289,11 @@ function SuperUserDashboard(props) {
                   <label>Contraseña:</label>
                   <input
                     type="password"
-                    value={editingUser.password}
+                    value={editingUser.newPassword}
                     onChange={(e) =>
                       setEditingUser({
                         ...editingUser,
-                        password: e.target.value,
+                        newPassword: e.target.value,
                       })
                     }
                   />
@@ -212,51 +312,23 @@ function SuperUserDashboard(props) {
                   />
                 </div>
                 {editError && <p style={{ color: "red" }}>{editError}</p>}
+                <button type="submit">Guardar cambios</button>
                 <button type="button" onClick={handleCancelEdit}>
-                  Descartar
+                  Cancelar
                 </button>
-                <button type="submit">Guardar</button>
               </form>
             ) : (
               <>
-                <h2>Detalles del Usuario: {user.name}</h2>
-                {/* <img src={user.image} alt="profile" className="profile-image" /> */}
-                <p>
-                  <strong>Email:</strong> {user.email}
-                </p>
-                <p>
-                  <strong>Edad:</strong> {user.age || "No especificado"}
-                </p>
-                <p>
-                  <strong>Compras:</strong> {user.bought || "Ninguna"}
-                </p>
-                <p>
-                  <strong>Teléfono:</strong> {user.phone || "No especificado"}
-                </p>
-                <p>
-                  <strong>Privilegios:</strong> {user.privileges}
-                </p>
-                <p>
-                  <strong>Cuenta Deshabilitada:</strong>{" "}
-                  {user.disabled ? "Sí" : "No"}
-                </p>
-                <p>
-                  <strong>Creado el:</strong>{" "}
-                  {new Date(user.createdAt).toLocaleDateString()}
-                </p>
-                <p>
-                  <strong>Última actualización:</strong>{" "}
-                  {new Date(user.updatedAt).toLocaleDateString()}
-                </p>
-                <button onClick={() => handleEditClick(user)}>Editar</button>
+                <h3>Nombre: {user.name}</h3>
+                <p>Email: {user.email}</p>
+                <p>Edad: {user.age}</p>
+                <p>Teléfono: {user.phone}</p>
+                <p>Privilegios: {user.privileges}</p>
+                <p>Deshabilitado: {user.disabled ? "Sí" : "No"}</p>
                 <Link to={`/SuperCatalog/${user.id}`}>Productos</Link>
                 <Link to={`/SuperTickets/${user.id}`}>Tickets</Link>
-                <button
-                  className="borrarUsuario"
-                  onClick={() => handleDelete(user.id)}
-                >
-                  Borrar
-                </button>
+                <button onClick={() => handleEditClick(user)}>Editar</button>
+                <button onClick={() => handleDelete(user.id)}>Eliminar</button>
               </>
             )}
           </div>

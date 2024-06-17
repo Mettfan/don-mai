@@ -2,21 +2,32 @@ const { User } = require("../../db.js");
 const bcrypt = require("bcrypt");
 
 const putUser = async (req, res, next) => {
-  const { editingUser, userId, newStatus } = req.body;
-console.log(editingUser, userId, newStatus, "?????????");
+  const { editingUser, userId, newStatus, additionalProducts } = req.body;
+  console.log(editingUser, userId, newStatus, additionalProducts, "?????????");
   try {
-    if (userId && newStatus) {
-      const result = await User.update(
-        { privileges: newStatus },
-        { where: { id: userId } }
-      );
+    if (userId) {
+      const user = await User.findOne({ where: { id: userId } });
 
-      if (result[0] === 1) {
-        const updatedUser = await User.findOne({ where: { id: userId } });
-        res.status(200).send(updatedUser);
-      } else {
-        res.status(404).send({ message: "User not found." });
+      if (!user) {
+        return res.status(404).send({ message: "User not found." });
       }
+
+      // Suma los productos adicionales al atributo `bought`
+      
+      if (additionalProducts) {
+        if(user.bought === null) {
+          user.bought = additionalProducts;
+        } else {
+          user.bought += additionalProducts;
+        }
+      }
+
+      if (newStatus) {
+        user.privileges = newStatus;
+      }
+console.log(additionalProducts, user, user.bought, "???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????");
+      await user.save();
+      res.status(200).send(user);
     } else {
       const user = await User.findOne({ where: { id: editingUser.id } });
 
@@ -52,7 +63,10 @@ console.log(editingUser, userId, newStatus, "?????????");
       }
 
       if (editingUser.newPassword) {
-        const isPasswordSame = await bcrypt.compare(editingUser.newPassword, user.password);
+        const isPasswordSame = await bcrypt.compare(
+          editingUser.newPassword,
+          user.password
+        );
         if (!isPasswordSame) {
           updates.password = await bcrypt.hash(editingUser.newPassword, 10);
         }
@@ -67,7 +81,9 @@ console.log(editingUser, userId, newStatus, "?????????");
       });
 
       if (result[0] === 1) {
-        const updatedUser = await User.findOne({ where: { id: editingUser.id } });
+        const updatedUser = await User.findOne({
+          where: { id: editingUser.id },
+        });
         res.status(200).send(updatedUser);
       } else {
         res.status(404).send({ message: "User not found." });

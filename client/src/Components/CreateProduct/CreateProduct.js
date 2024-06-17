@@ -4,14 +4,14 @@ import {
   getMyProducts,
   postProduct,
 } from "../../features/products/productSlicetest";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import "./CreateProduct.css";
 
 function CreateProduct() {
   let cookie = new Cookies();
   let user = cookie.get("user");
-  let nav = useNavigate();
+  // let nav = useNavigate();
   let [state, setState] = useState({
     product: {
       Producto: "",
@@ -31,6 +31,7 @@ function CreateProduct() {
       Departamento,
     } = state.product;
     setIsFormValid(Producto && Código && PVenta && Departamento);
+    getMyProducts({ userId: user.id })
   }, [state]);
 
   const handleInputChange = (e) => {
@@ -52,13 +53,13 @@ function CreateProduct() {
       });
     });
 
-    await promise
-      .then((result) => {
-        dispatch(getMyProducts({ userId: userId }));
-      })
-      .then(() => {
-        nav("/catalog");
-      });
+    await promise.then(alert("Creado")).then(window.location.reload())
+      // .then((result) => {
+      //   dispatch(getMyProducts({ userId: userId }));
+      // })
+      // .then(() => {
+      //   nav("/catalog");
+      // });
       // alert("Creado")
       // window.location.reload()
   };

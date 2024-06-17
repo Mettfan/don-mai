@@ -80,3 +80,21 @@
     background-color: #c82333;
   }
   
+  .search-filters-dashboard {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .search-input-dashboard {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .select-filter-dashboard {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+  }

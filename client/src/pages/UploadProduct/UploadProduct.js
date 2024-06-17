@@ -1,37 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Convert from "../../Components/Convert/Convert";
 import CreateProduct from "../../Components/CreateProduct/CreateProduct";
 import Cookies from "universal-cookie";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { fetchAllProducts as fetchProducts } from "../../features/products/productSlicetest";
+import { getMyProducts } from "../../features/products/productSlicetest";
 import "./UploadProduct.css";
 
 function UploadProduct() {
+  let dispatch = useDispatch();
   let cookie = new Cookies();
   let user = useSelector((state) => state.user) || cookie.get("user");
   let userProducts = useSelector((state) => state.products.userProducts);
   let nav = useNavigate();
 
-  const getProductLimit = (privileges) => {
-    switch (privileges) {
-      case "Plan Premium":
-      case "premium":
-        return 1000;
-      case "basic":
-        return 100;
-      case "usuario":
-        return 7;
-      default:
-        return 0;
+  useEffect(() => {
+    if (user?.id) {
+      getUserProducts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let getUserProducts = () => {
+    dispatch(getMyProducts({ userId: user.id }));
   };
 
-  const productLimit = getProductLimit(user?.privileges);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  // Solo realiza la verificación cuando los productos estén cargados
+  const productLimit = user?.bought || 0;
   const canCreateProduct = userProducts && userProducts.length < productLimit;
+
+  console.log(user, "!!!", userProducts);
 
   return (
     <>
-      {user?.privileges ? (
+      {user ? (
         <div className="uploadProductContainer">
           <div className="toolWrapper">
             {canCreateProduct ? (
@@ -42,7 +49,7 @@ function UploadProduct() {
               </>
             ) : (
               <h1 className="uploadTitle">
-                Has alcanzado el límite de productos para tu plan
+                Has alcanzado el límite de productos que puedes crear
               </h1>
             )}
           </div>

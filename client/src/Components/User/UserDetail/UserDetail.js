@@ -19,6 +19,8 @@ function UserDetail(props) {
   const [editingUser, setEditingUser] = useState({});
   const [error, setError] = useState();
   const [user, setUser] = useState(props.user || cookie.get("user"));
+  const token = cookie.get("token");
+  console.log(user);
 
   useEffect(() => {
     if (!user) {
@@ -31,6 +33,10 @@ function UserDetail(props) {
           params: {
             filter: "email",
             value: user.email,
+            password: user.password
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -138,6 +144,7 @@ function UserDetail(props) {
             {user.phone ? <div>{user.phone}</div> : null}
           </div>
           <div className="userInfo">Privileges: {user.privileges}</div>
+          <div className="userInfo">Productos disponibles: {user.bought}</div>
           <div className="userInfo">User ID: {user.id}</div>
           <button onClick={openOrCloseModal} className="editButton">
             Editar

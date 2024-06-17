@@ -13,6 +13,7 @@ const postUser = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
+    user.bought = 30;
 
     const newUser = await User.create(user);
     res.status(201).json({ user: newUser });
