@@ -323,6 +323,7 @@ function SuperUserDashboard(props) {
                 <p>Email: {user.email}</p>
                 <p>Edad: {user.age}</p>
                 <p>Teléfono: {user.phone}</p>
+                <p>Productos disponibles: {user.bought}</p>
                 <p>Privilegios: {user.privileges}</p>
                 <p>Deshabilitado: {user.disabled ? "Sí" : "No"}</p>
                 <Link to={`/SuperCatalog/${user.id}`}>Productos</Link>
