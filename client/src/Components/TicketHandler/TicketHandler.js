@@ -14,7 +14,8 @@ function TicketHandler() {
     if (String(currentURL.href)?.slice(-1) === "?") {
       nav("/tickets");
     }
-  }, [currentURL, nav]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

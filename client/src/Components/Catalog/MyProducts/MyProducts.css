@@ -83,6 +83,7 @@
 
 .deleteButton {
   position: absolute;
+  display: flex;
   top: 5px;
   right: 5px;
   background-color: red;
@@ -93,6 +94,8 @@
   height: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
+  justify-content: center;
+  align-items: center;
 }
 
 .deleteButton:hover {

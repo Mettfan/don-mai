@@ -138,7 +138,7 @@
   }
 
   .homeCarrousel {
-    height: 600px;
+    height: auto; /* Cambiado de 600px a auto para que se ajuste automáticamente */
     position: relative;
     left: 0;
   }

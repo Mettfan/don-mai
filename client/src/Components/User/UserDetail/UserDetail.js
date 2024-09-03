@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { editOneUser, fetchOneUser } from "../../../features/users/userSlice";
+import { editOneUser } from "../../../features/users/userSlice";
 import "./UserDetail.css";
 import LOGODONMAY from "../../../Assets/LOGODONMAY.png";
 import Modal from "react-modal";
@@ -12,17 +12,18 @@ import axios from "axios";
 function UserDetail(props) {
   let cookie = new Cookies();
   let dispatch = useDispatch();
-  let [imageUrl, setImageUrl] = useState(LOGODONMAY);
+  let [imageUrl] = useState(LOGODONMAY);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalError, setModalError] = useState(true);
   const [modalValues, setModalValues] = useState({});
   const [editingUser, setEditingUser] = useState({});
   const [error, setError] = useState();
   const [user, setUser] = useState(props.user || cookie.get("user"));
+  const token = cookie.get("token");
+  console.log(user);
 
   useEffect(() => {
     if (!user) {
-      // Redirect to login or handle accordingly
       console.log("No user data available, please login");
       return;
     }
@@ -32,7 +33,10 @@ function UserDetail(props) {
           params: {
             filter: "email",
             value: user.email,
-            password: user.password, // Not recommended to handle passwords like this
+            password: user.password
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -48,12 +52,12 @@ function UserDetail(props) {
     };
 
     fetchUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeModalInput = useCallback(
     (e) => {
       const { name, value } = e.target;
-
       setEditingUser((prev) => ({ ...prev, [name]: value }));
     },
     [setEditingUser]
@@ -64,9 +68,8 @@ function UserDetail(props) {
       modalValues.name === editingUser.name &&
       modalValues.email === editingUser.email &&
       modalValues.phone === editingUser.phone &&
-      modalValues.password &&
-      editingUser.password &&
-      modalValues.password === editingUser.password
+      (!editingUser.newPassword ||
+        editingUser.newPassword === modalValues.password)
     ) {
       setModalError(true);
     } else {
@@ -77,9 +80,12 @@ function UserDetail(props) {
   let nav = useNavigate();
   let handleOnLogOut = () => {
     cookie.remove("user");
+    cookie.remove("token"); // Elimina el token de las cookies
+    delete axios.defaults.headers.common["Authorization"]; // Elimina el token de las cabeceras de axios
     nav("/");
     window.location.reload();
   };
+
   const openOrCloseModal = () => {
     if (!modalIsOpen) {
       setModalValues(user);
@@ -96,29 +102,33 @@ function UserDetail(props) {
       setError("El correo electrónico no es válido");
       return;
     }
-    if (editingUser.password !== editingUser.confirmPassword) {
-      setError("Las contraseñas no coinciden");
-      return;
+    if (editingUser.newPassword && editingUser.confirmNewPassword) {
+      if (editingUser.newPassword !== editingUser.confirmNewPassword) {
+        setError("Las contraseñas no coinciden");
+        return;
+      }
     }
-    delete editingUser.confirmPassword;
 
-    dispatch(editOneUser({ editingUser })).then((response) => {
+    // Crear un objeto para enviar solo los campos que han cambiado
+    const updatedFields = {};
+    if (editingUser.name !== user.name) updatedFields.name = editingUser.name;
+    if (editingUser.email !== user.email)
+      updatedFields.email = editingUser.email;
+    if (editingUser.phone !== user.phone)
+      updatedFields.phone = editingUser.phone;
+    if (editingUser.newPassword)
+      updatedFields.newPassword = editingUser.newPassword;
+    updatedFields.id = user.id;
+
+    dispatch(editOneUser({ editingUser: updatedFields })).then((response) => {
       if (response.error) {
         alert(response.error);
       } else {
         alert("Usuario editado correctamente");
         setModalIsOpen(false);
-        dispatch(
-          fetchOneUser({
-            filter: "email",
-            value: editingUser.email,
-            password: editingUser.password,
-          })
-        ).then((response) => {
-          if (!response.error) {
-            setUser(response.payload);
-          }
-        });
+        setUser(response.payload); // Actualizar el estado del usuario con la respuesta
+        cookie.set("user", JSON.stringify(response.payload), { path: "/" }); // Actualizar la cookie
+        window.location.reload();
       }
     });
   };
@@ -134,6 +144,7 @@ function UserDetail(props) {
             {user.phone ? <div>{user.phone}</div> : null}
           </div>
           <div className="userInfo">Privileges: {user.privileges}</div>
+          <div className="userInfo">Productos disponibles: {user.bought}</div>
           <div className="userInfo">User ID: {user.id}</div>
           <button onClick={openOrCloseModal} className="editButton">
             Editar
@@ -199,23 +210,23 @@ function UserDetail(props) {
           <p>Quieres cambiar tu clave?</p>
           <input
             className="inputField"
-            name="password"
-            value={editingUser.password}
+            name="newPassword"
+            value={editingUser.newPassword || ""}
             onChange={handleChangeModalInput}
             type="password"
-            autoComplete="password"
+            autoComplete="new-password"
+            placeholder="Nueva contraseña"
             maxLength={100}
-            required
           ></input>
           <input
             className="inputField"
-            name="confirmPassword"
-            value={editingUser.confirmPassword}
-            maxLength={100}
+            name="confirmNewPassword"
+            value={editingUser.confirmNewPassword || ""}
             onChange={handleChangeModalInput}
             type="password"
-            autoComplete="password"
-            required
+            autoComplete="new-password"
+            placeholder="Confirmar nueva contraseña"
+            maxLength={100}
           ></input>
           {error && <p>{error}</p>}
           {modalError ? (

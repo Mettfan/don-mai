@@ -1,0 +1,100 @@
+.super-user-dashboard {
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  
+  .user-card {
+    padding: 20px;
+    display: flex;
+    /* width: 50%; */
+    max-width: 500px;
+    border: 1px solid #ccc;
+    margin: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+
+  }
+
+  .user-card a {
+    margin: 5px;
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .edit-form div {
+    margin-bottom: 10px;
+  }
+  
+  .edit-form label {
+    margin-right: 10px;
+  }
+  
+  .edit-form input[type="text"],
+  .edit-form input[type="email"],
+  .edit-form input[type="number"],
+  .edit-form input[type="password"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .edit-form button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .edit-form button[type="button"] {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .edit-form button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .edit-form button[type="button"]:hover {
+    background-color: #c82333;
+  }
+  
+  .search-filters-dashboard {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .search-input-dashboard {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .select-filter-dashboard {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+  }

@@ -62,6 +62,7 @@ export default function Home() {
     if (user?.id) {
       getUserProducts();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let getUserProducts = () => {

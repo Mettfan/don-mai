@@ -26,14 +26,21 @@ const fetchUser = createAsyncThunk(
   "users/fetchUser",
   async ({ filter, value, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/users/?filter=${filter}&value=${value}&password=${password}`
-      );
+      const response = await axios.get("http://localhost:3001/users", {
+        params: { filter, value, password },
+      });
+
       if (response.data.error) {
         return rejectWithValue(response.data.error);
       }
-      return response.data;
+
+      cookie.set("token", response.data.token, { path: "/" });
+      return response.data.user;
     } catch (error) {
+      console.error(
+        "Error en fetchUser:",
+        error.response ? error.response.data : "Error desconocido"
+      );
       return rejectWithValue(
         error.response && error.response.data
           ? error.response.data.error
@@ -47,8 +54,11 @@ const editUser = createAsyncThunk(
   "users/editUser",
   async ({ editingUser }, { rejectWithValue }) => {
     try {
-      const response = await axios.put("http://localhost:3001/users", {
-        editingUser,
+      const token = cookie.get("token");
+      const response = await axios.put("http://localhost:3001/users", { editingUser }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       return response.data;
     } catch (error) {

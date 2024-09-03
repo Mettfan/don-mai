@@ -8,6 +8,8 @@ import {
   fetchTickets,
 } from "../../features/products/productSlicetest";
 
+//PERMISOS LINEA 140
+
 export function Search() {
   let nav = useNavigate();
   let dispatch = useDispatch();
@@ -16,7 +18,7 @@ export function Search() {
 
   let tickets = useSelector((state) => state.products.tickets.response);
   let userTickets = useSelector((state) => state.products.userTickets);
-  console.log(userTickets);
+  console.log(userTickets, user);
 
   const getAllTickets = useCallback(() => {
     console.log(tickets);
@@ -134,9 +136,18 @@ export function Search() {
     return <div>Cargando tickets...</div>;
   }
 
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  //IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!
+  const filteredTickets =
+    user?.privileges === "usuario"
+      ? tickets.filter((ticket) => new Date(ticket.createdAt) >= oneWeekAgo)
+      : tickets;
+
   const sortedTickets = sortByDate
-    ? sortTicketsByDate(tickets, sortByDate)
-    : sortTicketsByPrice(tickets, sortByPrice);
+    ? sortTicketsByDate(filteredTickets, sortByDate)
+    : sortTicketsByPrice(filteredTickets, sortByPrice);
   const sortedAndFilteredTickets = sortedTickets?.filter(filterTickets);
 
   return (
@@ -179,6 +190,9 @@ export function Search() {
           </select>
         </div>
       </div>
+      {user?.privileges === "usuario" ? (
+        <p>Para ver todos los tickets debes mejorar tu plan</p>
+      ) : null}
       <div className="ticket-list">
         {sortedAndFilteredTickets?.map((ticket) => (
           <div

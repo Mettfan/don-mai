@@ -20,6 +20,12 @@
   margin: 5px;
   font-size: small;
   font-weight: 500;
+  transition: all 0.3s ease;
+}
+.productBg.selectedProduct {
+  border: 5px solid #c5269b;
+  /* background-color: #dd8501; */
+  transform: scale(1.05);
 }
 .productInfoContainer {
   background-color: rgb(240, 181, 100);
@@ -116,7 +122,7 @@
 }
 
 button.verFaltante {
-  background-color: #4caf50; 
+  background-color: #4caf50;
   color: white;
   padding: 14px 20px;
   margin: 10px;
@@ -136,7 +142,7 @@ button.completeInfo {
 }
 
 button.editarProductos {
-  background-color: #f44336; 
+  background-color: #f44336;
   color: white;
   padding: 14px 20px;
   margin: 10px;
@@ -146,7 +152,7 @@ button.editarProductos {
 }
 
 .seleccionarTodos {
-  background-color: #555555; 
+  background-color: #555555;
   color: white;
   padding: 10px 15px;
   margin: 10px;

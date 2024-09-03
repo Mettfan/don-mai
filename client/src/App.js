@@ -32,6 +32,10 @@ import Faltante from "./pages/Faltante/Faltante";
 import Listado from "./pages/Listado/Listado";
 import Membership from "./Components/Membership/Membership";
 import Modal from "react-modal";
+import SuperUserDashboard from "./Components/SuperUserDashBoard/SuperUserDashBoard";
+import SuperCatalog from "./Components/SuperCatalog/SuperCatalog";
+import SuperTickets from "./Components/SuperTickets/SuperTickets";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute"; 
 
 Modal.setAppElement("#root");
 
@@ -58,30 +62,200 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/upload/product" element={<UploadProduct />} />
-        <Route path="/delivery" element={<Delivery />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/stats" element={<Stats />} />
-        <Route path="/printest" element={<Example />} />
-        <Route path="/update/price" element={<UpdatePrice />} />
-        <Route path="/calculator" element={<Calculator />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/superuser" element={<SuperUser />} /> {/* 1 */}
-        <Route path="/profile" element={<UserDetail />} />
-        <Route path="/tickets" element={<TicketHandler />} />
-        <Route path="/tickets/:id" element={<TicketDetail />} />
-        <Route path="/tickets/stats" element={<TicketStats />} />{/* hasta aca llegue */}
-        <Route path="/tickets/backup" element={<RestoreTickets />} />
-        <Route path="/sucursal/:id" element={<Sucursal />} />
-        <Route path="/sucursal/" element={<UserSucursal />} />
-        <Route path="/onlist/" element={<Faltante />} />
-        <Route path="/print/list" element={<Listado />} />
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/upload/product"
+          element={
+            <ProtectedRoute>
+              <UploadProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/delivery"
+          element={
+            <ProtectedRoute>
+              <Delivery />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/catalog/"
+          element={
+            <ProtectedRoute>
+              <Catalog />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <Search />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/stats"
+          element={
+            <ProtectedRoute>
+              <Stats />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/printest"
+          element={
+            <ProtectedRoute>
+              <Example />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/update/price"
+          element={
+            <ProtectedRoute>
+              <UpdatePrice />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calculator"
+          element={
+            <ProtectedRoute>
+              <Calculator />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products/:id"
+          element={
+            <ProtectedRoute>
+              <ProductDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/superuser"
+          element={
+            <ProtectedRoute>
+              <SuperUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tickets"
+          element={
+            <ProtectedRoute>
+              <TicketHandler />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tickets/:id"
+          element={
+            <ProtectedRoute>
+              <TicketDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tickets/stats"
+          element={
+            <ProtectedRoute>
+              <TicketStats />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tickets/backup"
+          element={
+            <ProtectedRoute>
+              <RestoreTickets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sucursal/:id"
+          element={
+            <ProtectedRoute>
+              <Sucursal />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sucursal/"
+          element={
+            <ProtectedRoute>
+              <UserSucursal />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/onlist/"
+          element={
+            <ProtectedRoute>
+              <Faltante />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/print/list"
+          element={
+            <ProtectedRoute>
+              <Listado />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/DashBoard"
+          element={
+            <ProtectedRoute>
+              <SuperUserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/SuperCatalog/:id"
+          element={
+            <ProtectedRoute>
+              <SuperCatalog />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/SuperTickets/:id"
+          element={
+            <ProtectedRoute>
+              <SuperTickets />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/complete/product/:attribute"
-          element={<CompleteProductInfo />}
+          element={
+            <ProtectedRoute>
+              <CompleteProductInfo />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/membership" element={<Membership />} />
+        <Route
+          path="/membership"
+          element={
+            <ProtectedRoute>
+              <Membership />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );

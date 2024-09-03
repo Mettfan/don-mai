@@ -1,77 +1,44 @@
 .editContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
-  width: 80%;
+  width: 100%;
+  max-width: 600px; 
   background-color: #ffffff;
-  padding: 20px;
+  padding: 10px; 
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
   margin-bottom: 20px;
-}
-
-.nextProductToCheck {
-  display: flex;
-  position: absolute;
-  right: 3%;
-  top: 75px;
-  width: 50px;
-  height: 50px;
-  font-size: xx-large;
-  background-color: #007bff;
-  border: none;
-  border-radius: 50%;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.nextProductToCheck:hover {
-  background-color: #0056b3;
-}
-
-.previousProductToCheck {
-  display: flex;
-  position: fixed;
-  left: 3%;
-  top: 75px;
-  width: 50px;
-  height: 50px;
-  font-size: xx-large;
-  background-color: #007bff;
-  border: none;
-  border-radius: 50%;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.previousProductToCheck:hover {
-  background-color: #0056b3;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
 }
 
 .editProductContainer {
-  padding: 20px;
-  font-weight: 600;
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 10px; 
+  overflow: hidden; 
 }
 
 .inputFormEdit {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  width: 100%;
+  max-width: 300px; 
+  margin: 5px 0; 
 }
 
 .inputFormEdit input {
-  padding: 10px;
+  padding: 8px; 
   margin: 5px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 12px;
   background-color: #ffffff;
   transition: all 0.3s ease;
 }
@@ -87,18 +54,22 @@
   border: none;
   border-radius: 5px;
   color: #ffffff;
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 8px 16px; 
+  margin: 5px 0; 
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px; 
 }
 
 .buttonSubmit:hover {
   background-color: #19692c;
 }
 
-.catalogContainer {
-  margin-top: 20px;
+.productDetails {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

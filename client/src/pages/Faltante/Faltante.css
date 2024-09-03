@@ -1,36 +1,83 @@
-.faltanteContainer{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
+/* bodyF {
+  margin-top: 50px;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+} */
+
+header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
 }
-.faltanteInfoContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    /* background-color: blue; */
-    /* width: 40%; */
-    height: 100px;
-    padding: 3px;
-    margin: 5px;
+
+.faltanteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
 }
-.faltanteProductContainer{
-    /* width: 10%; */
-    display: flex;
-    margin: 3px;
-    background-color: white;
-    
+
+.faltanteInfoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+  text-align: center;
 }
-.faltanteName{
-    display: flex;
+
+.faltanteProductContainer {
+  margin: 10px;
 }
-.faltanteQuantity{
-    background-color: black;
-    color: white;
-    padding: 2px;
+
+.faltanteName {
+  font-weight: bold;
+  cursor: pointer;
+  color: #007bff;
+  margin-bottom: 5px;
+}
+
+.faltanteName:hover {
+  text-decoration: underline;
+}
+
+.faltanteQuantity {
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.filterSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filterGroup {
+  margin-bottom: 10px;
+}
+
+.filterGroup input[type="range"] {
+  width: 100%;
+  max-width: 300px;
+}
+
+.filterGroup select {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
 }
