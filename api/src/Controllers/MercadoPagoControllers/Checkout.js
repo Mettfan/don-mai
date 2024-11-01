@@ -3,7 +3,7 @@ const mercadopago = require('mercadopago');
 // Configura el access token
 //Este token es de una cuenta de prueba "APP_USR-8387528273949156-050114-aae811b7d6a6e9c9920c0daac533a5e7-1792400513" MODIFICAR
 mercadopago.configure({
-  access_token: 'APP_USR-8387528273949156-050114-aae811b7d6a6e9c9920c0daac533a5e7-1792400513'
+  access_token: proccess.env.MP_TOKEN
 });
 
 const paymentSuccess = async (req, res) => {
