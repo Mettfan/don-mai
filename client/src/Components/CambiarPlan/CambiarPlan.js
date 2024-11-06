@@ -24,7 +24,7 @@ const Planes = [
 //PARA QUE FUNCINE EN LA CUENTA REAL, SE CAMBIA EL INITMERCADOPAGO DE AQUI ABAJO
 // Y TAMBIEN EN EL BACKEND EN "Checkout.js" SE CAMBIA EL access_token
 const CambiarPlan = (userId) => {
-  initMercadoPago("APP_USR-041091cb-c047-490d-8fe3-86aff471f4d5", {
+  initMercadoPago("APP_USR-a406c57e-2d86-43bc-948e-aab078ef8fc6", {
     locale: "es-MX",
   });
   const [modalVisible, setModalVisible] = useState(false);
