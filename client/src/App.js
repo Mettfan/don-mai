@@ -53,9 +53,12 @@ function App() {
       dispatch(fetchOneSucursal({ filter: "UserId", value: user.id }));
     }
   }, [dispatch, user]);
+  let focusSearch = () => {
+    document.getElementById('inputSearch').focus()
 
+  }
   return (
-    <div className="App">
+    <div onClick={() => focusSearch()} className="App">
       <Nav />
       <Routes>
         <Route path="/" element={<Landing />} />

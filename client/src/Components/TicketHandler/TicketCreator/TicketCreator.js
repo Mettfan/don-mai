@@ -84,7 +84,10 @@ function TicketCreator(props) {
         }, 1000)
     }, [] )
     
-  
+
+    let f9 = () => {
+        togglePaymentCheckout()
+    } 
     function handleDeleteProduct(product){
         dispatch(removeProductFromGlobalTicket(product))
     }
@@ -338,7 +341,7 @@ function TicketCreator(props) {
             </div>
     {/* SLIDER */}
         <label className="switch">
-            {JSON.stringify(state.searchValue)}
+            {/* {JSON.stringify(state.searchValue)} */}
             <input id='switch' onClick={() => handleSwitch()} type="checkbox"/>
             <span className="slider"></span>
         </label>
@@ -354,9 +357,9 @@ function TicketCreator(props) {
                 <div>
                     <label className='formTicketCreatorTotal'>{ state.total && ('Total: ' +( '$' + state?.total) || '$0')}</label>
                 </div>
-                <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {submitTicket(state.ticketType)}}>CREAR TICKET</button>
                 {productThumb()}
             </form>
+            <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {f9()}}>CREAR TICKET</button>
             <h1 className='fixedTotal'>{state.total}</h1>
             {state.granelTab  && <div> 
                 <button className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                

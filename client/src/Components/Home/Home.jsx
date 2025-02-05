@@ -138,23 +138,7 @@ export default function Home() {
       </div>
 
       {/* Productos */}
-      <div className="promosHome">
-        {products
-          .slice(0, 10)
-          ?.reverse()
-          .map((recentProduct) => (
-            <div className="promoContainer" key={recentProduct?.id}>
-              <h3>
-                {recentProduct?.Producto ||
-                  recentProduct?.Código ||
-                  "Sin Nombre"}
-              </h3>
-              <h4>{`${recentProduct["P. Venta"]}`}</h4>
-              {/* <img alt="" className="promoImg" src={recentProduct?.image || LOGODONMAY}></img> */}
-            </div>
-          ))}
-      </div>
-
+    
       {/* Departamentos */}
       <div className="homeDepartmentsWrapper">
         {userProducts && Departamentos()}

@@ -71,10 +71,14 @@
 }
 
 .calendarMiniApp {
+  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  max-width: 300px;
+  /* z-index: 3; */
+
 }
 
 .ticketMiniApp {

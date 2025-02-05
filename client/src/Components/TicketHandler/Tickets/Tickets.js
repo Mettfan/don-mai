@@ -60,7 +60,7 @@ function Tickets() {
 
   const date = new Date();
   let [ticketDate, setTicketDate] = useState(date);
-  let [showCalendar, setShowCalendar] = useState(true);
+  let [showCalendar, setShowCalendar] = useState(false);
 
   function onDeleteTicket(id, user) {
     dispatch(destroyTicket(id, user?.email));
@@ -131,17 +131,27 @@ function Tickets() {
   let currentTickets = () =>
     filteredUserTickets
       ?.filter(
-        (ticket) =>
-          Number(ticket["createdAt"].split("T")[0].split("-")[1]) ===
-          ticketDate.getMonth() + 1
-      )
+        (ticket) =>{
+          let currentTicketDate = new Date(ticket["createdAt"]);
+          // Number(ticket["createdAt"].split("T")[0].split("-")[1]) ===
+          return (Number(currentTicketDate.toLocaleString().split(",")[0].split("/")[1]) ===
+          ticketDate.getMonth() + 1)
+      })
       ?.filter((ticket) => {
         let currentTicketDate = new Date(ticket["createdAt"]);
         return (
           Number(currentTicketDate.toLocaleString().split("/")[0]) ===
           ticketDate.getDate()
         );
-      });
+      })
+      ?.filter((ticket) => {
+        let currentTicketDate = new Date(ticket["createdAt"]);
+        return (
+          Number(currentTicketDate.toLocaleString().split(",")[0].split("/")[2]) ===
+          ticketDate.getFullYear()
+        )})
+      ;
+      
 
   let currentTicketsCards = () => {
     return currentTickets()
@@ -178,22 +188,24 @@ function Tickets() {
     <>
       <div className="ticketMiniApp">
         <div className="calendarMiniApp">
-          <h1>Seleccionar Fecha de Tickets</h1>
+          
+          {ticketDate.toLocaleString()}
           <div className="switchContainer">
             <label htmlFor="showCalendarSwitch">Mostrar Calendario</label>
             <Switch
               onChange={() => setShowCalendar(!showCalendar)}
               checked={showCalendar}
               id="showCalendarSwitch"
-            />
+              />
           </div>
-          {showCalendar && (
+          {showCalendar && (<div>
+            <h1>Seleccionar Fecha de Tickets</h1>
             <Calendar
-              onChange={setTicketDate}
-              value={ticketDate}
-              defaultView={"month"}
+            onChange={setTicketDate}
+            value={ticketDate}
+            defaultView={"month"}
             />
-          )}
+          </div>)}
           <div className="calendarTicketContainer">
             <div className="calendarTicket">
               <TicketCreator />
@@ -226,10 +238,10 @@ function Tickets() {
             </div>
           </div>
         </div>
+      </div>
         <div className="allTicketsContainer">
           {filteredUserTickets?.length && currentTicketsCards()}
         </div>
-      </div>
     </>
   );
 }
