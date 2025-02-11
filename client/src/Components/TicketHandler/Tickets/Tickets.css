@@ -1,3 +1,63 @@
+.ticketsLayout {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 20px;
+  grid-auto-rows: minmax(200px, auto);
+}
+.mostSoldContainer{
+  /* display: flex; */
+}
+.departamentProductsContainer{
+  display: flex;
+  justify-content: center;
+}
+.productInfo{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #59a3e5;
+  border: black 6px double ;
+  border-bottom-right-radius: 10px ;
+  border-top-left-radius: 10px ;
+}
+.productInfo:hover{
+  cursor: pointer;
+  background-color: #1087ff;
+}
+.allTicketsContainer{
+  grid-column: 2;
+  grid-row: 0;
+  display: flex;
+  /* background-color: red; */
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  /* background-color: red; */
+}
+.one {
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+.two {
+
+}
+.three {
+
+}
+.four {
+  grid-column: 3;
+  grid-row: 3;
+}
+.five {
+
+}
+.six {
+  grid-column: 3;
+  grid-row: 4;
+}
+
 .productTicketCard {
   background-color: #ffd449;
   color: white;
@@ -5,6 +65,46 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+}
+.mostSoldToday{
+position: fixed;
+top: 30%;
+right: 0;
+display: flex;
+flex-direction: column;
+  border: black solid 3px;
+  background-color: red;
+  /* grid-column: 1;
+  grid-row: -3; */
+}
+.mostSoldToday:hover{
+  cursor: pointer;
+  background-color: #d10000;
+}
+.mostSoldCard{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: blue dotted 1px;
+  background-color: rgb(113, 167, 255);
+}
+.mostSoldCard:hover{
+  background-color: #76baff;
+}
+.departmentProductContainer{
+  background-color: rgb(255, 255, 255);
+  border: black double 3px;
+  padding: 5px;
+}
+.productCard{
+  padding: 5px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  /* background-color: red; */
 }
 
 .ticketProducts {
@@ -63,11 +163,14 @@
   justify-content: center;
 }
 
-.allTicketsContainer {
+.favGroup {
   display: flex;
+  flex-direction: row;
+  grid-column: 2 ;
+  grid-row: 1 ;
   justify-content: center;
   width: 100%;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .calendarMiniApp {
@@ -84,6 +187,10 @@
 .ticketMiniApp {
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: row;
+  grid-column: 1;
+  grid-row: 1 / 3;
+
 }
 
 .entryTotal {
@@ -137,16 +244,27 @@
   font-weight: bold;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 800px) {
   .ticketsContainer {
     width: 60%;
   }
   .ticketMiniApp {
     display: flex;
+
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap;
+    grid-column: 1;
+    grid-row: 1 / 5; */
   }
+  .ticketsLayout{
+    display: flex;
+    flex-direction: column;
+  }
+  .favGroup{
+    flex-direction: column;
+  }
+
 }
 
 .react-calendar {

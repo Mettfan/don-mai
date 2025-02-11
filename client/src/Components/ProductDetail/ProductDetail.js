@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Barcode from "react-barcode";
 import {
+  editOneProduct,
   eraseProduct,
   fetchAllProducts,
   fetchOneProduct,
@@ -54,6 +55,20 @@ export default function ProductDetail() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  let toggleFav = (id, currentState) => {
+    console.log(currentState);
+    console.log(!currentState);
+    dispatch(
+            editOneProduct({
+              id: id,
+              findBy: "disabled",
+              infoUpdated: Boolean(!currentState),
+            })
+          ).then((response) => {
+            document.location.reload()
+            console.log(response);
+          })
+  }
 
   let product = {};
   if (userProducts && userProducts.length > 0) {
@@ -97,6 +112,11 @@ export default function ProductDetail() {
         <div className="productDetailItem">
           <span className="productDetailLabel">Estado:</span>
           <span className="productDetailValue">{product["description"]}</span>
+        </div>
+        <div className="productDetailItem">
+          <span className="productDetailLabel">Favorito:</span>
+          <span onClick={() => {toggleFav(product['id'], product['disabled'] )}}>favorito</span>
+          <span className="productDetailValue">{String(product["disabled"])}</span>
         </div>
         <div className="productDetailItem">
           <span className="productDetailLabel">Última Actualización:</span>

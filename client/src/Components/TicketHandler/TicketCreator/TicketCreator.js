@@ -25,7 +25,7 @@ function TicketCreator(props) {
     }, [])
     useEffect(() => {
         if(isCheckoutVisible === false){
-            document.getElementById('inputSearch').focus()
+            document.getElementById('inputSearch')?.focus()
 
         }
     }, [isCheckoutVisible])
@@ -58,16 +58,17 @@ function TicketCreator(props) {
         })})
     }, [productIndex])
     useEffect(() => {
-
-        document.getElementById('inputSearch').value = ''
+        let searchInput = document.getElementById('inputSearch')?.value
+        searchInput && (document.getElementById('inputSearch').value = '')
+        
         if(!state.granelTab){
-            document.getElementById('inputSearch').focus()
+            document.getElementById('inputSearch')?.focus()
             
         }
+  
 
     },[state.granelTab])
     useEffect(() => {
-        document.getElementById('inputSearch').focus()
         let ticketTotal = 0
         ticketProducts?.forEach((product) => {
             let price = product["P. Venta"]
@@ -132,6 +133,11 @@ function TicketCreator(props) {
                 matchList: []
             })
             state?.matchList?.length > 0 && setProductIndex(0)
+            ticketProducts.forEach((element, i) => {
+                if(element.id === product.id){
+                    setProductIndex(ticketProducts.length - i - 1)
+                }
+            });
 
         }
         else{
@@ -141,12 +147,13 @@ function TicketCreator(props) {
     function removeClicked(product){
         dispatch(removeProductFromGlobalTicket(product))
     }
-    let productCard = (product) => {
+    let productCard = (product, selected) => {
         return(<>
         <div className='productContainerTicketCreator'>
            { <span className='removeProductFromTicketCreator' onClick={() => {removeClicked(product)}}> - </span>}
-            <div onClick={() => productClicked(product)} className='productCardTicketCreatorContainer'> 
+            <div onClick={() => productClicked(product )} className='productCardTicketCreatorContainer'> 
                 <div className='productsCTCQuantity'>{(!(product?.Departamento === 'GRANEL') ? product['quantity'] : product['quantity'] + 'gr'  )}</div>
+                <div>{selected && '<'}</div>
                 <div>
                     <div className='productsCTCName'>{product['Producto']}</div>
                     <div className='productsCTCPrice'>{(!(product?.Departamento === 'GRANEL') ? product['P. Venta'] : product['P. Venta'] * 1000 )}</div>
@@ -348,12 +355,17 @@ function TicketCreator(props) {
         {JSON.stringify(date.toLocaleString())}
     {/*      */}
             <form onSubmit={(e) => handleAddProduct2Ticket(e) }>
-                <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
-                <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
+                {
+                    state.granelTab === false && <div>
+                        <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
+                        <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
+
+                    </div>
+                }
             </form>
             <form>
                 <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label>
-                {ticketProducts?.length && ticketProducts?.map( product => productCard(product) )?.reverse() || 'Agregue algunos productos!'}
+                {ticketProducts?.length && ticketProducts?.map( (product, index) => productCard(product, index === ticketProducts.length-productIndex-1?true:false) )?.reverse() || 'Agregue algunos productos!'}
                 <div>
                     <label className='formTicketCreatorTotal'>{ state.total && ('Total: ' +( '$' + state?.total) || '$0')}</label>
                 </div>
@@ -361,8 +373,8 @@ function TicketCreator(props) {
             </form>
             <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {f9()}}>CREAR TICKET</button>
             <h1 className='fixedTotal'>{state.total}</h1>
-            {state.granelTab  && <div> 
-                <button className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
+            {state.granelTab  && <div className='granelTabContainer'> 
+                <button id='closegt' className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
                 <GranelTab product={state.matchList[productIndex]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
                 
                 </div>}

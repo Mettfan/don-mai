@@ -142,8 +142,8 @@ export function Search() {
   //IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!
   const filteredTickets =
     user?.privileges === "usuario"
-      ? tickets.filter((ticket) => new Date(ticket.createdAt) >= oneWeekAgo)
-      : tickets;
+      ? userTickets.filter((ticket) => new Date(ticket.createdAt) >= oneWeekAgo)
+      : userTickets;
 
   const sortedTickets = sortByDate
     ? sortTicketsByDate(filteredTickets, sortByDate)
@@ -190,9 +190,9 @@ export function Search() {
           </select>
         </div>
       </div>
-      {user?.privileges === "usuario" ? (
+      {/* {user?.privileges === "usuario" ? (
         <p>Para ver todos los tickets debes mejorar tu plan</p>
-      ) : null}
+      ) : null} */}
       <div className="ticket-list">
         {sortedAndFilteredTickets?.map((ticket) => (
           <div
