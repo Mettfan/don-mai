@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #8a0202;
+  background-color: #2A3F5D;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
@@ -22,10 +22,16 @@
   height: 25px;
   cursor: pointer;
   margin-right: 10px;
+  
+}
+.menuIcon:hover {
+  padding: 2px;
+  filter: invert();
+  background-color: #2A3F5D;
 }
 
 .navLink {
-  color: #ffd449;
+  color: #E8DCCA;
   text-decoration: none;
   font-weight: bold;
   padding: 10px 15px;
@@ -36,7 +42,7 @@
 
 .navLink.active,
 .navLink:hover {
-  background-color: #ffd449;
+  background-color: #FFA07A;
   color: #8a0202;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
 }

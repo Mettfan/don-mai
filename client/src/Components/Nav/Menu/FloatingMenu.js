@@ -21,9 +21,12 @@ function FloatingMenu({ closeCallback }) {
       <NavLink className="menuLink" to="/update/price" onClick={closeCallback}>
         EDIT
       </NavLink>
-      <NavLink className="menuLink" to="/print/list" onClick={closeCallback}>
-        PRINT
+      <NavLink className="menuLink" to="/profile" onClick={closeCallback}>
+        PROFILE
       </NavLink>
+      {/* <NavLink className="menuLink" to="/print/list" onClick={closeCallback}>
+        PRINT
+      </NavLink> */}
     </div>
   );
 }

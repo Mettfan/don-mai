@@ -15,9 +15,24 @@ function Register() {
     confirmPassword: "",
     privileges: "usuario",
   });
+  let [terms, setTerms] = useState(false);
+  let [privacy, setPrivacy] = useState(false);
+  
 
   let [error, setError] = useState("");
+  let handleareTermsAccepted = (e) => {
 
+    setTerms(!terms)
+  }
+  let handlearePrivacyAccepted = (e) => {
+
+    setPrivacy(!privacy)
+  }
+
+
+  function openInNewTab(url) {
+    window.open(url, '_blank');
+  }
   let handleRegisterSubmit = (e) => {
     e.preventDefault && e.preventDefault();
 
@@ -41,7 +56,14 @@ function Register() {
       setError("Las contraseñas no coinciden");
       return;
     }
-
+    if (!terms){
+      setError('Acepta los Terminos y Condiciones')
+      return;
+    }
+    if (!privacy){
+      setError('Acepta el Aviso de Privacidad')
+      return;
+    }
     dispatch(createOneUser({ user })).then((response) => {
       if (response.error) {
         if (response.error.message.includes("400")) {
@@ -115,10 +137,23 @@ function Register() {
           />
         </div>
         {error && <p className="registerErrorMessage">{error}</p>}
+        <div className="termsContainer">
+
+          <div className={!terms?"termsContainerInactive":"termsContainerActive"}>
+            {<span> He Leído y acepto los <b className= {'link'}onClick={() => openInNewTab('/terms')}>Términos y Condiciones de Uso</b>.</span>}
+            <input value={ document.getElementById('areTermsAccepted') ? document.getElementById('areTermsAccepted') : false } id='areTermsAccepted' type='checkbox' name='areTermsAccepted' onChange={(e) => handleareTermsAccepted(e)}></input>
+          </div>
+          <div className={!privacy?"termsContainerInactive":"termsContainerActive"}>
+            {<span>He leído el <b className="link" onClick={() => openInNewTab('/privacy')}>Aviso de Privacidad</b>.</span>}
+            <input value={ document.getElementById('arePrivacyAccepted') ? document.getElementById('arePrivacyAccepted') : false } id='arePrivacyAccepted' type='checkbox' name='arePrivacyAccepted' onChange={(e) => handlearePrivacyAccepted(e)}></input>
+          </div>
+
+        </div>
+
         <Link to="/Login" className="registerLink">
           ¿Ya tienes una cuenta? Inicia sesión
         </Link>
-        <button className="registerButton">Registrar</button>
+        <button className="registerButton"  >Registrar</button>
       </form>
     </div>
   );

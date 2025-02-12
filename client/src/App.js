@@ -36,6 +36,8 @@ import SuperUserDashboard from "./Components/SuperUserDashBoard/SuperUserDashBoa
 import SuperCatalog from "./Components/SuperCatalog/SuperCatalog";
 import SuperTickets from "./Components/SuperTickets/SuperTickets";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute"; 
+import Privacy from "./Components/RegisterPreferences/Privacy";
+import Terms from "./Components/RegisterPreferences/Terms";
 
 Modal.setAppElement("#root");
 
@@ -257,6 +259,18 @@ function App() {
             <ProtectedRoute>
               <Membership />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+              <Privacy />
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+              <Terms />
           }
         />
       </Routes>

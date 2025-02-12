@@ -14,7 +14,7 @@
   left: 25%;
   background-color: burlywood ;
 }
-.fixedTotal{
+.fixedTotalLeft{
   position: fixed;
   padding: 8px;
   border: black dashed 5px;
@@ -22,8 +22,16 @@
   top: 40px;
   left: 20px;
 }
+.fixedTotalRight{
+  position: fixed;
+  padding: 8px;
+  border: black dashed 5px;
+  background-color: rgb(255, 255, 255);
+  top: 40px;
+  right: 20px;
+}
 .productCardTicketCreatorContainer{
-    background-color: #FFD449;
+    background-color: #E8DCCA;
     width: 100%;
     border: 1px groove black
 }
@@ -72,6 +80,11 @@
 }
 .ticketCreator{
     /* transform: scale(0.8, 0.8); */
+    background-color: #E8DCCA;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 30PX;
+    filter: drop-shadow(2px 2PX 2PX black);
 }
 /* The switch - the box around the slider */
 .switch {

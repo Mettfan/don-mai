@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import USER from "../../../Assets/user.png";
+
 import "./UserNav.css";
 
 function UserNav(props) {
@@ -20,12 +22,12 @@ function UserNav(props) {
   return (
     <div className="userNavThumb" onClick={onUserClick}>
       {user?.image ? (
-        <img alt="" className="userNavImage" src={user.image} />
+        <img alt="" className="userNavImage" src={USER} />
       ) : (
         <img
           alt="placeholder"
           className="userNavImage"
-          src="https://via.placeholder.com/50"
+          src={USER}
         />
       )}
       <div className="userNavName">{getDisplayName(user?.name)}</div>

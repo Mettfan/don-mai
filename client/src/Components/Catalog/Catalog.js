@@ -111,12 +111,12 @@ export default function Catalog(props) {
 
   const [filteredProducts, setFilteredProducts] = useState(productList);
 
-  useEffect(() => {
-    if (!productList.length) {
-      getAllProducts();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (!productList.length) {
+  //     getAllProducts();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     setFilteredProducts(productList);

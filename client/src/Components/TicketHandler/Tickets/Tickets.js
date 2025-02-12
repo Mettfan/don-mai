@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import TicketCreator from "../TicketCreator/TicketCreator";
 import Cookies from "universal-cookie";
 import GranelTab from "../../GranelTab/GranelTab";
+import Draggable from "react-draggable";
 
 function Tickets() {
   let nav = useNavigate();
@@ -22,7 +23,10 @@ function Tickets() {
   const date = new Date();
   let [ticketDate, setTicketDate] = useState(date);
   let [showCalendar, setShowCalendar] = useState(false);
-
+  let [showAnalytics, setShowAnalytics] = useState(false)
+  let toggleAnalytics = (currentState) => {
+    setShowAnalytics(!currentState)
+  }
 
   let dispatch = useDispatch();
   let [state, setState] = useState({
@@ -212,7 +216,7 @@ function Tickets() {
         ticketCounter += 1;
       }
     });
-    meanTicket = Math.floor(meanTicket / ticketCounter);
+    meanTicket = Math.floor(meanTicket / ticketCounter || 0);
     return [meanTicket, ticketCounter];
   }
 
@@ -269,7 +273,6 @@ function Tickets() {
     return (
       <>
         {extractDepartments(productos)
-          ?.slice(0, 10)
           ?.map((departament) => {
             let foundProducts = productos?.filter(
               (product) => product?.Departamento === departament
@@ -294,7 +297,7 @@ function Tickets() {
             let departamentSales = countSales()
             let departamentTotal = countTotal()
             return (
-              <div className="departamentContainer" key={departament}>
+              <div className="departamentAnalysisContainer" key={departament}>
                 <h3 className="departamentTitle">{departament}</h3>
                 <h4>
                   {'$: '}
@@ -307,13 +310,13 @@ function Tickets() {
                 </h4>
                 <div className="separatorLine"></div>
                 
-                <div className="departamentProductsContainer">
+                <div className="departmentProductsAnalysisContainer">
                   
                   {foundProducts?.map((foundProduct) => {
                     let productSale = (foundProduct['P. Venta'][0] === '$' ? foundProduct['P. Venta'].split('$')[1]:foundProduct['P. Venta'].split('$')[0]) * Number(foundProduct.sales)
                     
                     return(<div
-                      className="departmentProductContainer"
+                      className="departmentAnalysisProductContainer"
                       key={foundProduct?.id}
                     >
                       <h3>
@@ -362,24 +365,30 @@ function Tickets() {
             defaultView={"month"}
             />
           </div>)}
+            {/* <Draggable> */}
           <div className="calendarTicketContainer">
             <div className="calendarTicket">
               <TicketCreator/>
+              <button className="toggleAnalyticsButton" onClick={() => toggleAnalytics(showAnalytics)}></button>
               {currentTickets()?.length > 0 && (
-                <div>
-                  <div className="entryTotal">{calculateDaily("entry")}</div>
+                <div className={ showAnalytics ?"DayAnalysisContainerInactive":'DayAnalysisContainerActive'}>
+                  <div>
+                <h3>Day Balance</h3>
+                <h4>{calculateDaily("out") - calculateDaily("entry")}</h4>
+              </div>
                   <div className="meanEntry">
+                  <div className="entryTotal">{calculateDaily("entry")}</div>
                     <div>{String(calculateMeanTicket("entry")[1])}</div>
-                    <div>{"entry tickets con promedio de: "}</div>
+                    <div>{" Tickets de salida con promedio de: "}</div>
                     <div>
-                      {"$" + String(calculateMeanTicket("entry")[0]) ||
+                      { "$" + (String(calculateMeanTicket("entry")[0]) ) ||
                         "No hay Salida de Dinero"}
                     </div>
                   </div>
                   <div className="outTotal">{calculateDaily("out")}</div>
                   <div className="meanOut">
                     <div>{String(calculateMeanTicket("out")[1])}</div>
-                    <div>{"out tickets con promedio de: "}</div>
+                    <div>{" Tickets de venta con promedio de: "}</div>
                     <div>
                       {"$" + String(calculateMeanTicket("out")[0]) ||
                         "No hay Entrada de Dinero"}
@@ -387,12 +396,10 @@ function Tickets() {
                   </div>
                 </div>
               )}
-              <div>
-                <h3>Day Balance</h3>
-                <h4>{calculateDaily("out") - calculateDaily("entry")}</h4>
-              </div>
+              
             </div>
           </div>
+              {/* </Draggable> */}
         </div>
       </div>
           <div className="favGroup"> 

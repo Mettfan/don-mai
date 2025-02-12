@@ -26,6 +26,11 @@
   cursor: pointer;
   background-color: #1087ff;
 }
+.toggleAnalyticsButton{
+  position: fixed;
+  left: -25px;
+  top: 30px;
+}
 .allTicketsContainer{
   grid-column: 2;
   grid-row: 0;
@@ -73,25 +78,28 @@ right: 0;
 display: flex;
 flex-direction: column;
   border: black solid 3px;
-  background-color: red;
+  background-color: #E8DCCA;
   /* grid-column: 1;
   grid-row: -3; */
 }
 .mostSoldToday:hover{
   cursor: pointer;
-  background-color: #d10000;
+  background-color: #E8DCCA;
 }
 .mostSoldCard{
   width: 100%;
   display: flex;
   flex-direction: column;
   border: blue dotted 1px;
-  background-color: rgb(113, 167, 255);
+  background-color: #E8DCCA;
 }
 .mostSoldCard:hover{
   background-color: #76baff;
 }
-.departmentProductContainer{
+.departmentProductsAnalysisContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   background-color: rgb(255, 255, 255);
   border: black double 3px;
   padding: 5px;
@@ -106,7 +114,12 @@ flex-direction: column;
   flex-direction: column-reverse;
   /* background-color: red; */
 }
-
+.departamentAnalysisContainer{
+  padding: 10px;
+}
+.DayAnalysisContainerActive{
+  display: none;
+}
 .ticketProducts {
   width: 100%;
   border: solid black 3px;
@@ -243,7 +256,9 @@ flex-direction: column;
 .ticketCreatedAt {
   font-weight: bold;
 }
-
+.departmentAnalysisProductContainer{
+  border: black solid 1px;
+}
 @media (max-width: 800px) {
   .ticketsContainer {
     width: 60%;

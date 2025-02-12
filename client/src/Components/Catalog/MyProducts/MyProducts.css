@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(255, 230, 196);
+  background-color: #F5F5F5;
   padding: 20px;
   min-height: 100vh;
 }
@@ -37,7 +37,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(230, 138, 34);
+  background-color: #E8DCCA;
   border: 2px solid black;
   border-radius: 8px;
   padding: 10px;

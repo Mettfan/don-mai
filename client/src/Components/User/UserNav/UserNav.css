@@ -1,5 +1,6 @@
 .userNavThumb {
   display: flex;
+  /* background-color: #E8DCCA; */
   width: 80px;
   height: 20px;
   flex-direction: row;
@@ -11,13 +12,15 @@
   position: relative;
   border-radius: 10px;
   transition: all 0.3s ease;
+  width: 15%;
 }
 
 .userNavThumb:hover {
   color: black;
-  background-color: #ffd449;
+  background-color: #E8DCCA;
+  width: 20%;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
 }
 
 .userNavImage {
@@ -28,6 +31,7 @@
   border: 2px solid white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-right: 10px;
+  filter: invert();
 }
 
 .userNavThumb div {
@@ -52,5 +56,20 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@media (max-width: 800px) {
+  
+  .userNavThumb{
+    display: none;
+    background-color: red;
+  }
+  .userNavImage >img{
+    display: none;
+    background-color: red;
+  }
+  .userNavName{
+    display: none;
   }
 }

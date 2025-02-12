@@ -1,0 +1,10 @@
+.privacyContainer{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    top: 50px;
+    left: 5%;
+    width: 90%;
+
+}

@@ -9,12 +9,20 @@ import GranelTab from '../../GranelTab/GranelTab';
 import CheckoutTab from '../CheckoutTab/CheckoutTab';
 import { useReactToPrint } from 'react-to-print';
 import TicketForPrinting from './TicketForPrinting/TicketForPrinting';
+import Draggable from "react-draggable";
+
 function TicketCreator(props) {
     let [date, setDate] = useState(new Date()) 
     let [productIndex, setProductIndex] = useState(0)
     let cookie = new Cookies()
     let user = cookie.get('user')
+    let totalSide = cookie.get('totalSide')
     let dispatch = useDispatch()
+    let changeTotalSide = (currentSide) =>{
+        let resultSide =  currentSide === 'left' ? 'right' : 'left'
+        setState({...state, totalSide: resultSide})
+        cookie.set('totalSide', resultSide )
+    } 
     let ticketProducts = useSelector(state => state.products.ticketProducts)
     const allProducts = useSelector( state => state.products.products)
     const userProducts = useSelector( state => state.products.userProducts)
@@ -45,7 +53,8 @@ function TicketCreator(props) {
         total: 0,
         matchList: [],
         ticketType: 'out',
-        granelTab: false
+        granelTab: false,
+        totalSide: 'left'
     })
     useEffect(() => {
         setState({...state, matchList: state.matchList.map((product) => {
@@ -340,10 +349,14 @@ function TicketCreator(props) {
         console.log('ANTES DE IMPRESION');
     }
     return ( <>
-        {productIndex}
+        {/* {productIndex} */}
+        <h1  onClick={() => {changeTotalSide(state.totalSide)}} className= {totalSide === 'left' ? 'fixedTotalLeft':'fixedTotalRight'}>{state.total}</h1>
+        {JSON.stringify(date.toLocaleString())}
+        {/* <Draggable> */}
+            
         <div className='ticketCreator'>
             <div>
-                {state.ticketType === 'out' ?  'VENDER' : 'RECIBIR'}
+                {state.ticketType === 'out' ?  'VENDER PRODUCTOS' : 'RECIBIR PRODUCTOS'}
             
             </div>
     {/* SLIDER */}
@@ -352,7 +365,6 @@ function TicketCreator(props) {
             <input id='switch' onClick={() => handleSwitch()} type="checkbox"/>
             <span className="slider"></span>
         </label>
-        {JSON.stringify(date.toLocaleString())}
     {/*      */}
             <form onSubmit={(e) => handleAddProduct2Ticket(e) }>
                 {
@@ -364,7 +376,7 @@ function TicketCreator(props) {
                 }
             </form>
             <form>
-                <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label>
+                {/* <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label> */}
                 {ticketProducts?.length && ticketProducts?.map( (product, index) => productCard(product, index === ticketProducts.length-productIndex-1?true:false) )?.reverse() || 'Agregue algunos productos!'}
                 <div>
                     <label className='formTicketCreatorTotal'>{ state.total && ('Total: ' +( '$' + state?.total) || '$0')}</label>
@@ -372,7 +384,6 @@ function TicketCreator(props) {
                 {productThumb()}
             </form>
             <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {f9()}}>CREAR TICKET</button>
-            <h1 className='fixedTotal'>{state.total}</h1>
             {state.granelTab  && <div className='granelTabContainer'> 
                 <button id='closegt' className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
                 <GranelTab product={state.matchList[productIndex]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
@@ -389,6 +400,8 @@ function TicketCreator(props) {
                     >
                 </CheckoutTab></div>}
         </div>
+        {/* </Draggable> */}
+
     </> );
 }
 

@@ -6,9 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 10%;
+  width: 13%;
   padding: 10px;
-  background-color: #ffd449;
+  background-color: #FFA07A;
   flex-direction: column;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 0 10px 10px 0;
@@ -49,7 +49,7 @@
 .menuLink {
   display: block;
   text-decoration: none;
-  background-color: #8a0202;
+  background-color: #333333;
   color: #ffd449;
   margin: 10px 0;
   padding: 10px 15px;

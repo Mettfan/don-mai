@@ -26,9 +26,9 @@ function UploadProduct() {
     dispatch(getMyProducts({ userId: user.id }));
   };
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchProducts());
+  // }, [dispatch]);
 
   // Solo realiza la verificación cuando los productos estén cargados
   const productLimit = user?.bought || 0;
