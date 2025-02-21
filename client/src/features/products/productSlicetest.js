@@ -465,7 +465,7 @@ const decreaseStock = createAsyncThunk(
 );
 const makeTicket = createAsyncThunk(
   "products/ticketProducts",
-  ({ products, total, user, client, description, createdAt }) => {
+  ({ products, total, user, client, description, createdAt, status }) => {
     console.log(products, total, user, client, description, createdAt);
     return axios
       .post(`http://localhost:3001/Tickets`, {
@@ -475,6 +475,7 @@ const makeTicket = createAsyncThunk(
         client,
         description,
         createdAt,
+        status
       })
       .then((response) => response.data);
   }

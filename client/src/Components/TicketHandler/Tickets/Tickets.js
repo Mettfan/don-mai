@@ -406,8 +406,8 @@ function Tickets() {
               {userProducts?.filter(product => Boolean(product.disabled) === true && product.Departamento !=='GRANEL' ).map(product => {
                 return (<div className="productCard">
                   <div className="productInfo" onClick={() => {productClicked(product)}}> 
-                    <div>{product.Producto}</div>
-                    <div>{product['P. Venta']}</div>
+                    <div className="productName">{product.Producto}</div>
+                    <div className="productPrice">{product['P. Venta']}</div>
                     {/* {state.granelTab  && <div className='granelTabContainer'> 
                 <button  className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
                { state.granelTab && <GranelTab product={product} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './CheckoutTab.css'
 import PrintComponent from '../PrintComponent.js/PrintComponent';
 import Pagaré from '../../Pagaré/Pagaré';
-function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, closeCallback, Component}) {
+function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, closeCallback, Component, card, interest, recieved, given, onRecievedChange, onGivenChange}) {
     let [recibido, setRecibido] = useState(0)
     let [faltante, setFaltante] = useState(total)
     let [restante, setRestante] = useState(0)
@@ -16,6 +16,7 @@ function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, clos
             setFaltante(result)
             setRestante(0)
         }
+        onGivenChange(result)
     }, [total, recibido])
     useEffect(() => {
         document.getElementById('receiptValue').focus()
@@ -25,6 +26,7 @@ function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, clos
         if(!isNaN(e.target.value)){
             setRecibido(e.target.value)
         }
+        onRecievedChange(e.target.value)
     }
     function handleOnKeyDown(e){
         let keycode = e?.keyCode
@@ -49,7 +51,8 @@ function CheckoutTab({total, afterCheckoutCallback, beforeCheckoutCallback, clos
 
         <div className='checkoutTab'>
             <h1>TOTAL A PAGAR:</h1>
-            <h2>{total}</h2>       
+            {String(interest)}
+            <h2>{Number(interest) ===  0 ? total : ((Number(interest) * Number(total)) / 100 ) + Number(total)}</h2>       
             {/* <Pagaré name={'juan'} promised={16} tax={5} accumulated={169}  ></Pagaré> */}
             <input id = 'receiptValue' type='number' placeholder='RECIBIDO' onKeyDown={(e) => handleOnKeyDown(e) } onChange={(e) => handleOnInputChange(e) }></input>
             <div className='checkoutResultContainer'>

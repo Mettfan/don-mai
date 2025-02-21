@@ -37,6 +37,7 @@ function TicketCreator(props) {
 
         }
     }, [isCheckoutVisible])
+
     function togglePaymentCheckout(){
         if(isCheckoutVisible){
             setCheckout(false)
@@ -54,8 +55,37 @@ function TicketCreator(props) {
         matchList: [],
         ticketType: 'out',
         granelTab: false,
-        totalSide: 'left'
+        totalSide: 'left',
+        card: false,
+        interes:  0,
+        discount: 0,
+        recieved: 0,
+        given: 0
     })
+    useEffect(() => {
+        let i = document.getElementById('interestRate')?.value || 0
+        setInterest(Number(i))
+
+    }, [state.card])
+    let statusInfo = String(state.card) + ' ' + String(state.interes) + " " + String(state.discount) + " " + String(state.recieved) + " " + String(state.given) 
+    let setInterest = (value) =>{
+        setState({...state, interes: Number(value) || 0 })
+    }
+    let setDiscount = (value) =>{
+        setState({...state, discount: Number(value) || 0 })
+    }
+    let setRecieved = (value) =>{
+        setState({...state, recieved: Number(value) || 0 })
+    }
+    let setGiven = (value) =>{
+        setState({...state, given: Number(value) || 0 })
+    }
+    const handleInterestOnChange = (e)=> {
+        setInterest(e.target.value)
+    }
+    // const handleInterestOnChange = (e)=> {
+    //     setInterest(e.target.value)
+    // }
     useEffect(() => {
         setState({...state, matchList: state.matchList.map((product) => {
             if(product?.id == state.matchList[productIndex]?.id ){
@@ -221,7 +251,7 @@ function TicketCreator(props) {
             resolve('SOLD')
         })
         await promise.then((result) => {
-            dispatch(postTicket({products: ticketProducts, total: Number(state.total), user: user?.email, client: null, description: String(type), createdAt: JSON.stringify(date) }))
+            dispatch(postTicket({products: ticketProducts, total: Number(state.total), user: user?.email, client: null, description: String(type), createdAt: JSON.stringify(date), status: statusInfo}))
             console.log('posteado' , ticket );
             return 'posted'
         }).then((result) => {
@@ -348,12 +378,16 @@ function TicketCreator(props) {
     const handleOnBeforePrint = () => {
         console.log('ANTES DE IMPRESION');
     }
+    let handlecardPayment = (e) => {
+        setState({...state, card: !state.card})
+    }
     return ( <>
         {/* {productIndex} */}
+
         <h1  onClick={() => {changeTotalSide(state.totalSide)}} className= {totalSide === 'left' ? 'fixedTotalLeft':'fixedTotalRight'}>{state.total}</h1>
         {JSON.stringify(date.toLocaleString())}
         {/* <Draggable> */}
-            
+            {statusInfo}
         <div className='ticketCreator'>
             <div>
                 {state.ticketType === 'out' ?  'VENDER PRODUCTOS' : 'RECIBIR PRODUCTOS'}
@@ -391,12 +425,26 @@ function TicketCreator(props) {
                 </div>}
             
             {isCheckoutVisible && <div className='checkoutBoxContainer'> 
+                <input value={ document.getElementById('cardPayment') ? document.getElementById('cardPayment') : false } id='cardPayment' type='checkbox' name='cardPayment' onChange={(e) => handlecardPayment(e)}></input>
+                {String(state.card)}
+                {state.card && <div>
+
+                        <input onChange={(e) => {handleInterestOnChange(e)}} defaultValue={4.5} id='interestRate' type='number'></input>
+                    
+                    </div>}
                 <CheckoutTab 
                     total={state.total} 
                     afterCheckoutCallback={() => {document.location.reload()}} 
                     beforeCheckoutCallback={() => {submitTicket(state.ticketType)}} 
                     closeCallback={() => togglePaymentCheckout()} 
                     Component = {() => <TicketToPrint></TicketToPrint>} 
+                    card = {state.card}
+                    interest = {state.interes}
+                    discount = {state.discount}
+                    recieved = {state.recieved}
+                    given = {state.recieved}
+                    onRecievedChange = {(e) => setRecieved(e)}
+                    onGivenChange = {(e) => setGiven(e)}
                     >
                 </CheckoutTab></div>}
         </div>
