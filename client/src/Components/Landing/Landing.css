@@ -1,23 +1,63 @@
-.toolContainer:hover{
-    /* background-color: red; */
-    transform: scale(1.1, 1.1)  ;
-}
-.toolContainer{
-    background-color: transparent  ;
+.landingPage {
+    background-color: #F5F5F5;
+    /* background-color: #ffe283;  */
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+.toolContainer:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
+  
+  .toolContainer {
+    background-color: #ffffff;
     cursor: pointer;
-}
-.logsContainer{
+    margin: 15px;
+    margin-top: 30px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.191);
+    text-align: center;
+    width: 220px;
+  }
+  
+  .logsContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}
-.adverTitle{
+  }
+  
+  .adverTitle {
     display: flex;
     justify-content: flex-start;
-    /* background-color: blue; */
     position: relative;
     right: 30px;
     font-size: xx-large;
-
-}
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .Carrousel-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .Carrousel-title {
+    font-size: larger;
+    font-weight: bold;
+    color: var(--text-primary);
+  }
+  
+  /* Estilos para los íconos */
+  .icon {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    margin: 10px 0;
+  }
+  

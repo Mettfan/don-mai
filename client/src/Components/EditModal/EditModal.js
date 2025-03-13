@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./ConfirmationModal.css";
+import "./EditModal.css";
 
-function ConfirmationModal({
+function EditModal({
   isOpen,
   onClose,
   onConfirm,
@@ -90,4 +90,4 @@ function ConfirmationModal({
   );
 }
 
-export default ConfirmationModal;
+export default EditModal;

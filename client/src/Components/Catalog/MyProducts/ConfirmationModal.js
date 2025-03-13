@@ -1,21 +1,21 @@
 import React from "react";
-import "./ConfirmationModal.css"; // Estilos del modal
+import Modal from "react-modal";
+import "./ConfirmationModal.css";
 
 function ConfirmationModal({ isOpen, onClose, onConfirm, question }) {
   return (
-    <>
-      {isOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>{question}</h2>
-            <div className="modal-buttons">
-              <button className="Borrar" onClick={onConfirm}>Borrar</button>
-              <button className="Cancelar" onClick={onClose}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <Modal isOpen={isOpen} onRequestClose={onClose} className="modal-content">
+      <h2 className="modal-title">Confirmación</h2>
+      <p className="modal-question">{question}</p>
+      <div className="modal-buttons">
+        <button className="confirmButton" onClick={onConfirm}>
+          Confirmar
+        </button>
+        <button className="cancelButton" onClick={onClose}>
+          Cancelar
+        </button>
+      </div>
+    </Modal>
   );
 }
 

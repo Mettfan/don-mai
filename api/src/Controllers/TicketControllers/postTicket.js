@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, DataTypes } = require("sequelize");
 const { Product, User, Ticket } = require("../../db.js");
 // const Ticket = require("../../models/Ticket.js");
 
@@ -6,8 +6,8 @@ const { Product, User, Ticket } = require("../../db.js");
 
 const postTicket = async (req, res, next) => {
 
-  let { products, total, user, client, description, createdAt } = req.body
-  console.log({ products, total, user, client, description, createdAt });
+  let { products, total, user, client, description, createdAt, status } = req.body
+  console.log({ products, total, user, client, description, createdAt, status });
   try{
     await User.findOne({where: {email: user}}).then(async (user) => {
       console.log(user);
@@ -16,8 +16,10 @@ const postTicket = async (req, res, next) => {
           Productos: products, 
           Total: Number(total), 
           description: description, 
-          client: client || 'Público'},
-          createdAt
+          client: client || 'Público',
+          status: status,
+        },
+        createdAt  
           ).then(async (response) => {
           let ticket = await Ticket.findOne({where: {id: response?.id}})
           let userFound = await User.findOne({where: {email: user?.email} })

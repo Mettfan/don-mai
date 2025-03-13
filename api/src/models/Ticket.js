@@ -23,7 +23,18 @@ module.exports = (sequelize) => {
     },
     client: {
         type: DataTypes.STRING
+    },
+    status: {
+      type: DataTypes.STRING
+    },
+    sendAddress: {
+      type: DataTypes.STRING
+    },
+    payment_id: {
+      type: DataTypes.STRING,
+      defaultValue: null
     }
+
     
 
   });

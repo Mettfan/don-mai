@@ -1,113 +1,157 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllProducts, getMyProducts } from '../../features/products/productSlicetest';
-import Cookies from 'universal-cookie';
-import { useNavigate } from 'react-router-dom';
-import './Faltante.css'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllProducts,
+  getMyProducts,
+} from "../../features/products/productSlicetest";
+import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
+import "./Faltante.css";
+
 function Faltante() {
-    let dispatch = useDispatch()
-    let nav = useNavigate()
-    let userProducts = useSelector(state => state.products.userProducts) 
-    let cookie = new Cookies()
-    let user = cookie.get('user')
-    useEffect(() => {
-        if(user){
-            getUserProducts()
-        }
-    }, [])
-    let [state, setState] = useState({
-        ls: 20,
-        li: 0,
-        currentDepartment: null 
-    })
-    let getUserProducts = () => {
-        dispatch(getMyProducts({userId: user.id}))
+  let dispatch = useDispatch();
+  let nav = useNavigate();
+  let userProducts = useSelector((state) => state.products.userProducts);
+  let cookie = new Cookies();
+  let user = cookie.get("user");
+
+  useEffect(() => {
+    if (user) {
+      getUserProducts();
     }
-    function productSelector (li, ls){
-        return userProducts?.filter(product => product.quantity >= li && product.quantity <= ls)?.sort((a, b) => a?.Producto[0] - b?.Producto[0])
-    }
-    useEffect(() => {
-        dispatch(fetchAllProducts())
-    }, [])
-    function handleRangeChange(e){
-        let selectedValue = e.target.value
-        console.log(selectedValue)
-        setState({...state,
-            [e.target.name]: selectedValue
-        })
-    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    //La siguiente función es usada para filtrar los productos de acuerdo a una llave y su valor
-    // Esto debería ser llamando a una API sin embargo se muestra a continuación
-    function filterBy(key, value, list){
-        return list?.filter( element => {
-            return element[key] === value
-        })
-    }
+  let [state, setState] = useState({
+    ls: 20,
+    li: 0,
+    currentDepartment: null,
+  });
 
-    // La siguiente funcion complementa la anterior, la utilizaremos para extraer los Departamentos
-    // Devuelve una lista con los departamentos
-    function departmentCounter(products){
-        let departmentList = new Set()
-        products?.map(product => {
-            departmentList.add(product['Departamento'])
-        })
-        return Array.from(departmentList)?.sort()
+  let getUserProducts = () => {
+    dispatch(getMyProducts({ userId: user.id }));
+  };
 
-    }
+  function productSelector(li, ls) {
+    return userProducts
+      ?.filter((product) => product.quantity >= li && product.quantity <= ls)
+      ?.sort((a, b) => (a?.Producto ?? "").localeCompare(b?.Producto ?? ""));
+  }
 
-    function handleDepartmentOnChange(e){
-        console.log(e.target.value);
-        setState({...state, currentDepartment: e.target.value === 'TODOS' ? null : e.target.value})
-    }
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    function productCard(product){
-        return ( <div className="faltanteInfoContainer">
-                    <div className='faltanteName' onClick={()=>{ nav('/products/'+product.id) }} >{product?.Producto?.slice(0, 10)}</div>
-                    <div>{product['P. Venta']}</div>
-                    <div className='faltanteQuantity'>{product['quantity']}</div>                
-            </div>)
-    }
-    return ( <>
-    
-        <header>
-            Producto Faltante
-        </header>
+  function handleRangeChange(e) {
+    let selectedValue = e.target.value;
+    setState({ ...state, [e.target.name]: selectedValue });
+  }
 
-        <div>
-            <div>
-                <h3>Limite Superior</h3>
-                {state.ls}
-                <input value={state.ls} type="range" name='ls' id="marginRangeLS" min="0" max="20" onChange={(e) => handleRangeChange(e)} step="1"/>
-            </div>
-            <div>
-                <h3>Limite Inferior</h3>
-                {state.li}
-                <input value={state.li} type="range" name='li' id="marginRangeLI" min="0" max="20" onChange={(e) => handleRangeChange(e)} step="1"/>
-            </div> 
-            <div>
-                <h3>Departamento</h3>
-                <select onChange={ e => handleDepartmentOnChange(e)} name="departments" id="deps">
-                    <option value='TODOS'>TODOS</option>
-                    {departmentCounter(userProducts)?.map(departamento => {
-                        return <option value={departamento}>{departamento}</option>
-                            
-                    })}
-                </select>
-            </div>
-            <div className='faltanteContainer'>
+  function filterBy(key, value, list) {
+    return list?.filter((element) => element[key] === value);
+  }
 
-                {/* La siguiente linea de codigo muestra los productos filtrador por departamento si se selecciona uno, de otra manera devuelve todos los productos */}
-                {( state.currentDepartment ? filterBy('Departamento', state.currentDepartment, productSelector(state.li, state.ls)): productSelector(state.li, state.ls))?.map(product => {
-                    return (<div className='faltanteProductContainer'>
-                        { productCard(product) }
-                        
-                        </div>)
-                })}
+  function departmentCounter(products) {
+    let departmentList = new Set();
+    products?.forEach((product) => {
+      departmentList.add(product["Departamento"]);
+    });
+    return Array.from(departmentList)?.sort();
+  }
 
-            </div>
+  function handleDepartmentOnChange(e) {
+    setState({
+      ...state,
+      currentDepartment: e.target.value === "TODOS" ? null : e.target.value,
+    });
+  }
+
+  function productCard(product) {
+    return (
+      <div className="faltanteInfoContainer" key={product.id}>
+        <div
+          className="faltanteName"
+          onClick={() => {
+            nav("/products/" + product.id);
+          }}
+        >
+          {product?.Producto?.slice(0, 10)}
         </div>
-    </> );
+        <div>{product["P. Venta"]}</div>
+        <div className="faltanteQuantity">{product["quantity"]}</div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <header>Producto Faltante</header>
+      <div className="filterSection">
+        <div className="filterGroup">
+          <h3>Limite Superior</h3>
+          <input
+            value={state.ls}
+            type="range"
+            name="ls"
+            id="marginRangeLS"
+            min="0"
+            max="20"
+            onChange={handleRangeChange}
+            step="1"
+          />
+          <div>{state.ls}</div>
+        </div>
+        <div className="filterGroup">
+          <h3>Limite Inferior</h3>
+          <input
+            value={state.li}
+            type="range"
+            name="li"
+            id="marginRangeLI"
+            min="0"
+            max="20"
+            onChange={handleRangeChange}
+            step="1"
+          />
+          <div>{state.li}</div>
+        </div>
+        <div className="filterGroup">
+          <h3>Departamento</h3>
+          <select
+            onChange={handleDepartmentOnChange}
+            name="departments"
+            id="deps"
+          >
+            <option value="TODOS">TODOS</option>
+            {departmentCounter(userProducts)?.map((departamento) => {
+              return (
+                <option value={departamento} key={departamento}>
+                  {departamento}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      </div>
+      <div className="faltanteContainer">
+        {(state.currentDepartment
+          ? filterBy(
+              "Departamento",
+              state.currentDepartment,
+              productSelector(state.li, state.ls)
+            )
+          : productSelector(state.li, state.ls)
+        )?.map((product) => {
+          return (
+            <div className="faltanteProductContainer" key={product.id}>
+              {productCard(product)}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
 }
 
 export default Faltante;

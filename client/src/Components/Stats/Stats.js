@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import {
   fetchTickets,
   fetchFilteredTickets,
@@ -19,10 +18,8 @@ export function Stats() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortByDate, setSortByDate] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
-  const [selectedDescription, setSelectedDescription] = useState("");
   const [ticketsToPrint, setTicketsToPrint] = useState([]);
 
-  // let nav = useNavigate();
   let dispatch = useDispatch();
   let cookie = new Cookies();
   let user = cookie.get("user");
@@ -54,6 +51,7 @@ export function Stats() {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const calculatePriceWithoutInterest = () => {
@@ -80,6 +78,7 @@ export function Stats() {
 
   useEffect(() => {
     calculateManualInterest(manualDays, manualInterestRate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manualDays, manualInterestRate, selectedTickets]);
 
   const calculateManualInterest = (days, interestRate) => {
@@ -136,31 +135,28 @@ export function Stats() {
 
   return (
     <>
-      <div>
-        <div className="search-inputs">
-          <input
-            type="text"
-            placeholder="Buscar por nombre del cliente"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <select
-            value={sortByDate}
-            onChange={(e) => handleSortByDateChange(e)}
-          >
-            <option value="">Ordenar por fecha</option>
-            <option value="newest">Más reciente</option>
-            <option value="oldest">Más antiguo</option>
-          </select>
-          <select
-            value={sortByPrice}
-            onChange={(e) => handleSortByPriceChange(e)}
-          >
-            <option value="">Ordenar por precio</option>
-            <option value="highest">Más alto</option>
-            <option value="lowest">Más bajo</option>
-          </select>
-        </div>
+      <div className="search-inputs">
+        <input
+          type="text"
+          placeholder="Buscar por nombre del cliente"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select value={sortByDate} onChange={(e) => handleSortByDateChange(e)}>
+          <option value="">Ordenar por fecha</option>
+          <option value="newest">Más reciente</option>
+          <option value="oldest">Más antiguo</option>
+        </select>
+        <select
+          value={sortByPrice}
+          onChange={(e) => handleSortByPriceChange(e)}
+        >
+          <option value="">Ordenar por precio</option>
+          <option value="highest">Más alto</option>
+          <option value="lowest">Más bajo</option>
+        </select>
+      </div>
+      <div className="stats">
         <div className="manual-inputs">
           <div className="input-group">
             <p>
@@ -245,7 +241,7 @@ export function Stats() {
         <button className="printButton" onClick={handlePrint}>
           Imprimir Detalles
         </button>
-        <div>
+        <div className="tik">
           {userTicketsP
             ?.filter((ticket) =>
               ticket.client.toLowerCase().includes(searchTerm.toLowerCase())

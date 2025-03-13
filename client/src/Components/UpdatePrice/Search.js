@@ -8,6 +8,8 @@ import {
   fetchTickets,
 } from "../../features/products/productSlicetest";
 
+//PERMISOS LINEA 140
+
 export function Search() {
   let nav = useNavigate();
   let dispatch = useDispatch();
@@ -16,7 +18,7 @@ export function Search() {
 
   let tickets = useSelector((state) => state.products.tickets.response);
   let userTickets = useSelector((state) => state.products.userTickets);
-  console.log(userTickets);
+  console.log(userTickets, user);
 
   const getAllTickets = useCallback(() => {
     console.log(tickets);
@@ -134,13 +136,25 @@ export function Search() {
     return <div>Cargando tickets...</div>;
   }
 
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  //IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!
+  const filteredTickets =
+    user?.privileges === "usuario"
+      ? userTickets.filter((ticket) => new Date(ticket.createdAt) >= oneWeekAgo)
+      : userTickets;
+
   const sortedTickets = sortByDate
-    ? sortTicketsByDate(tickets, sortByDate)
-    : sortTicketsByPrice(tickets, sortByPrice);
+    ? sortTicketsByDate(filteredTickets, sortByDate)
+    : sortTicketsByPrice(filteredTickets, sortByPrice);
   const sortedAndFilteredTickets = sortedTickets?.filter(filterTickets);
 
   return (
     <>
+      <div className="search-header">
+        <h1>Buscar Tickets</h1>
+      </div>
       <div className="filtros-container">
         <div className="input-container">
           <input
@@ -176,24 +190,41 @@ export function Search() {
           </select>
         </div>
       </div>
-      {sortedAndFilteredTickets?.map((ticket) => (
-        <div
-          className="ticketCard"
-          key={ticket.id}
-          onClick={() => {
-            nav(`/tickets/${ticket.id}`);
-          }}
-        >
-          <p className="ticketInfo">Id: {ticket.id}</p>
-          <p className="ticketInfo">Descripción: {ticket.description}</p>
-          <p className="ticketInfo">Total: ${ticket.Total}</p>
-          <p className="ticketInfo">Cliente: {ticket.client}</p>
-          <p className="ticketInfo">Fecha de creación: {ticket.createdAt}</p>
-          {ticket.createdAt !== ticket.updatedAt && (
-            <p className="ticketInfo">Último cambio: {ticket.updatedAt}</p>
-          )}
-        </div>
-      ))}
+      {/* {user?.privileges === "usuario" ? (
+        <p>Para ver todos los tickets debes mejorar tu plan</p>
+      ) : null} */}
+      <div className="ticket-list">
+        {sortedAndFilteredTickets?.map((ticket) => (
+          <div
+            className="ticket-card"
+            key={ticket.id}
+            onClick={() => {
+              nav(`/tickets/${ticket.id}`);
+            }}
+          >
+            <p className="ticket-info">
+              <strong>Id:</strong> {ticket.id}
+            </p>
+            <p className="ticket-info">
+              <strong>Descripción:</strong> {ticket.description}
+            </p>
+            <p className="ticket-info">
+              <strong>Total:</strong> ${ticket.Total}
+            </p>
+            <p className="ticket-info">
+              <strong>Cliente:</strong> {ticket.client}
+            </p>
+            <p className="ticket-info">
+              <strong>Fecha de creación:</strong> {ticket.createdAt}
+            </p>
+            {ticket.createdAt !== ticket.updatedAt && (
+              <p className="ticket-info">
+                <strong>Último cambio:</strong> {ticket.updatedAt}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
     </>
   );
 }

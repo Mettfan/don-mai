@@ -10,7 +10,7 @@ import Cookies from "universal-cookie";
 import PrintComponent from "../TicketHandler/PrintComponent.js/PrintComponent";
 import "./TicketDetail.css";
 import printerPng from "../../Assets/printer.png";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import ConfirmationModal from "../EditModal/EditModal";
 
 function TicketDetail() {
   let params = useParams();
@@ -42,6 +42,14 @@ function TicketDetail() {
   };
 
   let TicketToPrint = ({ ticket }) => {
+    let listedStatus = ticket.status.split(' ') 
+    let notRegistered = 'NOT REGISTERED'
+    let isTicketMethodCard = listedStatus[0] || notRegistered
+    let ticketInterest = listedStatus[1] || notRegistered
+    let ticketDiscount = listedStatus[2] || notRegistered
+    let ticketReceived = listedStatus[3] || notRegistered
+    let ticketGiven = listedStatus[4] || notRegistered
+    let decodeStatus = String()
     return (
       <>
         <table className="ticketTable">
@@ -68,6 +76,13 @@ function TicketDetail() {
         )}
         <div className="totalTicket">{"A pagar:  $" + ticket?.Total}</div>
         <div className="totalTicket">{"User: " + ticket?.user}</div>
+        <div className="totalTicket">{"card: " + isTicketMethodCard}</div>
+        <div className="totalTicket">{"i: " + ticketInterest}</div>
+        <div className="totalTicket">{"DISCOUNT: " + ticketDiscount}</div>
+        <div className="totalTicket">{"Cash In: " + ticketReceived}</div>
+        <div className="totalTicket">{"Cash Out: " + ticketGiven}</div>
+        <div className="totalTicket">{"Expedido: " + new Date(ticket?.createdAt).toLocaleString()}</div>
+        <div className="totalTicket">{"status: " + ticket?.status}</div>
       </>
     );
   };
@@ -86,6 +101,7 @@ function TicketDetail() {
           <ReturnToTickets></ReturnToTickets>
         )}
         <button
+          className="changeStatusButton"
           onClick={(e) => {
             e.stopPropagation();
             setTicketId(ticket.id);

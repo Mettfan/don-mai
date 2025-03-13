@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mercadopago/sdk-react": "^0.0.19",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.5",
     "@progress/kendo-react-pdf": "^5.4.0",
@@ -25,6 +26,7 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-switch": "^7.0.0",
     "react-to-print": "^2.14.7",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
