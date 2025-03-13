@@ -1,33 +1,163 @@
-.productImage{
-    width: 100px;
+.catalogPage {
+  margin-top: 60px;
 }
-.catalogContainer{
-    display: inline-flex ;
-    /* width: 100%; */
-    background-color: transparent;
-    /* flex-direction: row; */
-    /* min-width: px; */
-    height: 200px;
-}
-.productBg{
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    /* justify-content: center; */
-    background-color: rgb(230, 138, 34);
-    margin: 5px;
-    font-size: small;
-    font-weight: 500;
 
+.productImage {
+  width: 100px;
 }
-.productInfoContainer{
-    background-color: rgb(240, 181, 100);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    width: 100%;
+.catalogContainer {
+  display: inline-flex;
+  background-color: transparent;
+  height: 200px;
+}
+.productBg {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(230, 138, 34);
+  margin: 5px;
+  font-size: small;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.productBg.selectedProduct {
+  border: 5px solid #c5269b;
+  /* background-color: #dd8501; */
+  transform: scale(1.05);
+}
+.productInfoContainer {
+  background-color: rgb(240, 181, 100);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+}
+
+.modal-estilo {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  margin: 30px auto;
+  position: relative;
+}
+
+.boton-accion {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-accion:hover {
+  background-color: #0056b3;
+}
+
+.boton-cerrar {
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-cerrar:hover {
+  background-color: #a71d2a;
+}
+
+.contenedor-acciones {
+  margin-top: 20px;
+}
+
+.actualizar-precio,
+.sumar-cantidad {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.input-precio,
+.input-cantidad {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 5px;
+  margin-left: 10px;
+  width: calc(100% - 20px);
+}
+
+.boton-actualizar,
+.boton-sumar {
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-actualizar:hover,
+.boton-sumar:hover {
+  background-color: #19692c;
+}
+
+button.verFaltante {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.completeInfo {
+  background-color: #008cba;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.editarProductos {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.seleccionarTodos {
+  background-color: #555555;
+  color: white;
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }

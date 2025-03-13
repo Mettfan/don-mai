@@ -1,44 +1,75 @@
-.editContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap ;
-    width: 50%;
+.editContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; 
+  background-color: #ffffff;
+  padding: 10px; 
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
 }
-.nextProductToCheck{
-    display: flex;
-    position: absolute;
-    right: 3%;
-    top: 75px;
-    width: 50px;
-    height: 50px;
-    font-size: xx-large;
+
+.editProductContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 10px; 
+  overflow: hidden; 
 }
-.previousProductToCheck{
-    display: flex;
-    position: fixed;
-    left: 3%;
-    top: 75px;
-    width: 50px;
-    height: 50px;
-    font-size: xx-large;
+
+.inputFormEdit {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px; 
+  margin: 5px 0; 
 }
-.editProductContainer{
-    
-    /* position: fixed; */
-    /* background-color: rgb(165, 42, 42, 0.9); */
-    /* color: white; */
-    padding: 20px;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-around ;
-    flex-wrap: wrap;
-    /* top: 50vh;
-    left: 50vw; */
+
+.inputFormEdit input {
+  padding: 8px; 
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
 }
-.inputFormEdit{
-    display: flex;
-    flex-direction: column;
-    
+
+.inputFormEdit input:focus {
+  border: 1px solid #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.buttonSubmit {
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 8px 16px; 
+  margin: 5px 0; 
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px; 
+}
+
+.buttonSubmit:hover {
+  background-color: #19692c;
+}
+
+.productDetails {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

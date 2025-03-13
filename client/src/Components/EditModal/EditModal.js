@@ -1,29 +1,37 @@
 import React, { useState } from "react";
-import "./ConfirmationModal.css";
+import "./EditModal.css";
 
-function ConfirmationModal({ isOpen, onClose, onConfirm, question, TicketId }) {
+function EditModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  question,
+  TicketId,
+  user_name,
+}) {
   const [customerName, setCustomerName] = useState("");
   const [selectedState, setSelectedState] = useState("pending");
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(selectedState === "pending") {
+    if (selectedState === "pending") {
       if (customerName.trim() !== "") {
+        const creditData = {
+          id: TicketId,
+          description: selectedState,
+          client: customerName,
+          user: user_name,
+        };
+        onConfirm(creditData);
+        setCustomerName("");
+      } else {
+        console.error("Nombre del cliente vacío");
+      }
+    } else {
       const creditData = {
         id: TicketId,
         description: selectedState,
-        client: customerName,
+        user: user_name,
       };
-      onConfirm(creditData);
-      setCustomerName("");
-    } else {
-      console.error("Nombre del cliente vacío");
-    }
-    } else {
-      const creditData = {
-        id: TicketId,
-        description: selectedState
-      }
       onConfirm(creditData);
     }
   };
@@ -34,10 +42,10 @@ function ConfirmationModal({ isOpen, onClose, onConfirm, question, TicketId }) {
         <div className="modalOverlay">
           <div className="modalContent">
             <button className="closeButton" onClick={onClose}>
-                X
-              </button>
-              <p>Estado del ticket:</p>
-               <form onSubmit={handleSubmit}>
+              X
+            </button>
+            <p>Estado del ticket:</p>
+            <form onSubmit={handleSubmit}>
               <select
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
@@ -47,24 +55,22 @@ function ConfirmationModal({ isOpen, onClose, onConfirm, question, TicketId }) {
                 <option value="entry">Entrada</option>
               </select>
 
-            <div className="modalHeader">
-              
-              
-            </div>
-{ selectedState === "pending" ? <div>
-  <h3>
-                <p>{question}</p>
-              </h3>
-              <p>Nombre del cliente:</p>
-              <input
-                placeholder="Nombre.."
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                required
-              />
-              </div>
-            :  null }
-            <div className="modalFooter">
+              <div className="modalHeader"></div>
+              {selectedState === "pending" ? (
+                <div>
+                  <h3>
+                    <p>{question}</p>
+                  </h3>
+                  <p>Nombre del cliente:</p>
+                  <input
+                    placeholder="Nombre.."
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    required
+                  />
+                </div>
+              ) : null}
+              <div className="modalFooter">
                 <button type="submit" className="confirmButton">
                   Confirmar
                 </button>
@@ -84,4 +90,4 @@ function ConfirmationModal({ isOpen, onClose, onConfirm, question, TicketId }) {
   );
 }
 
-export default ConfirmationModal;
+export default EditModal;

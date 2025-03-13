@@ -1,0 +1,193 @@
+.stats {
+  margin-top: 40px;
+}
+
+.ticketCard_selected {
+  border: 2px solid #4a47f9;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #f3f3ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticketCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-basis: calc(33.33% - 20px);
+  margin: 10px;
+  transition: all 0.3s ease;
+}
+
+.ticketCard:hover,
+.ticketCard_selected {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ticketInfo {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.ticketInfo:first-child {
+  font-weight: bold;
+}
+
+.ticketInfo:last-child {
+  color: #777;
+}
+
+.ticketInfo span {
+  color: #555;
+}
+
+.printContainerStat {
+  font-family: "Handwriting";
+  background-color: #fff;
+  margin-left: 20%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.printContainerStat div {
+  border: 1px solid #000;
+  margin: 5px;
+  padding: 10px;
+  font-size: 12px;
+}
+.printContainerStat .lspan {
+  margin-left: 150px;
+}
+
+.printContainerStat .p {
+  margin: 2px 0;
+  margin-left: 15px;
+}
+
+.printContainerStat .label {
+  font-weight: bold;
+}
+
+.printButton {
+  margin-top: 20px;
+}
+
+.calculation {
+  border-top: 1px solid black;
+  padding-top: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.calculation-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.label,
+.value {
+  margin: 0 12px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.l {
+  margin-left: 20%;
+}
+
+.ticketContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ticketCard,
+.ticketCard_selected {
+  display: inline-grid;
+  background-color: #fff;
+  flex-basis: calc(33.33% - 10px);
+  margin: 5px;
+}
+
+.manual-inputs {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.manual-inputs .input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  margin-left: 100px;
+}
+
+.calc {
+  padding: 7px;
+  font-size: large;
+}
+
+.tik {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 15px;
+  margin: 20px auto;
+  max-width: 80%;
+}
+
+.search-inputs {
+  position: fixed;
+  left: 0;
+  width: 250px;
+  padding: 20px;
+  background-color: #ffd449;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-inputs input,
+.search-inputs select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.search-inputs input:focus,
+.search-inputs select:focus {
+  border: 1px solid #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.search-inputs input::placeholder {
+  color: #888;
+}
+
+.search-inputs select {
+  cursor: pointer;
+}

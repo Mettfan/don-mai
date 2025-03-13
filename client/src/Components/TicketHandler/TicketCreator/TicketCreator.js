@@ -9,12 +9,20 @@ import GranelTab from '../../GranelTab/GranelTab';
 import CheckoutTab from '../CheckoutTab/CheckoutTab';
 import { useReactToPrint } from 'react-to-print';
 import TicketForPrinting from './TicketForPrinting/TicketForPrinting';
+import Draggable from "react-draggable";
+
 function TicketCreator(props) {
     let [date, setDate] = useState(new Date()) 
     let [productIndex, setProductIndex] = useState(0)
     let cookie = new Cookies()
     let user = cookie.get('user')
+    let totalSide = cookie.get('totalSide')
     let dispatch = useDispatch()
+    let changeTotalSide = (currentSide) =>{
+        let resultSide =  currentSide === 'left' ? 'right' : 'left'
+        setState({...state, totalSide: resultSide})
+        cookie.set('totalSide', resultSide )
+    } 
     let ticketProducts = useSelector(state => state.products.ticketProducts)
     const allProducts = useSelector( state => state.products.products)
     const userProducts = useSelector( state => state.products.userProducts)
@@ -25,10 +33,11 @@ function TicketCreator(props) {
     }, [])
     useEffect(() => {
         if(isCheckoutVisible === false){
-            document.getElementById('inputSearch').focus()
+            document.getElementById('inputSearch')?.focus()
 
         }
     }, [isCheckoutVisible])
+
     function togglePaymentCheckout(){
         if(isCheckoutVisible){
             setCheckout(false)
@@ -45,8 +54,38 @@ function TicketCreator(props) {
         total: 0,
         matchList: [],
         ticketType: 'out',
-        granelTab: false
+        granelTab: false,
+        totalSide: 'left',
+        card: false,
+        interes:  0,
+        discount: 0,
+        recieved: 0,
+        given: 0
     })
+    useEffect(() => {
+        let i = document.getElementById('interestRate')?.value || 0
+        setInterest(Number(i))
+
+    }, [state.card])
+    let statusInfo = String(state.card) + ' ' + String(state.interes) + " " + String(state.discount) + " " + String(state.recieved) + " " + String(state.given) 
+    let setInterest = (value) =>{
+        setState({...state, interes: Number(value) || 0 })
+    }
+    let setDiscount = (value) =>{
+        setState({...state, discount: Number(value) || 0 })
+    }
+    let setRecieved = (value) =>{
+        setState({...state, recieved: Number(value) || 0 })
+    }
+    let setGiven = (value) =>{
+        setState({...state, given: Number(value) || 0 })
+    }
+    const handleInterestOnChange = (e)=> {
+        setInterest(e.target.value)
+    }
+    // const handleInterestOnChange = (e)=> {
+    //     setInterest(e.target.value)
+    // }
     useEffect(() => {
         setState({...state, matchList: state.matchList.map((product) => {
             if(product?.id == state.matchList[productIndex]?.id ){
@@ -58,16 +97,17 @@ function TicketCreator(props) {
         })})
     }, [productIndex])
     useEffect(() => {
-
-        document.getElementById('inputSearch').value = ''
+        let searchInput = document.getElementById('inputSearch')?.value
+        searchInput && (document.getElementById('inputSearch').value = '')
+        
         if(!state.granelTab){
-            document.getElementById('inputSearch').focus()
+            document.getElementById('inputSearch')?.focus()
             
         }
+  
 
     },[state.granelTab])
     useEffect(() => {
-        document.getElementById('inputSearch').focus()
         let ticketTotal = 0
         ticketProducts?.forEach((product) => {
             let price = product["P. Venta"]
@@ -84,7 +124,10 @@ function TicketCreator(props) {
         }, 1000)
     }, [] )
     
-  
+
+    let f9 = () => {
+        togglePaymentCheckout()
+    } 
     function handleDeleteProduct(product){
         dispatch(removeProductFromGlobalTicket(product))
     }
@@ -129,6 +172,11 @@ function TicketCreator(props) {
                 matchList: []
             })
             state?.matchList?.length > 0 && setProductIndex(0)
+            ticketProducts.forEach((element, i) => {
+                if(element.id === product.id){
+                    setProductIndex(ticketProducts.length - i - 1)
+                }
+            });
 
         }
         else{
@@ -138,12 +186,13 @@ function TicketCreator(props) {
     function removeClicked(product){
         dispatch(removeProductFromGlobalTicket(product))
     }
-    let productCard = (product) => {
+    let productCard = (product, selected) => {
         return(<>
         <div className='productContainerTicketCreator'>
            { <span className='removeProductFromTicketCreator' onClick={() => {removeClicked(product)}}> - </span>}
-            <div onClick={() => productClicked(product)} className='productCardTicketCreatorContainer'> 
+            <div onClick={() => productClicked(product )} className='productCardTicketCreatorContainer'> 
                 <div className='productsCTCQuantity'>{(!(product?.Departamento === 'GRANEL') ? product['quantity'] : product['quantity'] + 'gr'  )}</div>
+                <div>{selected && '<'}</div>
                 <div>
                     <div className='productsCTCName'>{product['Producto']}</div>
                     <div className='productsCTCPrice'>{(!(product?.Departamento === 'GRANEL') ? product['P. Venta'] : product['P. Venta'] * 1000 )}</div>
@@ -202,7 +251,7 @@ function TicketCreator(props) {
             resolve('SOLD')
         })
         await promise.then((result) => {
-            dispatch(postTicket({products: ticketProducts, total: Number(state.total), user: user?.email, client: null, description: String(type), createdAt: JSON.stringify(date) }))
+            dispatch(postTicket({products: ticketProducts, total: Number(state.total), user: user?.email, client: null, description: String(type), createdAt: JSON.stringify(date), status: statusInfo}))
             console.log('posteado' , ticket );
             return 'posted'
         }).then((result) => {
@@ -329,51 +378,78 @@ function TicketCreator(props) {
     const handleOnBeforePrint = () => {
         console.log('ANTES DE IMPRESION');
     }
+    let handlecardPayment = (e) => {
+        setState({...state, card: !state.card})
+    }
     return ( <>
-        {productIndex}
+        {/* {productIndex} */}
+
+        <h1  onClick={() => {changeTotalSide(state.totalSide)}} className= {totalSide === 'left' ? 'fixedTotalLeft':'fixedTotalRight'}>{state.total}</h1>
+        {JSON.stringify(date.toLocaleString())}
+        {/* <Draggable> */}
+            {statusInfo}
         <div className='ticketCreator'>
             <div>
-                {state.ticketType === 'out' ?  'VENDER' : 'RECIBIR'}
+                {state.ticketType === 'out' ?  'VENDER PRODUCTOS' : 'RECIBIR PRODUCTOS'}
             
             </div>
     {/* SLIDER */}
         <label className="switch">
-            {JSON.stringify(state.searchValue)}
+            {/* {JSON.stringify(state.searchValue)} */}
             <input id='switch' onClick={() => handleSwitch()} type="checkbox"/>
             <span className="slider"></span>
         </label>
-        {JSON.stringify(date.toLocaleString())}
     {/*      */}
             <form onSubmit={(e) => handleAddProduct2Ticket(e) }>
-                <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
-                <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
+                {
+                    state.granelTab === false && <div>
+                        <label className='formTicketCreatorInputProduct'>{ state.inputSearch && ('Nombre: ' + state.inputSearch) || 'Ingrese Código o Nombre'}</label>
+                        <input onKeyDown={(e) => {handleKeyDown(e)}} autoComplete={'off'} id='inputSearch' name='inputSearch' type={'text'} placeholder='Nombre ó Código' onChange={(e) => {handleOnChange(e)}}></input>
+
+                    </div>
+                }
             </form>
             <form>
-                <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label>
-                {ticketProducts?.length && ticketProducts?.map( product => productCard(product) )?.reverse() || 'Agregue algunos productos!'}
+                {/* <label className='formTicketCreatorName'>{JSON.stringify(user?.name)}</label> */}
+                {ticketProducts?.length && ticketProducts?.map( (product, index) => productCard(product, index === ticketProducts.length-productIndex-1?true:false) )?.reverse() || 'Agregue algunos productos!'}
                 <div>
                     <label className='formTicketCreatorTotal'>{ state.total && ('Total: ' +( '$' + state?.total) || '$0')}</label>
                 </div>
-                <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {submitTicket(state.ticketType)}}>CREAR TICKET</button>
                 {productThumb()}
             </form>
-            <h1 className='fixedTotal'>{state.total}</h1>
-            {state.granelTab  && <div> 
-                <button className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
+            <button id='submitTicket' className='createTicketSubmitButton' onClick={ () => {f9()}}>CREAR TICKET</button>
+            {state.granelTab  && <div className='granelTabContainer'> 
+                <button id='closegt' className='closeGranelTab' onClick={() => closeGranelTab()}>X</button>                
                 <GranelTab product={state.matchList[productIndex]} weightFactor = {1000} closeCallback={() => setState({...state, granelTab: false})}></GranelTab> 
                 
                 </div>}
             
             {isCheckoutVisible && <div className='checkoutBoxContainer'> 
+                <input value={ document.getElementById('cardPayment') ? document.getElementById('cardPayment') : false } id='cardPayment' type='checkbox' name='cardPayment' onChange={(e) => handlecardPayment(e)}></input>
+                {String(state.card)}
+                {state.card && <div>
+
+                        <input onChange={(e) => {handleInterestOnChange(e)}} defaultValue={4.5} id='interestRate' type='number'></input>
+                    
+                    </div>}
                 <CheckoutTab 
                     total={state.total} 
                     afterCheckoutCallback={() => {document.location.reload()}} 
                     beforeCheckoutCallback={() => {submitTicket(state.ticketType)}} 
                     closeCallback={() => togglePaymentCheckout()} 
                     Component = {() => <TicketToPrint></TicketToPrint>} 
+                    card = {state.card}
+                    interest = {state.interes}
+                    discount = {state.discount}
+                    recieved = {state.recieved}
+                    given = {state.recieved}
+                    onRecievedChange = {(e) => setRecieved(e)}
+                    onGivenChange = {(e) => setGiven(e)}
                     >
                 </CheckoutTab></div>}
         </div>
+        {/* </Draggable> */}
+
     </> );
 }
 

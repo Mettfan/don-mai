@@ -1,24 +1,24 @@
 import React, { useEffect, useState, useCallback } from "react";
-// import { getProduct } from "../counter/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import "./Search.css";
-// import { Counter } from "../counter/Counter";
 import { useNavigate } from "react-router-dom";
 import {
   fetchFilteredTickets,
   fetchTickets,
 } from "../../features/products/productSlicetest";
-// import { Ticket } from "./Ticket";
+
+//PERMISOS LINEA 140
+
 export function Search() {
   let nav = useNavigate();
   let dispatch = useDispatch();
   let cookie = new Cookies();
   let user = cookie.get("user");
-  // let currentProduct = cookie.get('currentProduct')
+
   let tickets = useSelector((state) => state.products.tickets.response);
   let userTickets = useSelector((state) => state.products.userTickets);
-  console.log(userTickets);
+  console.log(userTickets, user);
 
   const getAllTickets = useCallback(() => {
     console.log(tickets);
@@ -31,10 +31,13 @@ export function Search() {
   }, [dispatch, tickets, user?.name]);
 
   useEffect(() => {
-    getAllTickets();
-    getUserTickets();
-  }, []);
+    const fetchData = async () => {
+      await Promise.all([getAllTickets(), getUserTickets()]);
+    };
 
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortByDate, setSortByDate] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
@@ -47,8 +50,8 @@ export function Search() {
   const handleSortByDateChange = (event) => {
     const value = event.target.value;
     setSortByDate(value);
-    if (value === 'newest' || value === 'oldest') {
-      setSortByPrice('');
+    if (value === "newest" || value === "oldest") {
+      setSortByPrice("");
     }
   };
 
@@ -56,8 +59,8 @@ export function Search() {
     const value = event.target.value;
     setSortByPrice(value);
 
-    if (value === 'lowest' || value === 'highest') {
-      setSortByDate('');
+    if (value === "lowest" || value === "highest") {
+      setSortByDate("");
     }
   };
 
@@ -133,13 +136,25 @@ export function Search() {
     return <div>Cargando tickets...</div>;
   }
 
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  //IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!
+  const filteredTickets =
+    user?.privileges === "usuario"
+      ? userTickets.filter((ticket) => new Date(ticket.createdAt) >= oneWeekAgo)
+      : userTickets;
+
   const sortedTickets = sortByDate
-    ? sortTicketsByDate(tickets, sortByDate)
-    : sortTicketsByPrice(tickets, sortByPrice);
+    ? sortTicketsByDate(filteredTickets, sortByDate)
+    : sortTicketsByPrice(filteredTickets, sortByPrice);
   const sortedAndFilteredTickets = sortedTickets?.filter(filterTickets);
 
   return (
     <>
+      <div className="search-header">
+        <h1>Buscar Tickets</h1>
+      </div>
       <div className="filtros-container">
         <div className="input-container">
           <input
@@ -175,69 +190,41 @@ export function Search() {
           </select>
         </div>
       </div>
-      {sortedAndFilteredTickets?.map((ticket) => (
-        <div
-          className="ticketCard"
-          key={ticket.id}
-          onClick={() => {
-            nav(`/tickets/${ticket.id}`);
-          }}
-        >
-          <p className="ticketInfo">Id: {ticket.id}</p>
-          <p className="ticketInfo">Descripción: {ticket.description}</p>
-          {/* <p>Producto: {ticket.Productos}</p> */}
-          <p className="ticketInfo">Total: ${ticket.Total}</p>
-          <p className="ticketInfo">Cliente: {ticket.client}</p>
-          <p className="ticketInfo">Fecha de creación: {ticket.createdAt}</p>
-          {ticket.createdAt !== ticket.updatedAt && (
-            <p className="ticketInfo">Último cambio: {ticket.updatedAt}</p>
-          )}
-        </div>
-      ))}
-      {/* Update Price
-      <button onClick={()=>{ previousPage() } }>previous</button>
-      {pageIndex}
-      <button onClick={()=>{ nextPage() } }>next</button> */}
-      {/* <Ticket></Ticket> */}
-      <div>
-        {/* {JSON.stringify(state.currentProduct)} */}
-        <div>
-          <div>{/* {state?.currentProduct?.Producto} */}</div>
-          <div>{/* {state?.currentProduct["P. Venta"]} */}</div>
-          {/* <img src={state.currentProduct.image}/> */}
-        </div>
-  
-        {/* <button onClick={()=>{miFuncionChida()}}>MI BOTON CHIDO</button> */}
+      {/* {user?.privileges === "usuario" ? (
+        <p>Para ver todos los tickets debes mejorar tu plan</p>
+      ) : null} */}
+      <div className="ticket-list">
+        {sortedAndFilteredTickets?.map((ticket) => (
+          <div
+            className="ticket-card"
+            key={ticket.id}
+            onClick={() => {
+              nav(`/tickets/${ticket.id}`);
+            }}
+          >
+            <p className="ticket-info">
+              <strong>Id:</strong> {ticket.id}
+            </p>
+            <p className="ticket-info">
+              <strong>Descripción:</strong> {ticket.description}
+            </p>
+            <p className="ticket-info">
+              <strong>Total:</strong> ${ticket.Total}
+            </p>
+            <p className="ticket-info">
+              <strong>Cliente:</strong> {ticket.client}
+            </p>
+            <p className="ticket-info">
+              <strong>Fecha de creación:</strong> {ticket.createdAt}
+            </p>
+            {ticket.createdAt !== ticket.updatedAt && (
+              <p className="ticket-info">
+                <strong>Último cambio:</strong> {ticket.updatedAt}
+              </p>
+            )}
+          </div>
+        ))}
       </div>
     </>
   );
 }
-//   let [state, setState] = useState({
-//     pageIndex: 0,
-//     currentProduct: cookie.get("currentProduct"),
-//   });
-//   let pageIndex = state.pageIndex;
-//   function reloadAfter(sec) {
-//     setTimeout(() => {
-//       window.location.reload();
-//     }, sec * 1000);
-//   }
-//   function nextPage() {
-//     setState({
-//       ...state,
-//       pageIndex: ++pageIndex,
-//     });
-//     dispatch(getProduct(pageIndex));
-//     reloadAfter(2);
-//     // window.location.reload()
-//     // console.log('CURRENT: '+ currentProduct );
-//   }
-//   function previousPage() {
-//     setState({
-//       ...state,
-//       pageIndex: --pageIndex,
-//     });
-//     dispatch(getProduct(pageIndex));
-//     reloadAfter(2);
-//     // window.location.reload()
-//   }

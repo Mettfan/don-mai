@@ -1,12 +1,65 @@
-.ticketStatsContainer{
-    background-color: red;
+.ticketStatsContainer {
+    background-color: #FFD449;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
 }
-/* .ticketStatsMargin{
-    border: 2px solid red;
-} */
-.zoomInButton{
-    background-color: gold;
+
+.ticketStatsMargin {
+    margin: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #FFF5CC;
 }
-.zoomOutButton{
-    background-color: blue;
+
+.downloadStockButton {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.downloadStockButton:hover {
+    background-color: #218838;
+}
+
+.printButton {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.printButton:hover {
+    background-color: #0056b3;
+}
+
+.monthButton {
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.monthButton:hover {
+    background-color: #0056b3;
+}
+
+.printTicketsContainer {
+    margin-top: 20px;
 }
