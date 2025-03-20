@@ -68,7 +68,6 @@ function SuperUserDashboard(props) {
     };
 
     getAllUsers();
-    console.log(uniqueEmails, "??????");
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 

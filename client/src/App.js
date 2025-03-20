@@ -56,7 +56,7 @@ function App() {
     }
   }, [dispatch, user]);
   let focusSearch = () => {
-    document.getElementById('inputSearch').focus()
+    document.getElementById('inputSearch')?.focus()
 
   }
   return (

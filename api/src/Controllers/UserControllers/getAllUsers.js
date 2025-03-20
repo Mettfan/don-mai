@@ -3,7 +3,7 @@ const { User } = require("../../db.js");
 const getAllUsers = async (req, res, next) => {
   const { userId } = req.query;
   const requesterId = userId;
-  console.log("hola", req.query);
+
   try {
     // Primero, verifica si el usuario que hace la solicitud es un super usuario
     const requester = await User.findByPk(requesterId);
