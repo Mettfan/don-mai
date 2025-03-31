@@ -1,7 +1,6 @@
 const { Op, NUMBER, where } = require("sequelize");
 const { Product, User } = require("../../db.js");
-
-
+const createRegisterTicket = require("../../Helpers/postRegisterTicket.js");
 
 const postProduct = async (req, res, next) => {
 
@@ -46,9 +45,14 @@ const postProduct = async (req, res, next) => {
                   {['Producto']: producto['Producto']}
                 ]
               }})
-              await user.addProduct(product).then((result) => {
+              await user.addProduct(product).then(async (result) => {
                 console.log(result);
                 
+                const ticket = await createRegisterTicket({
+                  userId,
+                  description: `Producto creado: ${product['Producto']}`,
+                  productId: product.id,
+                });
               }).catch((err) => {
                 console.log(err);
               });
@@ -73,9 +77,18 @@ const postProduct = async (req, res, next) => {
           console.log(user.name);
           let product = await Product.findOne({where: {id: response.id}})  
           console.log(product.Producto);
-          await user.addProduct(product).then((result) => {
+          await user.addProduct(product).then(async (result) => {
             console.log(result)
-
+            const ticket = await createRegisterTicket({
+              userId,
+              description: `Producto creado: ${product['Producto']} por el usuario con Id: ${userId}`,
+              productId: product.id,
+            });
+            const updatedUser = await User.findOne({
+              where: { id: user.id },
+              include: Product,
+            });
+            console.log("Usuario actualizado con productos:", updatedUser);
           })
         }
         else{

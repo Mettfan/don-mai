@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { editOneProduct, fetchAllProducts, fetchOneProduct } from '../../features/products/productSlicetest';
+import Cookies from "universal-cookie";
 
 function CompleteProductInfo() {
     let params = useParams()
@@ -10,6 +11,8 @@ function CompleteProductInfo() {
     let [state, setState] = useState({
         products4Complete: []
     })
+    let cookie = new Cookies();
+    let user = cookie.get("user");
     let dispatch = useDispatch()
     function onProductsChangeAttribute(e){
         // Busca el producto y cambia su atributo seleccionado por el valor del input
@@ -28,7 +31,7 @@ function CompleteProductInfo() {
         console.log(e.target.name, barcode)
         console.log(e.target.value)
         console.log(productSelected);
-        dispatch(editOneProduct({id: productSelected?.id, findBy: e.target.name, infoUpdated: productSelected[params?.attribute]})).then(()=>{
+        dispatch(editOneProduct({id: productSelected?.id, findBy: e.target.name, infoUpdated: productSelected[params?.attribute], userId: user.id})).then(()=>{
             window.location.reload()
         })
 

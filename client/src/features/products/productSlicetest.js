@@ -397,13 +397,13 @@ const fetchProduct = createAsyncThunk(
 );
 const editProduct = createAsyncThunk(
   "products/editProduct",
-  ({ id, findBy, infoUpdated }) => {
-    // console.log(value);
+  ({ id, findBy, infoUpdated, userId }) => { 
     return axios
       .put(`http://localhost:3001/products/update`, {
         id,
         findBy,
         infoUpdated,
+        userId
       })
       .then((response) => response.data);
   }
@@ -490,11 +490,11 @@ const getTicket = createAsyncThunk("products/getTicket", (id) => {
     .get(`http://localhost:3001/Tickets/?id=${id}`)
     .then((response) => response.data);
 });
-const deleteTicket = createAsyncThunk("products/deleteTicket", (id, user) => {
+const deleteTicket = createAsyncThunk("products/deleteTicket", async ({id, userId}) => {
   return axios
     .post(`http://localhost:3001/Ticket/delete`, {
       id,
-      user,
+      userId,
     })
     .then((response) => response.data);
 });
@@ -537,10 +537,11 @@ const filterTickets = createAsyncThunk(
       .then((response) => response.data);
   }
 );
-const editTicket = createAsyncThunk("Ticket/edit", (editingTicket) => {
+const editTicket = createAsyncThunk("Ticket/edit", async ({ editingTicket, userId }) => {
   return axios
-    .put(`http://localhost:3001/Ticket/edit`, {
+    .put("http://localhost:3001/Ticket/edit", {
       editingTicket,
+      userId
     })
     .then((response) => response.data);
 });

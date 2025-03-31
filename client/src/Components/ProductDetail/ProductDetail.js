@@ -64,6 +64,7 @@ export default function ProductDetail() {
         id: id,
         findBy: "disabled",
         infoUpdated: Boolean(!currentState),
+        userId: user.id
       })
     ).then((response) => {
       document.location.reload()

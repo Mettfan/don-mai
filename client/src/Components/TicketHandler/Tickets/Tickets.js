@@ -99,7 +99,7 @@ function Tickets() {
 
 
   function onDeleteTicket(id, user) {
-    dispatch(destroyTicket(id, user?.email));
+    dispatch(destroyTicket({id, userId: user?.id}));
   }
 
   if (!user) {
@@ -192,7 +192,10 @@ function Tickets() {
   let currentTicketsCards = () => {
     return currentTickets()
       ?.map((ticket) => {
+        if(ticket?.client !== 'Sistema'){
         return <>{ticketCard(ticket)}</>;
+      }
+      return <></>;
       })
       .reverse();
   };
