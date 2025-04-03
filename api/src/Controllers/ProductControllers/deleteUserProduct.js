@@ -19,7 +19,7 @@ const deleteUserProduct = async (req, res) => {
 
     await createRegisterTicket({
       userId,
-      description: `El producto ${product.name} ha sido eliminado por el usuario: ${userId}.`,
+      description: `El producto ${product.Producto} (ID: ${product.id}) ha sido eliminado por el usuario: ${userId}.`,
       productId,
     });
 
