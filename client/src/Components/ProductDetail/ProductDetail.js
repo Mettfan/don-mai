@@ -40,7 +40,7 @@ export default function ProductDetail() {
   };
   
   const confirmDeleteProduct = () => {
-    dispatch(eraseProduct(selectedProductId))
+    dispatch(eraseProduct({ userId: user.id, productId: selectedProductId }))
     .then(() => {
       nav("/catalog");
     })

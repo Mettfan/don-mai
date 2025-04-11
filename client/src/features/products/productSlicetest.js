@@ -420,11 +420,11 @@ const createProduct = createAsyncThunk(
       .then((response) => response.data);
   }
 );
-const deleteProduct = createAsyncThunk("products/deleteProduct", (id) => {
-  // console.log(value);
+const deleteProduct = createAsyncThunk("products/deleteProduct", ({ userId, productId }) => {
   return axios
     .post(`http://localhost:3001/products/delete`, {
-      id,
+      userId,
+      productId
     })
     .then((response) => response.data);
 });
