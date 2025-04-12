@@ -1,8 +1,7 @@
 const { Op, DataTypes } = require("sequelize");
 const { Product, User, Ticket } = require("../../db.js");
+const createRegisterTicket = require("../../Helpers/postRegisterTicket.js");
 // const Ticket = require("../../models/Ticket.js");
-
-
 
 const postTicket = async (req, res, next) => {
 
@@ -21,21 +20,28 @@ const postTicket = async (req, res, next) => {
         },
         createdAt  
           ).then(async (response) => {
+            console.log("Ticket creado:", response.toJSON());
           let ticket = await Ticket.findOne({where: {id: response?.id}})
           let userFound = await User.findOne({where: {email: user?.email} })
           if(ticket){
 
-            await userFound.addTicket(ticket).then((result) => {
+            await userFound.addTicket(ticket).then(async(result) => {
               console.log(result);
+              const registerTicket = await createRegisterTicket({
+                userId: userFound.id,
+                description: `Se ha creado un nuevo ticket con id ${ticket.id} para el usuario: ${userFound.id} - ${userFound.name}.`,
+                ticketId: ticket.id,
+                productId: products.id ? products.id : null, 
+              });
+          
+              console.log("Ticket de registro creado:", registerTicket);
               res.send(result)        
-
             })
           }
         })
       }
       else{
         res.send('no found')
-
       }
     })
   }
@@ -60,7 +66,6 @@ const postTicket = async (req, res, next) => {
   // catch(error){
   //   res.send({error: error.error})
   // }
- 
 };
 
 module.exports = postTicket;

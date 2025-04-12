@@ -99,6 +99,7 @@ export default function UpdatePrice() {
         id: selectedProduct.id,
         findBy: e.target.name,
         infoUpdated: state[e.target.name],
+        userId: user.id
       })
     ).then(() => {
       getProduct(selectedProduct["Código"]);
@@ -112,6 +113,7 @@ export default function UpdatePrice() {
         id: selectedProduct.id,
         findBy: "P. Venta",
         infoUpdated: selectedProduct["P. Venta"],
+        userId: user.id
       })
     )
       .then(() => {

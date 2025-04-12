@@ -23,6 +23,9 @@ export default function Catalog(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const cookie = new Cookies();
+  const user = cookie.get("user")
+  const userId = user?.id;
 
   const handleEditProduct = () => {
     setIsEditing(true);
@@ -50,6 +53,7 @@ export default function Catalog(props) {
           id: product.id,
           findBy: "P. Venta",
           infoUpdated: `$${newPrice}`,
+          userId: userId
         })
       ).then(() => {
         setIsLoading(false); // Termina la carga
@@ -72,6 +76,7 @@ export default function Catalog(props) {
             id: product.id,
             findBy: "P. Venta",
             infoUpdated: `$${newprice}`,
+            userId: userId
           })
         ).then(() => {
           setIsLoading(false); // Termina la carga
@@ -107,8 +112,6 @@ export default function Catalog(props) {
   let editMode = props.editmode;
   const productState = useSelector((state) => state);
   const productList = productState.products.products;
-  let cookie = new Cookies();
-
   const [filteredProducts, setFilteredProducts] = useState(productList);
 
   // useEffect(() => {
@@ -132,8 +135,6 @@ export default function Catalog(props) {
   function getAllProducts() {
     dispatch(fetchProducts());
   }
-
-  let user = cookie.get("user");
 
   let createProduct = async (product, userId) => {
     product = {

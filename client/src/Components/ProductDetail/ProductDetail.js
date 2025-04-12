@@ -40,7 +40,7 @@ export default function ProductDetail() {
   };
   
   const confirmDeleteProduct = () => {
-    dispatch(eraseProduct(selectedProductId))
+    dispatch(eraseProduct({ userId: user.id, productId: selectedProductId }))
     .then(() => {
       nav("/catalog");
     })
@@ -64,6 +64,7 @@ export default function ProductDetail() {
         id: id,
         findBy: "disabled",
         infoUpdated: Boolean(!currentState),
+        userId: user.id
       })
     ).then((response) => {
       document.location.reload()
