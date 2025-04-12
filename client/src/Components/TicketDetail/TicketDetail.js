@@ -27,8 +27,8 @@ function TicketDetail() {
   }, [dispatch, params?.id]);
 
   const handleCredit = async (creditData) => {
-    try {
-      dispatch(editOneTicket(creditData));
+    try {  
+      dispatch(editOneTicket({ editingTicket: creditData, userId: user.id }));
       dispatch(fetchFilteredTickets({ filter: "user", value: creditData.user }))
         .then(setIsModalOpen(false))
         .then(window.location.reload());
@@ -42,7 +42,7 @@ function TicketDetail() {
   };
 
   let TicketToPrint = ({ ticket }) => {
-    let listedStatus = ticket.status.split(' ') 
+    let listedStatus = ticket?.status ? ticket.status.split(' ') : []
     let notRegistered = 'NOT REGISTERED'
     let isTicketMethodCard = listedStatus[0] || notRegistered
     let ticketInterest = listedStatus[1] || notRegistered

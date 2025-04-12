@@ -48,7 +48,7 @@ function Tickets() {
   let [ticketDate, setTicketDate] = useState(date);
   // let [ticketsUpload, setTicketsUpload] = useState([]);
   function onDeleteTicket(id, user) {
-    dispatch(destroyTicket(id, user?.email));
+    dispatch(destroyTicket({id, userId: user?.id}));
   }
   // function separateCodebar(char, tickets){
   //     // Esta funcion ayuda a separar los codigos de barras con un cáracter predefinido

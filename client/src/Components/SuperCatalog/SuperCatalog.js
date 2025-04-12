@@ -70,6 +70,7 @@ function SuperCatalog() {
           id: product.id,
           findBy: "P. Venta",
           infoUpdated: `$${newPrice}`,
+          userId: userId,
         })
       ).then(() => {
         setIsLoading(false); // Termina la carga
@@ -91,6 +92,7 @@ function SuperCatalog() {
             id: product.id,
             findBy: "P. Venta",
             infoUpdated: `$${newprice}`,
+            userId: userId,
           })
         ).then(() => {
           setIsLoading(false); // Termina la carga
