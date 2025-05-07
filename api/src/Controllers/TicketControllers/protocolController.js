@@ -52,7 +52,7 @@ const ProtocolController = async (req, res) => {
         });
       }
       ticket.description = nextStep.Código;
-      ticket.status = `Task ${nextStep.Producto}`;
+      ticket.status = `Task ${blueprintId} in ${nextStep.Producto}`;
       await ticket.save();
 
       return res.status(200).json({
