@@ -3,7 +3,6 @@ const createRegisterTicket = require("../../Helpers/postRegisterTicket.js");
 
 const putTicket = async (req, res, next) => {
   let { editingTicket, userId } = req.body;
-  console.log(userId, "¿¿¿¿¿");
   
   try {
     if (editingTicket.client) {

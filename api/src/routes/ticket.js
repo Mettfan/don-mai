@@ -7,6 +7,7 @@ const getTotalTickets = require("../Controllers/TicketControllers/getTotalTicket
 const postTicket = require("../Controllers/TicketControllers/postTicket");
 const filterTickets = require("../Controllers/TicketControllers/filterTickets");
 const putTicket = require("../Controllers/TicketControllers/putTicket");
+const ProtocolController = require("../Controllers/TicketControllers/protocolController");
 // const putTicket = require("../Controllers/TicketControllers/putTicket");
 // const deleteTicket = require("../Controllers/TicketControllers/deleteTicket");
 
@@ -19,6 +20,7 @@ router.post("/Tickets", postTicket);
 router.get("/Tickets", getTicket);
 router.get("/Tickets/search", filterTickets);
 router.put("/Ticket/edit", putTicket);
+router.put("/Ticket/checkProtocol", ProtocolController);
 
 
 
