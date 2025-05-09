@@ -2,7 +2,6 @@ const { User } = require("../../db"); // Asegúrate de ajustar la ruta según tu
 
 const deleteUser = async (req, res) => {
   const { userId } = req.params; // Obtener el ID del usuario desde los parámetros de la URL
-  console.log(userId, "HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   try {
     const user = await User.findByPk(userId);
 

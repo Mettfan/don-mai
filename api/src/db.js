@@ -63,8 +63,8 @@ const { Product, User, Sucursal, Ticket } = sequelize.models;
 User.hasMany(Product)
 Product.belongsToMany(User, {through: 'UserProducts'})
 
-User.hasOne(Sucursal)
-Sucursal.belongsTo(User)
+User.hasMany(Sucursal)
+Sucursal.belongsToMany(User, {through: 'SucursalUsers'})
 
 Sucursal.hasMany(Product)
 Product.belongsToMany(Sucursal, {through: 'SucursalProducts'})
