@@ -11,7 +11,7 @@ import {
 } from "../../features/products/productSlicetest";
 import productPlaceholder from "../../Assets/productPlaceholder.png";
 import { checkIfProductIsUpdated } from "../UpdatePrice/UpdatePrice/updateTools";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MyProducts from "./MyProducts/MyProducts";
 import { downloadExcel } from "../Convert/Convert";
 import Modal from "react-modal";
@@ -23,9 +23,11 @@ export default function Catalog(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const params = useParams();
   const cookie = new Cookies();
   const user = cookie.get("user")
   const userId = user?.id;
+  const paramsId = params.id;
 
   const handleEditProduct = () => {
     setIsEditing(true);
@@ -193,6 +195,7 @@ export default function Catalog(props) {
           </div>
         )}
         {user?.privileges === "usuario" && <div>usuario mode</div>}
+        {paramsId && <div>Productos del usuario con id: {paramsId}</div>}
         <div className="container">
           {user?.privileges === "admin" && Number(user?.kyu) >= 9 && (
             <div>
@@ -208,11 +211,11 @@ export default function Catalog(props) {
               </button>
             </div>
           )}
-          <button onClick={() => nav("/onlist")} className="verFaltante">
+          {!paramsId && <button onClick={() => nav("/onlist")} className="verFaltante">
             VER FALTANTE
-          </button>
-
-          {userProducts.length > 0 && (
+          </button>}
+          
+          {!paramsId && userProducts.length > 0 && (
             <button
               onClick={() => nav("/complete/product/info")}
               className="completeInfo"
@@ -221,23 +224,24 @@ export default function Catalog(props) {
             </button>
           )}
 
-          {selectedProducts.length > 0 && (
+          {!paramsId && selectedProducts.length > 0 && (
             <button onClick={handleEditProduct} className="editarProductos">
               Editar Productos Seleccionados
             </button>
           )}
 
-          <button onClick={selectAllProducts} className="seleccionarTodos">
+          {!paramsId && <button onClick={selectAllProducts} className="seleccionarTodos">
             {selectedProducts.length > 0
               ? "Deseleccionar Todos"
               : "Seleccionar Todos"}
-          </button>
+          </button>}
         </div>
         {filteredProducts.length !== 0 ? (
           <MyProducts
             selectedProducts={selectedProducts}
             editMode={editMode}
             handleProductSelection={handleProductSelection}
+            paramsId={paramsId}
           />
         ) : (
           <button onClick={() => nav("/upload/product")}>

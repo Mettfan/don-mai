@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import Cookies from "universal-cookie";
-let cookie = new Cookies()
+//import Cookies from "universal-cookie";
+//let cookie = new Cookies()
 export const analyticsSlice = createSlice({
     name: 'analytics',
     initialState: {
@@ -70,7 +70,6 @@ export const analyticsSlice = createSlice({
 
 
 const fetchAnalytics = createAsyncThunk('users/fetchAnalytics', ({analytic}) => {
-    console.log(analytic);
     return axios.get(`http://localhost:3001/analytic/${analytic}`)
     .then( response => response.data)
 })

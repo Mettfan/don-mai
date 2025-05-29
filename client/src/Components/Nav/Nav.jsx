@@ -46,6 +46,10 @@ export default function Nav() {
             Sucursal
           </NavLink>
         )}
+        {user && 
+        <NavLink className="navLink" to="/carrito">
+          🛒
+        </NavLink>}
         <UserNav user={user}></UserNav>
       </div>
     </nav>

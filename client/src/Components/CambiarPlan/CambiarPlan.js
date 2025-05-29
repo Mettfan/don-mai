@@ -24,7 +24,8 @@ const Planes = [
 //PARA QUE FUNCINE EN LA CUENTA REAL, SE CAMBIA EL INITMERCADOPAGO DE AQUI ABAJO
 // Y TAMBIEN EN EL BACKEND EN "Checkout.js" SE CAMBIA EL access_token
 const CambiarPlan = (userId) => {
-  initMercadoPago("APP_USR-a406c57e-2d86-43bc-948e-aab078ef8fc6", {
+  const publicKey = process.env.REACT_APP_PUBLIC_KEY;
+  initMercadoPago(publicKey, {
     locale: "es-MX",
   });
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,7 +39,6 @@ const CambiarPlan = (userId) => {
 
   const createPreference = async (plan) => {
     try {
-      console.log(parseInt(quantity), "?");
       const response = await axios.post(
         "http://localhost:3001/pago/create_preference",
         {
