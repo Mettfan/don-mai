@@ -133,7 +133,6 @@ export const productSlicetest = createSlice({
           (listedProduct) => action.payload.id === listedProduct.id
         )
       ) {
-        console.log("Ya existe");
         state.ticketProducts = state.ticketProducts.map((producto) => {
           if (action.payload.id === producto.id && producto.quantity > 0) {
             return { ...producto, quantity: action.payload.quantity };
@@ -372,6 +371,67 @@ export const productSlicetest = createSlice({
       state.error = action.error.message;
       state.response = null;
     });
+    builder.addCase(fetchShoppingCart.pending, (state) => {
+    state.loading = true;
+  });
+  builder.addCase(fetchShoppingCart.fulfilled, (state, action) => {
+    state.loading = false;
+    state.shoppingCart = action.payload;
+    state.error = "";
+  });
+  builder.addCase(fetchShoppingCart.rejected, (state, action) => {
+    state.loading = false;
+    state.shoppingCart = [];
+    state.error = action.error.message;
+  });
+  builder.addCase(addProductToShoppingCart.pending, (state) => {
+    state.loading = true;
+  });
+  builder.addCase(addProductToShoppingCart.fulfilled, (state, action) => {
+    state.loading = false;
+    state.shoppingCart = action.payload;
+    state.error = "";
+  });
+  builder.addCase(addProductToShoppingCart.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.error.message;
+  });
+  builder.addCase(removeProductFromShoppingCart.pending, (state) => {
+    state.loading = true;
+  });
+  builder.addCase(removeProductFromShoppingCart.fulfilled, (state, action) => {
+    state.loading = false;
+    state.shoppingCart = action.payload;
+    state.error = "";
+  });
+  builder.addCase(removeProductFromShoppingCart.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.error.message;
+  });
+  builder.addCase(updateProductQuantityInCart.pending, (state) => {
+    state.loading = true;
+  });
+  builder.addCase(updateProductQuantityInCart.fulfilled, (state, action) => {
+    state.loading = false;
+    state.shoppingCart = action.payload;
+    state.error = "";
+  });
+  builder.addCase(updateProductQuantityInCart.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.error.message;
+  });
+  builder.addCase(clearShoppingCart.pending, (state) => {
+    state.loading = true;
+  });
+  builder.addCase(clearShoppingCart.fulfilled, (state, action) => {
+    state.loading = false;
+    state.shoppingCart = [];
+    state.error = "";
+  });
+  builder.addCase(clearShoppingCart.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.error.message;
+  });
   },
 });
 
@@ -545,6 +605,40 @@ const editTicket = createAsyncThunk("Ticket/edit", async ({ editingTicket, userI
     })
     .then((response) => response.data);
 });
+const fetchShoppingCart = createAsyncThunk(
+  "shoppingCart/fetch",
+  async ({userId}) => {
+    return axios.get(`http://localhost:3001/shoppingCart/${userId}`).then((response) => response.data);
+  }
+);
+const addProductToShoppingCart = createAsyncThunk(
+  "shoppingCart/addProduct",
+  async ({ userId, product }) => {
+    alert("Adding product to cart", userId, product);
+    return axios.post(`http://localhost:3001/shoppingCart/${userId}/add`, product).then((response) => response.data);
+  }
+);
+const removeProductFromShoppingCart = createAsyncThunk(
+  "shoppingCart/removeProduct",
+  async ({ userId, productId }) => {
+      return axios.delete(`http://localhost:3001/shoppingCart/${userId}/remove/${productId}`).then((response) => response.data);
+  }
+);
+const updateProductQuantityInCart = createAsyncThunk(
+  "shoppingCart/updateQuantity",
+  async ({ userId, id, quantity }) => {
+      return axios.put(`http://localhost:3001/shoppingCart/${userId}/updateQuantity`, {
+        productId: id,
+        quantity: quantity,
+      }).then((response) => response.data);
+  }
+);
+const clearShoppingCart = createAsyncThunk(
+  "shoppingCart/clear",
+  async (userId) => {
+    return axios.delete(`http://localhost:3001/shoppingCart/${userId}/clear`).then((response) => response.data);
+  }
+);
 export const {
   setPayment,
   showModal,
@@ -556,7 +650,6 @@ export const {
   counterDecrement,
   counterIncrement,
   setCounter,
-  addProductToShoppingCart,
   setProductQuantity,
   deleteProductFromGlobalTicket,
 } = productSlicetest.actions;
@@ -580,3 +673,8 @@ export const matchProduct = associateProduct;
 export const getMyProducts = getUserProducts;
 export const removeProduct = deleteUserProduct;
 export const fetchFilteredTickets = filterTickets;
+export const getShoppingCart = fetchShoppingCart;
+export const addProductToCart = addProductToShoppingCart;
+export const removeProductFromCart = removeProductFromShoppingCart;
+export const updateQuantityInCart = updateProductQuantityInCart;
+export const clearCart = clearShoppingCart;

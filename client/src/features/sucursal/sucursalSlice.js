@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import Cookies from "universal-cookie";
-let cookie = new Cookies()
+//import Cookies from "universal-cookie";
+//let cookie = new Cookies()
 export const sucursalSlice = createSlice({
     name: 'sucursales',
     initialState: {

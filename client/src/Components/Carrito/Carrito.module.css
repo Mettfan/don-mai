@@ -1,0 +1,140 @@
+.carritoContainer {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 200px;
+  background-color: #f9f9f9;
+  margin-top: 80px; 
+}
+
+.carritoTitulo {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.carritoLista {
+  list-style: none;
+  padding: 0;
+}
+
+.carritoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.carritoItem:last-child {
+  border-bottom: none;
+}
+
+.productoInfo {
+  flex-grow: 1;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.productoNombre {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.productoPrecio {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.cantidadControles {
+  display: flex;
+  align-items: center;
+}
+
+.cantidadBoton {
+  background-color: #eee;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.cantidadBoton:hover {
+  background-color: #ddd;
+}
+
+.cantidadNumero {
+  font-size: 16px;
+  margin: 0 10px;
+  color: #777;
+}
+
+.productoSubtotal {
+  font-weight: bold;
+  color: #555;
+  margin-left: 10px;
+}
+
+.vaciarCarritoBoton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.vaciarCarritoBoton:hover {
+  background-color: #d32f2f;
+}
+
+.carritoVacio {
+  color: #777;
+}
+
+.carritoTotal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.totalTexto {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 10px;
+  color: #333;
+}
+
+.totalPrecio {
+  font-size: 18px;
+  color: #007bff;
+  margin-right: 20px;
+}
+
+.comprarBoton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.comprarBoton:hover {
+  background-color: #1e7e34;
+}

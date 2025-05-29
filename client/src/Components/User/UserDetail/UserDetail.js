@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -8,6 +8,8 @@ import LOGODONMAY from "../../../Assets/LOGODONMAY.png";
 import Modal from "react-modal";
 import CambiarPlan from "../../CambiarPlan/CambiarPlan";
 import axios from "axios";
+import QRCode from "react-qr-code";
+import { useReactToPrint } from "react-to-print";
 
 function UserDetail(props) {
   let cookie = new Cookies();
@@ -20,7 +22,20 @@ function UserDetail(props) {
   const [error, setError] = useState();
   const [user, setUser] = useState(props.user || cookie.get("user"));
   const token = cookie.get("token");
-  console.log(user);
+  const qrCodeRef = useRef();
+  const [qrSize, setQrSize] = useState(100);
+  const handlePrint = useReactToPrint({
+    content: () => qrCodeRef.current,
+    onBeforeGetContent: () => {
+      setQrSize(1000);
+      return Promise.resolve();
+    },
+    onAfterPrint: () => {
+      setQrSize(100);
+    },
+
+    documentTitle: `QR_Catalogo_${user?.id || "Usuario"}`,
+  });
 
   useEffect(() => {
     if (!user) {
@@ -33,7 +48,6 @@ function UserDetail(props) {
           params: {
             filter: "email",
             value: user.email,
-            password: user.password
           },
           headers: {
             Authorization: `Bearer ${token}`,
@@ -82,6 +96,7 @@ function UserDetail(props) {
     cookie.remove("user");
     cookie.remove("token"); // Elimina el token de las cookies
     delete axios.defaults.headers.common["Authorization"]; // Elimina el token de las cabeceras de axios
+    localStorage.removeItem("shoppingCart"); // Borra el carrito del localStorage
     nav("/");
     window.location.reload();
   };
@@ -137,6 +152,17 @@ function UserDetail(props) {
     <>
       <div className="userDetailContainer">
         <img alt="" className="userDetailImage" src={imageUrl || user.image} />
+        <div ref={qrCodeRef} className="QRCodePrintPage">
+          <QRCode
+            value={window.location.origin + "/catalog/" + user?.id}
+            size={qrSize} 
+            style={{ height: "100%", width: "100%" }}
+          />
+        </div>
+        <p>Comparte tu catalogo!</p>
+        <button onClick={handlePrint} className="printQrButton">
+          Imprimir QR
+        </button>
         <div className="userDetailInfo">
           <div className="userInfo">{user.name}</div>
           <div className="userInfo">{user.email}</div>

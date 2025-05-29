@@ -4,7 +4,7 @@ import CreateProduct from "../../Components/CreateProduct/CreateProduct";
 import Cookies from "universal-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchAllProducts as fetchProducts } from "../../features/products/productSlicetest";
+//import { fetchAllProducts as fetchProducts } from "../../features/products/productSlicetest";
 import { getMyProducts } from "../../features/products/productSlicetest";
 import "./UploadProduct.css";
 
@@ -33,8 +33,6 @@ function UploadProduct() {
   // Solo realiza la verificación cuando los productos estén cargados
   const productLimit = user?.bought || 0;
   const canCreateProduct = userProducts && userProducts.length < productLimit;
-
-  console.log(user, "!!!", userProducts);
 
   return (
     <>

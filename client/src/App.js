@@ -38,6 +38,7 @@ import SuperTickets from "./Components/SuperTickets/SuperTickets";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute"; 
 import Privacy from "./Components/RegisterPreferences/Privacy";
 import Terms from "./Components/RegisterPreferences/Terms";
+import Carrito from "./Components/Carrito/Carrtito";
 
 Modal.setAppElement("#root");
 
@@ -86,13 +87,14 @@ function App() {
           }
         />
         <Route
-          path="/catalog/"
+          path="/catalog/:id?"
           element={
             <ProtectedRoute>
               <Catalog />
             </ProtectedRoute>
           }
         />
+         <Route path="/carrito" element={<Carrito />} />
         <Route
           path="/search"
           element={

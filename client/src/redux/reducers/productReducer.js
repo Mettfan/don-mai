@@ -1,5 +1,5 @@
 import {
-    ADD_PRODUCTS, ERROR, GET_PRODUCTS, GET_PRODUCT
+    ADD_PRODUCTS, ERROR, GET_PRODUCTS, GET_PRODUCT, GET_PRODUCT_BY_BARCODE
 } from '../actions/productActions'
 
 const initialState = {
